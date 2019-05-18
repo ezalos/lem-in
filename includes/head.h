@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/05/13 13:30:14 by root             ###   ########.fr       */
+/*   Updated: 2019/05/18 13:50:55 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,18 @@
 # define HEAD_H
 
 
-# define MODE					2
+# define FAILURE				0
+# define SUCCESS				1
+
+# define ERROR					-1
+# define VALID					0
+
+# define PTR_ERROR			NULL
+
+# define INIT_QANT			1
+# define INIT_ROOM			2
+# define INIT_LINK			3
+# define INIT_SPEC			4
 
 # include "../../libft/includes/libft.h"
 
