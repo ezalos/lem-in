@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/05/18 13:50:55 by root             ###   ########.fr       */
+/*   Updated: 2019/05/19 14:07:01 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 # define INIT_LINK			3
 # define INIT_SPEC			4
 
+# define RIGHT					0
+# define DOWN						1
+# define LEFT						2
+# define UP							3
+
 # include "../../libft/includes/libft.h"
 
 typedef struct		s_lemin
@@ -36,6 +41,7 @@ typedef struct		s_lemin
 	int							x_coord;
 	int							y_coord;
 	int							ants;
+	void						**connexions;
 }									t_lemin;
 
 /*
