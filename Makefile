@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/05/13 13:26:45 by root             ###   ########.fr        #
+#    Updated: 2019/05/27 16:41:21 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,13 @@ DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 ##############################################################################
 
 SRCS_LI		=	main\
-						init
+						init\
+						print\
+						calcul\
+						alg_a_star\
+						close_a_path\
+						how_many_paths\
+						find_a_path
 
 # SRCS_VS		=	visu-hex
 
