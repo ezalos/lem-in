@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 16:32:03 by root              #+#    #+#             */
-/*   Updated: 2019/06/01 13:47:01 by root             ###   ########.fr       */
+/*   Updated: 2019/06/01 21:20:06 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		print_debug(t_lemin *here)
 		ft_printf("%~{255;155;155}");
 	else	if (here->place == END)
 		ft_printf("%~{155;255;155}");
-	ft_printf("%s%~{}\n", here->name);
+	ft_printf("%d%~{}\n", here->id);
 }
 
 void		save_this_path(t_lemin *here, t_path *ptr)

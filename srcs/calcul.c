@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:35:56 by root              #+#    #+#             */
-/*   Updated: 2019/06/01 14:16:20 by root             ###   ########.fr       */
+/*   Updated: 2019/06/01 21:20:37 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,12 @@ void 		add_gone_from_paths(t_god *god)
 
 int				full_process(t_god *god, t_path *ptr)
 {
+	int		r_v;
 	// ft_printf("%s\n", __func__);
+	clear_data(god);
+	r_v = refresh_a_star(god);
 	// print_name_and_from_dist(god);
-	if (refresh_a_star(god))
+	if (r_v)
 	{
 		find_a_path(god->start, ptr);
 		clear_data(god);
@@ -99,52 +102,12 @@ void			does_path_exist(t_god *god, int a, int b)
 	ft_printf("%d-%d%~{}\n", a, b);
 }
 
-int				complete_missing_paths(t_god *god, int missing_paths)
-{
-		int	i;
-		int	j;
-		int smallest;
-		t_path *the_choosen_two;
-
-		ft_printf("Missing paths : %d/%d\n", missing_paths, god->goulots);
-		i = -1;
-		smallest = god->size;
-		while (++i < god->goulots - missing_paths)
-			if (ft_printf("Size of path %d is %d\n", i, god->paths[i].path[0]) && god->paths[i].path[0] < smallest)
-				smallest = i;
-		ft_printf("Smallest path is the n*%d:\n", smallest);
-		print_this_path(god, &god->paths[smallest]);
-		ft_printf("\n\nLets try to block room by room this path\n");
-		i = 1;
-		while (++i < god->paths[smallest].path[0])
-		{
-			the_choosen_two = ft_memalloc(sizeof(t_path));
-			clear_gone(god);
-			god->rooms[god->paths[smallest].path[i]]->gone = 1;
-			if (god->size > 15)
-			{
-				j = 0;
-				while (++j < god->exit_points)
-				{
-					god->rooms[god->exit_list[j]]->gone = 1;
-					ft_printf("We just block room n* %d\n", god->exit_list[j]);
-				}
-			}
-			ft_printf("We just block room n* %d\n", god->paths[smallest].path[i]);
-			full_process(god, the_choosen_two);
-			print_this_path(god, the_choosen_two);
-			ft_memdel((void**)&the_choosen_two);
-		}
-		ft_printf("\n\nI hope there was a solution here...\n\n\n\n");
-		return (0);
-}
-
 int				lets_calcul(t_god *god)
 {
 	int	i;
 	int	missing_paths;
 
-	get_rid_of_dead_ends(god);
+	// get_rid_of_dead_ends(god);
 	how_many_entries_exits(god);
 	if (!god->goulots)
 	{
@@ -156,10 +119,11 @@ int				lets_calcul(t_god *god)
 	ft_printf("This anthill has %d rooms\n\n", god->size);
 	i = -1;
 	missing_paths = god->goulots;
+	clear_gone(god);
 	while (++i < god->goulots)
 		missing_paths -= full_process(god, &god->paths[i]);
+	print_paths(god);
 	if (missing_paths)
 		complete_missing_paths(god, missing_paths);
-	print_paths(god);
 	return (0);
 }

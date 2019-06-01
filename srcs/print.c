@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/06/01 13:56:26 by root             ###   ########.fr       */
+/*   Updated: 2019/06/01 21:17:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void 			print_this_path(t_god *god, t_path *path)
 	int			j;
 	int			name_size;
 
+	// ft_printf("HEY\n");
 	name_size = ft_nb_len(god->end->id, 10);
 	if (path && path->path && path->path[0])
 	{
@@ -99,12 +100,14 @@ void 		print_name_and_from_dist(t_god *god)
 {
 	t_tab		*tmp;
 	t_lemin	*here;
+	int len;
 
 	tmp = god->lem_in;
+	len = ft_nb_len(god->end->id, 10);
 	while (tmp)
 	{
 		here = tmp->content;
-		ft_printf("%~{255;155;255}%*s%~{}(%d)\t", 10, here->name, here->gone);
+		ft_printf("%~{255;155;255}%*d%~{}(%d)\t", len, here->id, here->gone);
 		ft_printf("start: %d\t", here->from[0]);
 		ft_printf("end: %d\n", here->from[1]);
 		tmp = tmp->dir[0];

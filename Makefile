@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/05/28 11:57:27 by root             ###   ########.fr        #
+#    Updated: 2019/06/01 18:17:28 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRCS_LI		=	main\
 						calcul\
 						alg_a_star\
 						how_many_paths\
+						missing_paths\
 						find_a_path
 
 # SRCS_VS		=	visu-hex

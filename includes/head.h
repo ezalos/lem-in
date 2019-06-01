@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/01 13:35:16 by root             ###   ########.fr       */
+/*   Updated: 2019/06/01 19:51:23 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct		s_god
 	int							exit_points;
 	int							*exit_list;
 	int							goulots;
+	int							side;
 }									t_god;
 
 /*
@@ -113,8 +114,10 @@ void 			clear_data(t_god *god);
 void 			print_name_and_from_dist(t_god *god);
 void 			print_paths(t_god *god);
 void 			print_this_path(t_god *god, t_path *path);
-void 		clear_gone(t_god *god);
-void 		add_gone_from_paths(t_god *god);
+void 			clear_gone(t_god *god);
+void 			add_gone_from_paths(t_god *god);
+int				full_process(t_god *god, t_path *ptr);
 
-int			is_there_a_path(t_god *god, int *kill_list, int point_a, int point_b);
+int				complete_missing_paths(t_god *god, int missing_paths);
+int				is_there_a_path(t_god *god, int *kill_list, int point_a, int point_b);
 #endif
