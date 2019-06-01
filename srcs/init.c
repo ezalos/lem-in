@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/05/27 16:16:49 by root             ###   ########.fr       */
+/*   Updated: 2019/05/30 18:45:15 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 			return (ERROR);
 		if (!(room->name = ft_strdup(split[0])))
 			return (ERROR);
+		if ((int)ft_strlen(room->name) > god->name_len)
+			god->name_len = ft_strlen(room->name);
 		room->place = place;
 		room->y_coord = ft_atoi(split[1]);
 		room->x_coord = ft_atoi(split[2]);
@@ -189,6 +191,13 @@ void		get_rooms_in_tab(t_god *god)
 	}
 }
 
+t_god		**ft_remember_god(void)
+{
+	static t_god		*god;
+
+	return (&god);
+}
+
 t_god		*init(int fd)
 {
 	t_god		*god;
@@ -225,5 +234,6 @@ t_god		*init(int fd)
 	// print_matrix(god->lem_in);
 	order_my_little_connexions(god);
 	get_rooms_in_tab(god);
+	*ft_remember_god() = god;
 	return (god);
 }

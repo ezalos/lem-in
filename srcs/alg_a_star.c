@@ -6,11 +6,87 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:05:17 by root              #+#    #+#             */
-/*   Updated: 2019/05/27 18:04:28 by root             ###   ########.fr       */
+/*   Updated: 2019/05/31 20:27:14 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
+
+int				execute_pile(t_god *god, int depth, int *pile_a, int *pile_b, int id_end, int start_to_end)
+{
+		t_lemin		*lem_in;
+		int				*a;
+		int				*b;
+		int				i;
+		int				r_v;
+
+		a = &pile_a[0];
+		b = &pile_b[0];
+		r_v = 0;
+		while (*a > 0)
+		{
+			lem_in = god->rooms[pile_a[*a]];
+			if (!lem_in || lem_in->gone)
+			{
+				pile_a[(*a)--] = 0;
+				continue;
+			}
+			if (lem_in->id == id_end)
+				r_v++;
+			if (!lem_in->from[start_to_end] || lem_in->from[start_to_end] > depth) // 0 is start to end
+			{
+				lem_in->from[start_to_end] = depth;
+				i = -1;
+				while (lem_in->connexions[++i])
+						pile_b[++(*b)] = ((t_lemin*)lem_in->connexions[i])->id;
+			}
+			pile_a[(*a)--] = 0;
+		}
+		return (r_v);
+}
+
+int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end)
+{
+	int		*pile_a;
+	int		*pile_b;
+	int 	depth;
+	int		r_v;
+	// int		i;
+
+	depth = 0;
+	pile_a = ft_memalloc(sizeof(int) * god->size * 2);
+	pile_b = ft_memalloc(sizeof(int) * god->size * 2);
+	pile_a[0] = 1;
+	pile_a[1] = id_start;
+	r_v = 0;
+	while (pile_a[0] || pile_b[0])
+	{
+		if (depth % 2)
+			r_v += execute_pile(god, depth, pile_a, pile_b, id_end, start_to_end);
+		else
+			r_v += execute_pile(god, depth, pile_b, pile_a, id_end, start_to_end);
+		// ft_printf("\tr_v: %d\n", r_v);
+		depth++;
+		// ft_printf("\n\t\t%~{}DEPTH: %d\n\n", depth);
+		// if(pile_a[0])
+		// {
+		// i = 0;
+		// ft_printf("\n%~{}Pile(%d) %~{?}a:", pile_a[0]);
+		// while (++i <= pile_a[0])
+		// 	ft_printf("%d ", pile_a[i]);
+		// }
+		// if(pile_b[0])
+		// {
+		// ft_printf("\n%~{}Pile(%d) %~{?}b:", pile_b[0]);
+		// i = 0;
+		// while (++i <= pile_b[0])
+		// 	ft_printf("%d ", pile_b[i]);
+		// }
+	}
+	ft_memdel((void**)&pile_a);
+	ft_memdel((void**)&pile_b);
+	return (r_v);
+}
 
 int				from_start(t_lemin *lem_in, int depth)
 {
@@ -20,9 +96,9 @@ int				from_start(t_lemin *lem_in, int depth)
 		r_v = 0;
 		if (!lem_in || lem_in->gone)
 			return (0);
-		if (!lem_in->from_start || lem_in->from_start > depth)
+		if (!lem_in->from[0] || lem_in->from[0] > depth)
 		{
-			lem_in->from_start = depth;
+			lem_in->from[0] = depth;
 			i = -1;
 			while (lem_in->connexions[++i])
 				r_v += from_start(lem_in->connexions[i], depth + 1);
@@ -38,9 +114,9 @@ int				from_end(t_lemin *lem_in, int depth)
 		r_v = 0;
 		if (!lem_in || lem_in->gone)
 			return (0);
-		if (!lem_in->from_end || lem_in->from_end > depth)
+		if (!lem_in->from[1] || lem_in->from[1] > depth)
 		{
-				lem_in->from_end = depth;
+				lem_in->from[1] = depth;
 			i = -1;
 			while (lem_in->connexions[++i])
 				r_v += from_end(lem_in->connexions[i], depth + 1);
@@ -50,83 +126,48 @@ int				from_end(t_lemin *lem_in, int depth)
 
 int				refresh_a_star(t_god *god)
 {
-	from_start(god->start, 0);
-	god->start->from_start = 0;
-	from_end(god->end, 0);
-	god->end->from_end = 0;
-	return (1);
+	int speed;
+	int r_v;
+
+	speed = 1;
+	r_v = 0;
+	clear_data(god);
+	if (speed)
+		r_v = alternate_piles(god, god->start->id, god->end->id, 0);
+	else
+		from_start(god->start, 0);
+	god->start->from[0] = 0;
+	// ft_printf("R_V from start is %d\n", r_v);
+	if (speed)
+		r_v = alternate_piles(god, god->end->id, god->start->id, 1);
+	else
+		from_end(god->end, 0);
+	god->end->from[1] = 0;
+	// ft_printf("R_V from end is %d\n", r_v);
+	return (r_v);
 }
 
-/*
-int				go_depth_first(t_lemin *lem_in, int (*f)(t_lemin *, t_lemin *, int, int), int depth)
+int			is_there_a_path(t_god *god, int *kill_list, int point_a, int point_b)
 {
-		void			***tab;
-		int				i;
-		int				r_v;
+	int r_v;
+	int	i;
 
-		if (f(lem_in, NULL, 0, depth))
-		{
-			if ((r_v = f(lem_in, NULL, 0, depth)) != -1)
-				return (r_v);
-			else
-				r_v = 0;
-			tab = get_data_in_tab(lem_in, );
-			order_data(tab, );
-			i = -1;
-			while (tab[++i][0])
-				if (r_v = go_depth_first(tab[i][0], depth + 1))// while r_v = 0, continue to explore
-					return (r_v);
-		}
-		return (r_v);
-}
-
-void				***get_data_in_tab(t_lemin *lem_in, (void*) (*f)(t_lemin *, int))
-{
-	void			***tab;
-	int				size;
-	int				values;
-	int				j;
-	int				i;
-
-	size = 0;
-	while (lem_in->connexions[size])
-		size++;
-	tab = ft_memalloc((sizeof(void*) * size);
+	r_v = 0;
+	clear_data(god);
 	i = -1;
-	values = (int)f(NULL, 0);
-	while (++i < size)
-	{
-		tab[i] = ft_memalloc((sizeof(void*) * (values + 1)) + 1);
-		tab[i][0] = lem_in->connexions[i];
-		j = 0;
-		while (++j <= values)
-			tab[i][j] = f(lem_in->connexions[i], j);
-	}
-	return (tab);
+	if (kill_list)
+		kill_list = NULL;
+	// while (++i < kill_list[0])
+		// god->rooms[kill_list[i]]->gone = 1;
+	god->end->gone = 1;
+	god->start->gone = 1;
+	r_v = alternate_piles(god, god->rooms[point_a]->id, god->rooms[point_b]->id, 0);
+	god->end->gone = 0;
+	god->start->gone = 0;
+	i = -1;
+	i++;
+	// while (++i < kill_list[0])
+	// 	god->rooms[kill_list[i]]->gone = 0;
+	clear_data(god);
+	return (r_v);
 }
-
-int				find_shortest_path_to_end(t_lemin *lem_one, t_lemin *lem_two, int val, int mode)
-{
-	if (mode == 0) //going inside recursive condition
-	{
-		if (!lem_one->from_start || lem_one->from_start > val)
-			return (1);
-		return (0);
-	}
-	else if (mode == 1) //Pre work and stay in if r_v = -1;
-	{
-		if (!lem_one)
-			return (0);
-		if (!lem_one->gone)
-			lem_one->from_start = depth;
-		else
-		{
-			lem_one->from_start = 10000000;
-			return (0);
-		}
-		if (lem_in->place == 1)
-			return (1);
-		return (-1);
-	}
-}
-*/

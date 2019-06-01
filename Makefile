@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/05/27 16:41:21 by root             ###   ########.fr        #
+#    Updated: 2019/05/28 11:57:27 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,6 @@ SRCS_LI		=	main\
 						print\
 						calcul\
 						alg_a_star\
-						close_a_path\
 						how_many_paths\
 						find_a_path
 
