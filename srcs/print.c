@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/06/01 21:17:00 by root             ###   ########.fr       */
+/*   Updated: 2019/06/01 22:32:08 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,19 @@ int		print_matrix(t_tab *lem_in)
 	int				i;
 	int				len;
 
-	tmp = lem_in;
 	len = ft_tab_lendir(lem_in, 0);
 	fd = ft_strlen(((t_lemin*)lem_in->content)->name);
+	// tmp = lem_in;
+	// while (tmp)
+	// {
+	// 	if (fd < (int)ft_strlen(((t_lemin*)lem_in->content)->name))
+	// 		fd = ft_strlen(((t_lemin*)lem_in->content)->name);
+	// 	tmp = tmp->dir[0];
+	// }
 	if (fd < 3)
 		fd = 3;
 	ft_printf("%*s", fd, " ");
+	tmp = lem_in;
 	while (tmp)
 	{
 		here = (t_lemin*)(tmp->content);

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/01 19:51:23 by root             ###   ########.fr       */
+/*   Updated: 2019/06/02 19:46:24 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,24 +98,68 @@ typedef struct		s_god
 
 /*
 **************
-**   INIT	**
+**   INIT		**
 **************
 */
 t_god			*init(int fd);
-int				print_matrix(t_tab *lem_in);
-int				lets_calcul(t_god *god);
-int				refresh_a_star(t_god *god);
-int				how_many_entries_exits(t_god *god);
-int				close_a_path(t_lemin *here);
-void			find_a_path(t_lemin *here, t_path *ptr);
+
+int				add_rooms(t_god *god, int place, int ants_nb, char *line);
+
+int				find_room_name(t_tab *lem_in, char *line, size_t dir);
+void			***first_call(t_tab *lem_in, t_god *god);
+int				link_rooms(t_tab *lem_in, char *line, void ****adjacent_matrix, t_god *god);
+
+int				order_my_little_connexions(t_god *god);
+void			get_rooms_in_tab(t_god *god);
 t_god			**ft_remember_god(void);
-int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end);
+
+
+/*
+**************
+**   DATA		**
+**************
+*/
+t_god			**ft_remember_god(void);
 void 			clear_data(t_god *god);
+void 			clear_gone(t_god *god);
+void 			add_gone_from_paths(t_god *god);
+
+/*
+**************
+**   PRINT	**
+**************
+*/
+int				print_matrix(t_tab *lem_in);
 void 			print_name_and_from_dist(t_god *god);
 void 			print_paths(t_god *god);
 void 			print_this_path(t_god *god, t_path *path);
-void 			clear_gone(t_god *god);
-void 			add_gone_from_paths(t_god *god);
+
+/*
+**************
+** GOULOTS	**
+**************
+*/
+int				how_many_entries_exits(t_god *god);
+
+/*
+**************
+** 	PATH		**
+**************
+*/
+int				close_a_path(t_lemin *here);
+void			find_a_path(t_lemin *here, t_path *ptr);
+int				get_rid_of_dead_ends(t_god *god);
+
+
+/*
+**************
+**   	A*		**
+**************
+*/
+int				refresh_a_star(t_god *god);
+int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end);
+
+int				lets_calcul(t_god *god);
 int				full_process(t_god *god, t_path *ptr);
 
 int				complete_missing_paths(t_god *god, int missing_paths);

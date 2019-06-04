@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:05:17 by root              #+#    #+#             */
-/*   Updated: 2019/06/01 20:37:13 by root             ###   ########.fr       */
+/*   Updated: 2019/06/02 18:41:01 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,87 +65,61 @@ int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end)
 			r_v += execute_pile(god, depth, pile_a, pile_b, id_end, start_to_end);
 		else
 			r_v += execute_pile(god, depth, pile_b, pile_a, id_end, start_to_end);
-		// ft_printf("\tr_v: %d\n", r_v);
 		depth++;
-		// ft_printf("\n\t\t%~{}DEPTH: %d\n\n", depth);
-		// if(pile_a[0])
-		// {
-		// i = 0;
-		// ft_printf("\n%~{}Pile(%d) %~{?}a:", pile_a[0]);
-		// while (++i <= pile_a[0])
-		// 	ft_printf("%d ", pile_a[i]);
-		// }
-		// if(pile_b[0])
-		// {
-		// ft_printf("\n%~{}Pile(%d) %~{?}b:", pile_b[0]);
-		// i = 0;
-		// while (++i <= pile_b[0])
-		// 	ft_printf("%d ", pile_b[i]);
-		// }
 	}
 	ft_memdel((void**)&pile_a);
 	ft_memdel((void**)&pile_b);
 	return (r_v);
 }
 
-int				from_start(t_lemin *lem_in, int depth)
-{
-		int				i;
-		int				r_v;
-
-		r_v = 0;
-		if (!lem_in || lem_in->gone)
-			return (0);
-		if (!lem_in->from[0] || lem_in->from[0] > depth)
-		{
-			lem_in->from[0] = depth;
-			i = -1;
-			while (lem_in->connexions[++i])
-				r_v += from_start(lem_in->connexions[i], depth + 1);
-		}
-		return (r_v);
-}
-
-int				from_end(t_lemin *lem_in, int depth)
-{
-		int				i;
-		int				r_v;
-
-		r_v = 0;
-		if (!lem_in || lem_in->gone)
-			return (0);
-		if (!lem_in->from[1] || lem_in->from[1] > depth)
-		{
-				lem_in->from[1] = depth;
-			i = -1;
-			while (lem_in->connexions[++i])
-				r_v += from_end(lem_in->connexions[i], depth + 1);
-		}
-		return (r_v);
-}
-
 int				refresh_a_star(t_god *god)
 {
-	int speed;
 	int r_v;
 
-	speed = 1;
 	r_v = 0;
 	clear_data(god);
-	if (speed)
-		r_v = alternate_piles(god, god->start->id, god->end->id, 0);
-	else
-		from_start(god->start, 0);
+	r_v = alternate_piles(god, god->start->id, god->end->id, 0);
 	god->start->from[0] = 0;
-	// ft_printf("R_V from start is %d\n", r_v);
-	if (speed)
-		r_v = alternate_piles(god, god->end->id, god->start->id, 1);
-	else
-		from_end(god->end, 0);
+	r_v += alternate_piles(god, god->end->id, god->start->id, 1);
 	god->end->from[1] = 0;
-	// ft_printf("R_V from end is %d\n", r_v);
 	return (r_v);
 }
+
+// int				from_start(t_lemin *lem_in, int depth)
+// {
+// 		int				i;
+// 		int				r_v;
+//
+// 		r_v = 0;
+// 		if (!lem_in || lem_in->gone)
+// 			return (0);
+// 		if (!lem_in->from[0] || lem_in->from[0] > depth)
+// 		{
+// 			lem_in->from[0] = depth;
+// 			i = -1;
+// 			while (lem_in->connexions[++i])
+// 				r_v += from_start(lem_in->connexions[i], depth + 1);
+// 		}
+// 		return (r_v);
+// }
+//
+// int				from_end(t_lemin *lem_in, int depth)
+// {
+// 		int				i;
+// 		int				r_v;
+//
+// 		r_v = 0;
+// 		if (!lem_in || lem_in->gone)
+// 			return (0);
+// 		if (!lem_in->from[1] || lem_in->from[1] > depth)
+// 		{
+// 				lem_in->from[1] = depth;
+// 			i = -1;
+// 			while (lem_in->connexions[++i])
+// 				r_v += from_end(lem_in->connexions[i], depth + 1);
+// 		}
+// 		return (r_v);
+// }
 
 int			is_there_a_path(t_god *god, int *kill_list, int point_a, int point_b)
 {

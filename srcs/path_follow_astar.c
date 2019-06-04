@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 16:32:03 by root              #+#    #+#             */
-/*   Updated: 2019/06/01 21:20:06 by root             ###   ########.fr       */
+/*   Updated: 2019/06/02 19:22:25 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void			find_a_path(t_lemin *here, t_path *ptr)
 				winner = i;
 		if (winner == -1)
 			return ;
-		if (here->place == END)
+		if (here->from[1] == 0)
 			return ;
 		i = winner;
 		while (here->connexions[++i])

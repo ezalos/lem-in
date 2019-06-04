@@ -6,54 +6,11 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:35:56 by root              #+#    #+#             */
-/*   Updated: 2019/06/01 21:20:37 by root             ###   ########.fr       */
+/*   Updated: 2019/06/02 19:46:31 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/head.h"
-
-void 		clear_data(t_god *god)
-{
-		int i;
-
-		i = -1;
-		while (++i < god->size)
-		{
-			god->rooms[i]->from[1] = 0;
-			god->rooms[i]->from[0] = 0;
-		}
-		god->start->gone = 0;
-		god->end->gone = 0;
-}
-
-void 		clear_gone(t_god *god)
-{
-		int i;
-
-		i = -1;
-		while (++i < god->size)
-			god->rooms[i]->gone = 0;
-}
-
-void 		add_gone_from_paths(t_god *god)
-{
-	t_path 	*path;
-	int 		i;
-	int			j;
-
-	i = -1;
-	while (++i < god->goulots)
-	{
-		path = &god->paths[i];
-		if (path && path->path && path->path[0])
-		{
-			j = 0;
-			while (++j <= path->path[0])
-				god->rooms[path->path[j]]->gone = 1;
-		}
-	}
-}
 
 int				full_process(t_god *god, t_path *ptr)
 {
@@ -69,28 +26,6 @@ int				full_process(t_god *god, t_path *ptr)
 		return (1);
 	}
 	return (0);
-}
-
-int				get_rid_of_dead_ends(t_god *god)
-{
-	int i;
-	int nb;
-	int total;
-
-	i = -1;
-	nb = 1;
-	total = 0;
-	while (nb)
-	{
-		nb = 0;
-		while (++i < god->size)
-			if (god->rooms[i]->nb_of_connexions == 1 && !god->rooms[i]->place && ++nb)
-				god->rooms[i]->connexions[0] = NULL;
-		total += nb;
-	}
-	god->size -= total;
-	ft_printf("Dead_ends_remover deleted %~{255;155;155}%d%~{} rooms\n", total);
-	return (total);
 }
 
 void			does_path_exist(t_god *god, int a, int b)
