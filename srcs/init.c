@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/02 18:37:52 by root             ###   ########.fr       */
+/*   Updated: 2019/06/08 15:51:33 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int			file_steps(int fd, char **line)
 	int						r_v;
 	int						i;
 
+	time_exe(__func__);
 	i = -1;
 	if ((r_v = get_next_line(fd, line)) > 0)
 	{
@@ -47,12 +48,18 @@ t_god		*init(int fd)
 	int			r_v;
 	int			place;
 	int			ants_nb;
+	int			ste;
 
+	time_exe(__func__);
 	god = ft_memalloc(sizeof(t_god));
 	place = 0;
 	line = NULL;
+	ste = 0;
 	while ((r_v = file_steps(fd, &line)) > 0)
 	{
+		ste++;
+		ft_progress("READING FILE", ste, 30000);
+		time_exe(__func__);
 		if (r_v == INIT_SPEC && line[0] != 'L')
 		{
 			if (!ft_strcmp(line + 2, "start"))
@@ -75,8 +82,11 @@ t_god		*init(int fd)
 	close(fd);
 	god->end = ft_tab_reach_end(god->lem_in, 0)->content;
 	// print_matrix(god->lem_in);
+	time_exe(__func__);
 	order_my_little_connexions(god);
+	time_exe(__func__);
 	get_rooms_in_tab(god);
+	time_exe(__func__);
 	*ft_remember_god() = god;
 	return (god);
 }

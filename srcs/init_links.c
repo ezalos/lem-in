@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/02 18:35:41 by root             ###   ########.fr       */
+/*   Updated: 2019/06/08 15:03:20 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			link_rooms(t_tab *lem_in, char *line, void ****adjacent_matrix, t_god *god
 	int			first;
 	int			second;
 
+	time_exe(__func__);
 	if (!*adjacent_matrix)
 		*adjacent_matrix = first_call(lem_in, god);
 	if (!(split = ft_strsplit(line, '-')))

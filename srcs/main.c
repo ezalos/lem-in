@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/05/25 15:58:53 by root             ###   ########.fr       */
+/*   Updated: 2019/06/07 16:47:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ int		main(int ac, char **av)
 
 	if (ac != 2)
 		return (0);
+	time_exe(__func__);
 	if ((fd = open(av[1], O_RDONLY)) > 0)
 	{
 		god = init(fd);
 		lets_calcul(god);
 	}
+	print_time();
 	return (0);
 }

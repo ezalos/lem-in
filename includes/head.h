@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/02 19:46:24 by root             ###   ########.fr       */
+/*   Updated: 2019/06/07 16:26:53 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int				how_many_entries_exits(t_god *god);
 **************
 */
 int				close_a_path(t_lemin *here);
-void			find_a_path(t_lemin *here, t_path *ptr);
+void			find_a_path(t_lemin *here, int id, t_path *ptr);
 int				get_rid_of_dead_ends(t_god *god);
 
 

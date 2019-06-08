@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_a_path.c                                      :+:      :+:    :+:   */
+/*   path_follow_astar.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 16:32:03 by root              #+#    #+#             */
-/*   Updated: 2019/06/02 19:22:25 by root             ###   ########.fr       */
+/*   Updated: 2019/06/07 16:30:10 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int			compare_rooms(t_lemin *zero, t_lemin *one)
 {
 	if (one->from[1] < zero->from[1])
 		return (1);
-	else if (zero->from[1] == one->from[1] && one->from[0] < zero->from[0])
-		return (1);
+	// else if (zero->from[1] == one->from[1] && one->from[0] < zero->from[0])
+	// 	return (1);
 	return (0);
 }
 
-void			find_a_path(t_lemin *here, t_path *ptr)
+void			find_a_path(t_lemin *here, int id, t_path *ptr)
 {
 		int							winner;
 		int							i;
@@ -52,7 +52,7 @@ void			find_a_path(t_lemin *here, t_path *ptr)
 				winner = i;
 		if (winner == -1)
 			return ;
-		if (here->from[1] == 0)
+		if (here->id == id)
 			return ;
 		i = winner;
 		while (here->connexions[++i])
@@ -60,5 +60,5 @@ void			find_a_path(t_lemin *here, t_path *ptr)
 				if (compare_rooms(here->connexions[winner], here->connexions[i]))
 					winner = i;
 		here->gone = 1;
-		find_a_path(here->connexions[winner], ptr);
+		find_a_path(here->connexions[winner], id, ptr);
 }

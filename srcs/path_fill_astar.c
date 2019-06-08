@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alg_a_star.c                                       :+:      :+:    :+:   */
+/*   path_fill_astar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:05:17 by root              #+#    #+#             */
-/*   Updated: 2019/06/02 18:41:01 by root             ###   ########.fr       */
+/*   Updated: 2019/06/07 16:30:25 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ int				refresh_a_star(t_god *god)
 
 	r_v = 0;
 	clear_data(god);
-	r_v = alternate_piles(god, god->start->id, god->end->id, 0);
-	god->start->from[0] = 0;
-	r_v += alternate_piles(god, god->end->id, god->start->id, 1);
+	// r_v = alternate_piles(god, god->start->id, god->end->id, 0);
+	// god->start->from[0] = 0;
+	r_v = alternate_piles(god, god->end->id, god->start->id, 1);
 	god->end->from[1] = 0;
 	return (r_v);
 }
