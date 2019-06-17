@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/08 15:51:33 by root             ###   ########.fr       */
+/*   Updated: 2019/06/14 00:09:39 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			file_steps(int fd, char **line)
 {
-	static int		step;
+	static int				step;
 	int						r_v;
 	int						i;
 
@@ -58,14 +58,15 @@ t_god		*init(int fd)
 	while ((r_v = file_steps(fd, &line)) > 0)
 	{
 		ste++;
-		ft_progress("READING FILE", ste, 30000);
 		time_exe(__func__);
-		if (r_v == INIT_SPEC && line[0] != 'L')
+		if (r_v == INIT_SPEC)
 		{
-			if (!ft_strcmp(line + 2, "start"))
-				place = -1;
+			if (line[0] == 'L')
+				(void)place;
+			else if (!ft_strcmp(line + 2, "start"))
+				place = START;
 			else if (!ft_strcmp(line + 2, "end"))
-				place = 1;
+				place = END;
 		}
 		else if (r_v == INIT_QANT)
 			ants_nb = ft_atoi(line);

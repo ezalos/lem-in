@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/08 15:03:20 by root             ###   ########.fr       */
+/*   Updated: 2019/06/14 00:29:20 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int			link_rooms(t_tab *lem_in, char *line, void ****adjacent_matrix, t_god *god
 	char		**split;
 	int			first;
 	int			second;
+	int			i;
 
 	time_exe(__func__);
 	if (!*adjacent_matrix)
@@ -61,8 +62,14 @@ int			link_rooms(t_tab *lem_in, char *line, void ****adjacent_matrix, t_god *god
 		return (ERROR);
 	first = find_room_name(lem_in, split[0], 0);
 	second = find_room_name(lem_in, split[1], 0);
-	(*adjacent_matrix)[first][second] = ft_tab_dirth(lem_in, 0, second)->content;
-	(*adjacent_matrix)[second][first] = ft_tab_dirth(lem_in, 0, first)->content;
+	i = 0;
+	while ((*adjacent_matrix)[first][i])
+		i++;
+	(*adjacent_matrix)[first][i] = ft_tab_dirth(lem_in, 0, second)->content;
+	i = 0;
+	while ((*adjacent_matrix)[second][i])
+		i++;
+	(*adjacent_matrix)[second][i] = ft_tab_dirth(lem_in, 0, first)->content;
 	first = -1;
 	while (split[++first])
 		ft_memdel((void**)&split[first]);
