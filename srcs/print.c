@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/06/18 18:56:38 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 00:22:10 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void 			print_this_path(t_god *god, t_path *path)
 			if (god->rooms[path->path[j]]->place != 1)
 			{
 				if (god->rooms[path->path[j]]->nb_of_connexions < 3)
-					ft_printf("%~{100;100;100}");
+					ft_printf("%~{50;50;50}");
 				ft_printf(" --> ");
 			}
 		}

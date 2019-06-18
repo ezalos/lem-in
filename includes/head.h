@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/18 20:42:34 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/18 23:08:25 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@
 
 # include "../../libft/includes/libft.h"
 
-typedef int 					t_ints;
+typedef int* 					t_ints;
 
 typedef struct					s_path
 {
-	int							*path;
+	t_ints						path;
 }								t_path;
 
 typedef struct					s_lemin
@@ -73,6 +73,7 @@ typedef struct					s_god
 
 	t_lemin						*start;
 	t_lemin						*end;
+	t_lemin						*extremities[2];
 
 	int							size;
 
@@ -85,6 +86,8 @@ typedef struct					s_god
 	int							exit_points;
 	int							*exit_list;
 	int							*exit_t_list;
+
+	t_ints						extremities_list[2];
 
 	int							goulots;
 	int							side;
@@ -127,6 +130,7 @@ t_god			**ft_remember_god(void);
 void 			clear_data(t_god *god);
 void 			clear_gone(t_god *god);
 void 			add_gone_from_paths(t_god *god);
+void 		full_clear(t_god *god);
 
 /*
 **************

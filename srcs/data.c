@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:35:56 by root              #+#    #+#             */
-/*   Updated: 2019/06/02 19:43:37 by root             ###   ########.fr       */
+/*   Updated: 2019/06/18 23:06:20 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ void 		clear_gone(t_god *god)
 		i = -1;
 		while (++i < god->size)
 			god->rooms[i]->gone = 0;
+}
+
+void 		full_clear(t_god *god)
+{
+		clear_data(god);
+		clear_gone(god);
 }
 
 void 		add_gone_from_paths(t_god *god)
