@@ -6,13 +6,13 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:05:17 by root              #+#    #+#             */
-/*   Updated: 2019/06/18 15:34:36 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 00:23:53 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int				execute_pile(t_god *god, int depth, int *pile_a, int *pile_b, int id_end, int start_to_end)
+int				execute_pile(t_god *god, int depth, t_ints pile_a, t_ints pile_b, int id_end, int start_to_end)
 {
 		t_lemin		*lem_in;
 		int				*a;
@@ -50,8 +50,8 @@ int				execute_pile(t_god *god, int depth, int *pile_a, int *pile_b, int id_end,
 
 int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end)
 {
-	int		*pile_a;
-	int		*pile_b;
+	t_ints	pile_a;
+	t_ints	pile_b;
 	int 	depth;
 	int		r_v;
 	// int		i;

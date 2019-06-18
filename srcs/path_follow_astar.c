@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 16:32:03 by root              #+#    #+#             */
-/*   Updated: 2019/06/07 16:30:10 by root             ###   ########.fr       */
+/*   Updated: 2019/06/19 00:29:10 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@ void		print_debug(t_lemin *here)
 	ft_printf("%d%~{}\n", here->id);
 }
 
-void		save_this_path(t_lemin *here, t_path *ptr)
+void		save_this_path(t_lemin *here, t_ints path)
 {
-	if (!ptr->path)
-		ptr->path = ft_memalloc((*ft_remember_god())->size * sizeof(int));
-	ptr->path[0] += 1;
-	ptr->path[ptr->path[0]] = here->id;
+	path[++path[0]] = here->id;
 }
 
 int			compare_rooms(t_lemin *zero, t_lemin *one)
@@ -38,7 +35,7 @@ int			compare_rooms(t_lemin *zero, t_lemin *one)
 	return (0);
 }
 
-void			find_a_path(t_lemin *here, int id, t_path *ptr)
+void			find_a_path(t_lemin *here, int id, t_ints path)
 {
 		int							winner;
 		int							i;
@@ -46,7 +43,7 @@ void			find_a_path(t_lemin *here, int id, t_path *ptr)
 		i = -1;
 		winner = -1;
 		// print_debug(here);
-		save_this_path(here, ptr);
+		save_this_path(here, path);
 		while (here->connexions[++i] && winner < 0)
 			if (!((t_lemin*)here->connexions[i])->gone)
 				winner = i;
@@ -60,5 +57,5 @@ void			find_a_path(t_lemin *here, int id, t_path *ptr)
 				if (compare_rooms(here->connexions[winner], here->connexions[i]))
 					winner = i;
 		here->gone = 1;
-		find_a_path(here->connexions[winner], id, ptr);
+		find_a_path(here->connexions[winner], id, path);
 }

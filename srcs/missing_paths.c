@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/01 18:16:43 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 00:20:53 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 00:34:58 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ t_ints			extremities_list_unused(t_god *god)
 		{
 			exist = 0;
 			i = -1;
-			while (god->paths[++i].path)
+			while (god->paths[++i])
 			{
 				if (!god->side)
 				{
-					if (god->paths[i].path[2] == god->extremities_list[god->side][j]) //path[2] means it looks at the second room of the path, so the one directly connected to start
+					if (god->paths[i][2] == god->extremities_list[god->side][j]) //path[2] means it looks at the second room of the path, so the one directly connected to start
 						exist = 1;
 				}
 				else
-				 	if (god->paths[i].path[god->paths[i].path[0] - 1] == god->extremities_list[god->side][j]) //path[god->paths[i].path[0] - 1] means it looks at the before last room of the path, so the one directly connected to end
+				 	if (god->paths[i][god->paths[i][0] - 1] == god->extremities_list[god->side][j]) //path[god->paths[i].path[0] - 1] means it looks at the before last room of the path, so the one directly connected to end
 						exist = 1;
 			}
 			if (!exist)
@@ -93,7 +93,7 @@ int			*block_room_list(t_god *god, t_ints room_list, t_ints open_list)
 int				complete_missing_paths(t_god *god, int missing_paths)
 {
 		t_ints	unblock;
-		t_path	**new_combi;
+		t_ints	*new_combi;
 		t_ints	blocked_rooms;
 		int		i;
 
@@ -104,7 +104,7 @@ int				complete_missing_paths(t_god *god, int missing_paths)
 		new_combi = ft_memalloc(sizeof(void*) * (god->goulots + 1));
 		i = -1;
 		while (++i <= god->goulots)
-			new_combi[i] = ft_memalloc(sizeof(t_path));
+			new_combi[i] = ft_memalloc(sizeof(int) * god->size);
 		i = 0;
 		while (full_process(god, new_combi[i]))
 			i++;

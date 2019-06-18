@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:16:14 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 00:17:44 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 00:38:59 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int				how_many_extremities(t_god *god, int side)
 	int 		i;
 	int			name_size;
 
-	ft_printf("%s %d %d\n", __func__, side, !side);
 	name_size = ft_nb_len(god->extremities[side]->id, 10);
 	if (!side)
 		ft_printf("\nStart goulot: ");
@@ -69,7 +68,6 @@ int				how_many_entries_exits(t_god *god)
 			god->goulots = god->extremities_list[0][0];
 			god->side = 0;
 		}
-		god->paths = ft_memalloc(sizeof(t_path) * god->goulots);
 		clear_gone(god);
 		ft_printf("Goulots %d\tEntry %d\tExit %d\n\n", god->goulots, god->extremities_list[0][0], god->extremities_list[1][0]);
 		return (god->goulots);

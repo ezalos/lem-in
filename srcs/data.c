@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:35:56 by root              #+#    #+#             */
-/*   Updated: 2019/06/18 23:06:20 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 00:33:17 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,19 @@ void 		full_clear(t_god *god)
 
 void 		add_gone_from_paths(t_god *god)
 {
-	t_path 	*path;
+	t_ints		path;
 	int 		i;
 	int			j;
 
 	i = -1;
 	while (++i < god->goulots)
 	{
-		path = &god->paths[i];
-		if (path && path->path && path->path[0])
+		path = god->paths[i];
+		if (path && path[0])
 		{
 			j = 0;
-			while (++j <= path->path[0])
-				god->rooms[path->path[j]]->gone = 1;
+			while (++j <= path[0])
+				god->rooms[path[j]]->gone = 1;
 		}
 	}
 }

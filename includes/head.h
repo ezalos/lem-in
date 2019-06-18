@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/18 23:08:25 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 00:33:57 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@
 
 typedef int* 					t_ints;
 
-typedef struct					s_path
-{
-	t_ints						path;
-}								t_path;
-
 typedef struct					s_lemin
 {
 	int							id;
@@ -68,7 +63,7 @@ typedef struct					s_god
 	t_lemin						**rooms;
 	void						***adjacent_matrix;
 
-	t_path						*paths;
+	t_ints						*paths;
 	int							nb_of_paths;
 
 	t_lemin						*start;
@@ -78,14 +73,6 @@ typedef struct					s_god
 	int							size;
 
 	int							name_len;
-
-	int							entry_points;
-	int							*entry_list;
-	int							*entry_t_list;
-
-	int							exit_points;
-	int							*exit_list;
-	int							*exit_t_list;
 
 	t_ints						extremities_list[2];
 
@@ -140,7 +127,7 @@ void 		full_clear(t_god *god);
 int				print_matrix(t_tab *lem_in);
 void 			print_name_and_from_dist(t_god *god);
 void 			print_paths(t_god *god);
-void 			print_this_path(t_god *god, t_path *path);
+void 			print_this_path(t_god *god, t_ints path);
 void			print_room_infos(t_god *god);
 
 /*
@@ -156,7 +143,7 @@ int				how_many_entries_exits(t_god *god);
 **************
 */
 int				close_a_path(t_lemin *here);
-void			find_a_path(t_lemin *here, int id, t_path *ptr);
+void			find_a_path(t_lemin *here, int id, t_ints path);
 int				get_rid_of_dead_ends(t_god *god);
 
 
@@ -169,7 +156,7 @@ int				refresh_a_star(t_god *god);
 int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end);
 
 int				lets_calcul(t_god *god);
-int				full_process(t_god *god, t_path *ptr);
+int				full_process(t_god *god, t_ints ptr);
 
 int				complete_missing_paths(t_god *god, int missing_paths);
 int				is_there_a_path(t_god *god, int *kill_list, int point_a, int point_b);

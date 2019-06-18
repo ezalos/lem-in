@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 00:22:10 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 00:32:20 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,34 +85,34 @@ void			print_room_infos(t_god *god)
 	ft_printf("There is %~{155;155;255}%d%~{} ants\n", god->start->ants);
 }
 
-void 			print_this_path(t_god *god, t_path *path)
+void 			print_this_path(t_god *god, t_ints path)
 {
 	int			j;
 	int			name_size;
 
 	// ft_printf("HEY\n");
 	name_size = ft_nb_len(god->end->id, 10);
-	if (path && path->path && path->path[0])
+	if (path && path[0])
 	{
-		ft_printf("%~{155;155;255}Path of length %d\n", path->path[0]);
+		ft_printf("%~{155;155;255}Path of length %d\n", path[0]);
 		j = 0;
-		while (++j <= path->path[0])
+		while (++j <= path[0])
 		{
-			if (god->rooms[path->path[j]]->place == -1)
+			if (god->rooms[path[j]]->place == -1)
 				ft_printf("%~{255;155;155}");
-			else if (god->rooms[path->path[j]]->place == 1)
+			else if (god->rooms[path[j]]->place == 1)
 				ft_printf("%~{155;255;155}");
 			else
-				ft_printf("%~{?*}", god->rooms[path->path[j]]);
-			ft_printf("%*d%~{}", name_size, god->rooms[path->path[j]]->id);
-			if (god->rooms[path->path[j]]->place != 1)
+				ft_printf("%~{?*}", god->rooms[path[j]]);
+			ft_printf("%*d%~{}", name_size, god->rooms[path[j]]->id);
+			if (god->rooms[path[j]]->place != 1)
 			{
-				if (god->rooms[path->path[j]]->nb_of_connexions < 3)
+				if (god->rooms[path[j]]->nb_of_connexions < 3)
 					ft_printf("%~{50;50;50}");
 				ft_printf(" --> ");
 			}
 		}
-		if (path->path[0])
+		if (path[0])
 			ft_printf("\n\n");
 	}
 }
@@ -123,7 +123,7 @@ void 			print_paths(t_god *god)
 
 	i = -1;
 	while (++i < god->goulots)
-		print_this_path(god, &god->paths[i]);
+		print_this_path(god, god->paths[i]);
 }
 
 void 		print_name_and_from_dist(t_god *god)
