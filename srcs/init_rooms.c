@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 18:34:40 by root              #+#    #+#             */
-/*   Updated: 2019/06/14 00:10:00 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/17 14:59:08 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	static int	err;
 
 	nb = ft_rand(100000, ft_seed_string(line));
-	if (!machin(nb) && ++err)
-		ft_printf("%dERROR: %d\t%s\n", err, nb, line);
+	// if (!machin(nb) && ++err)
+	// 	ft_printf("%dERROR: %d\t%s\n", err, nb, line);
 	time_exe(__func__);
 	lem_in = &god->lem_in;
 	if (!(split = ft_strsplit(line, ' ')))
@@ -74,4 +74,5 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 		}
 	}
 	return (VALID);
+	err++;
 }

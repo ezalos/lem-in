@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:05:17 by root              #+#    #+#             */
-/*   Updated: 2019/06/07 16:30:25 by root             ###   ########.fr       */
+/*   Updated: 2019/06/18 15:34:36 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ int				execute_pile(t_god *god, int depth, int *pile_a, int *pile_b, int id_end,
 				continue;
 			}
 			if (lem_in->id == id_end)
+			{
 				r_v++;
-			if (!lem_in->from[start_to_end] || lem_in->from[start_to_end] > depth) // 0 is start to end
+				// lem_in->from[start_to_end] = depth;
+			}
+			if (!lem_in->from[start_to_end]) // 0 is start to end
 			{
 				lem_in->from[start_to_end] = depth;
 				i = -1;

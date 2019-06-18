@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   how_many_paths.c                                   :+:      :+:    :+:   */
+/*   path_quantity_estimate.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:16:14 by root              #+#    #+#             */
-/*   Updated: 2019/06/01 22:33:07 by root             ###   ########.fr       */
+/*   Updated: 2019/06/18 18:55:50 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int				how_many_entries(t_god *god)
 		name_size = ft_nb_len(god->end->id, 10);
 		i = -1;
 		god->entry_list = ft_memalloc(sizeof(int*) * god->start->nb_of_connexions);
-		ft_printf("Start goulot: ");
+		god->entry_t_list = ft_memalloc(sizeof(int*) * (god->start->nb_of_connexions + 1));
+		ft_printf("\nStart goulot: ");
 		while (god->start->connexions[++i])
 		{
 			clear_data(god);
@@ -41,6 +42,7 @@ int				how_many_entries(t_god *god)
 			{
 				ft_printf("%~{155;255;155}%*d%~{} ", name_size, ((t_lemin*)god->start->connexions[i])->id);
 				god->entry_list[god->entry_points++] = ((t_lemin*)god->start->connexions[i])->id;
+				god->entry_t_list[++(*god->entry_t_list)] = ((t_lemin*)god->start->connexions[i])->id;
 			}
 			else
 				ft_printf("%~{255;155;155}%*d%~{} ", name_size, ((t_lemin*)god->start->connexions[i])->id);
@@ -56,6 +58,7 @@ int				how_many_exits(t_god *god)
 
 		name_size = ft_nb_len(god->end->id, 10);i = -1;
 		god->exit_list = ft_memalloc(sizeof(int*) * god->end->nb_of_connexions);
+		god->exit_t_list = ft_memalloc(sizeof(int*) * (god->end->nb_of_connexions + 1));
 		ft_printf("  End goulot: ");
 		i = -1;
 		while (god->end->connexions[++i])
@@ -69,6 +72,7 @@ int				how_many_exits(t_god *god)
 			{
 				ft_printf("%~{155;255;155}%*d%~{} ", name_size, ((t_lemin*)god->end->connexions[i])->id);
 				god->exit_list[god->exit_points++] = ((t_lemin*)god->end->connexions[i])->id;
+				god->exit_t_list[++(*god->exit_t_list)] = ((t_lemin*)god->end->connexions[i])->id;
 			}
 			else
 				ft_printf("%~{255;155;155}%*d%~{} ", name_size, ((t_lemin*)god->end->connexions[i])->id);
@@ -93,6 +97,8 @@ int				how_many_entries_exits(t_god *god)
 			god->goulots = god->entry_points;
 			god->side = 0;
 		}
-		ft_printf("Goulots %d\tEntry %d\tExit %d\n", god->goulots, god->entry_points, god->exit_points);
+		god->paths = ft_memalloc(sizeof(t_path) * god->goulots);
+		clear_gone(god);
+		ft_printf("Goulots %d\tEntry %d\tExit %d\n\n", god->goulots, god->entry_points, god->exit_points);
 		return (god->goulots);
 }

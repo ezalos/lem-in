@@ -6,14 +6,15 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/01 18:16:43 by root              #+#    #+#             */
-/*   Updated: 2019/06/03 14:00:15 by root             ###   ########.fr       */
+/*   Updated: 2019/06/18 20:39:14 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int				entries_unused(t_god *god)
+int				*entries_unused_tab(t_god *god)
 {
+		int *unused_tab;
 		int	i;
 		int	j;
 		int exist;
@@ -22,6 +23,7 @@ int				entries_unused(t_god *god)
 		ft_printf("This red entries were not used: ");
 		j = -1;
 		r_v = 0;
+		unused_tab = ft_memalloc((god->entry_points + 1) * sizeof(int));
 		while (++j < god->entry_points)
 		{
 			exist = 0;
@@ -30,25 +32,31 @@ int				entries_unused(t_god *god)
 				if (god->paths[i].path[2] == god->entry_list[j])
 					exist = 1;
 			if (!exist)
-				ft_printf("%~{255;155;155}");
+			{
+				unused_tab[++(*unused_tab)] = god->entry_list[j];
+				ft_printf("%~{255;155;155}");//red
+			}
 			else
-				ft_printf("%~{155;255;155}");
+				ft_printf("%~{155;255;155}");//green
 			ft_printf("%d ", god->entry_list[j]);
 			if (!exist && !r_v)
 				r_v = god->entry_list[j];
 		}
 		ft_printf("%~{}\n");
-		return (r_v);
+		ft_printf("Lets force their use by blocking the green ones\n\n");
+		return (unused_tab);
 }
 
-int				exits_unused(t_god *god)
+int				*exits_unused_tab(t_god *god)
 {
+		int *unused_tab;
 		int	i;
 		int	j;
 		int exist;
 		int r_v;
 
 		ft_printf("This red exits were not used: ");
+		unused_tab = ft_memalloc((god->exit_points + 1) * sizeof(int));
 		j = -1;
 		r_v = 0;
 		while (++j < god->exit_points)
@@ -59,7 +67,10 @@ int				exits_unused(t_god *god)
 				if (god->paths[i].path[god->paths[i].path[0] - 1] == god->exit_list[j])
 					exist = 1;
 			if (!exist)
+			{
+				unused_tab[++(*unused_tab)] = god->exit_list[j];
 				ft_printf("%~{255;155;155}");
+			}
 			else
 				ft_printf("%~{155;255;155}");
 			ft_printf("%d ", god->exit_list[j]);
@@ -67,54 +78,9 @@ int				exits_unused(t_god *god)
 				r_v = god->exit_list[j];
 		}
 		ft_printf("%~{}\n");
-		return (r_v);
+		ft_printf("Lets force their use by blocking the green ones\n\n");
+		return (unused_tab);
 }
-
-// int				find_the_smallest_path(t_god *god, int missing_paths)
-// {
-// 	int	i;
-// 	int smallest;
-//
-// 	i = -1;
-// 	smallest = god->size;
-// 	while (++i < god->goulots - missing_paths)
-// 		if (god->paths[i].path[0] < smallest)
-// 			smallest = i;
-// 	ft_printf("Smallest path is the n*%d with a size of %d\n", smallest, god->paths[smallest].path[0]);
-// 	print_this_path(god, &god->paths[smallest]);
-// 	return (smallest);
-// }
-
-// int				block_room_by_room_this_path(t_god *god, int smallest)
-// {
-// 		int	i;
-// 		int	j;
-// 		t_path *the_choosen_two;
-//
-// 		ft_printf("\n\nLets try to block room by room this path\n");
-// 		i = 1;
-// 		while (++i < god->paths[smallest].path[0])
-// 		{
-// 			the_choosen_two = ft_memalloc(sizeof(t_path));
-// 			clear_gone(god);
-// 			god->rooms[god->paths[smallest].path[i]]->gone = 1;
-// 			if (god->size > 15)
-// 			{
-// 				j = 0;
-// 				while (++j < god->exit_points)
-// 				{
-// 					god->rooms[god->exit_list[j]]->gone = 1;
-// 					ft_printf("We just block room n* %d\n", god->exit_list[j]);
-// 				}
-// 			}
-// 			ft_printf("We just block room n* %d\n", god->paths[smallest].path[i]);
-// 			full_process(god, the_choosen_two);
-// 			print_this_path(god, the_choosen_two);
-// 			ft_memdel((void**)&the_choosen_two);
-// 		}
-// 		ft_printf("\n\nI hope there was a solution here...\n\n\n\n");
-// 		return (1);
-// }
 
 void				block_this_path(t_god *god, t_path *block)
 {
@@ -125,61 +91,82 @@ void				block_this_path(t_god *god, t_path *block)
 		god->rooms[block->path[i]]->gone = 1;
 }
 
+void				unblock_this_path(t_god *god, int *block)
+{
+	int i;
+
+	i = 0;
+	while (++i <= block[0])
+		god->rooms[block[i]]->gone = 0;
+}
+
+int			*block_room_list(t_god *god, int *entry_list, int *unused_entries)
+{
+	int	*blocked_rooms;
+	int i;
+	int j;
+	int exist;
+
+	blocked_rooms = ft_memalloc(entry_list[0] * sizeof(int));
+	i = 0;
+	while (++i <= entry_list[0])
+	{
+		exist = 0;
+		j = 0;
+		while (++j <= unused_entries[0])
+		{
+			if (entry_list[i] == unused_entries[j])
+				exist++;
+		}
+		if (!exist)
+		{
+			blocked_rooms[++(*blocked_rooms)] = god->rooms[entry_list[i]]->id;
+			god->rooms[entry_list[i]]->gone = 1;
+		}
+	}
+	return(blocked_rooms);
+}
+
 int				complete_missing_paths(t_god *god, int missing_paths)
 {
-		// int smallest;
-		int unblock;
-		t_path *the_choosen_two;
+		int *unblock;
 		t_path **new_combi;
+		int	*blocked_rooms;
 		int i;
 
-		ft_printf("%~{255;155;155}Missing paths : %d/%d%~{}\n", missing_paths, god->goulots);
-		i = -1;
+
+		ft_printf("%~{255;155;155}Missing paths estimation : %d/%d%~{}\n", missing_paths, god->goulots);
 		clear_gone(god);
 		clear_data(god);
 		if (!god->side)
 		{
-			unblock = entries_unused(god);
-			// ft_printf("EnCan we %d\n", unblock);
-			while (++i < god->entry_points)
-				if (god->entry_list[i] != unblock)
-					god->rooms[god->entry_list[i]]->gone = 1;
+			unblock = entries_unused_tab(god);
+			blocked_rooms = block_room_list(god, god->entry_t_list, unblock);
 		}
 		else
 		{
-			unblock = exits_unused(god);
-			// ft_printf("ExCan we %d\n", unblock);
-			while (++i < god->exit_points)
-				if (god->exit_list[i] != unblock)
-					god->rooms[god->exit_list[i]]->gone = 1;
+			unblock = exits_unused_tab(god);
+			blocked_rooms = block_room_list(god, god->exit_t_list, unblock);
 		}
-		the_choosen_two = ft_memalloc(sizeof(t_path));
-		ft_printf("Lets force the use of room %~{255;155;155}%d%~{} to find a path\n", unblock);
-		// ft_printf("*****************************\n");
-		if (full_process(god, the_choosen_two))
+		new_combi = ft_memalloc(sizeof(void*) * (god->goulots + 1));
+		i = -1;
+		while (++i <= god->goulots)
+			new_combi[i] = ft_memalloc(sizeof(t_path));
+		i = 0;
+		while (full_process(god, new_combi[i]))
+			i++;
+		if (i)
 		{
-			new_combi = ft_memalloc(sizeof(void*) * god->goulots);
-			new_combi[0] = the_choosen_two;
-			print_this_path(god, new_combi[0]);
-			clear_gone(god);
-			block_this_path(god, the_choosen_two);
-			i = 0;
-			while (++i < god->goulots)
-			{
-				ft_printf("%d/%d paths found, let's search for another one\n", i, god->goulots);
-				new_combi[i] = ft_memalloc(sizeof(t_path));
-				if (full_process(god, new_combi[i]))
-					print_this_path(god, new_combi[i]);
-				else
+			unblock_this_path(god, blocked_rooms);
+			ft_printf("%~{200;200;255}Let's unblock the rooms and complete our search%~{}\n\n");
+			while (++i <= god->goulots)
+				if (!full_process(god, new_combi[i]))
 					break ;
-			}
-			if (i == god->goulots)
-				ft_printf("%~{155;255;155}We found a complete set of path!%~{}\n");
+			ft_printf("We found a total of %~{155;155;255}%d%~{} paths :", i - 1);
+			if (i >= god->goulots)
+				ft_printf("%~{155;255;155}\tThis is a complete set!%~{}\n\n");
+			else
+				ft_printf("%~{255;155;155}\t%d paths are still missing%~{}\n", god->goulots - (i - 1));
 		}
-		ft_memdel((void**)&the_choosen_two);
-
-		// ft_printf("*****************************\n");
-		// smallest = find_the_smallest_path(god, missing_paths);
-		// block_room_by_room_this_path(god, smallest);
 		return (0);
 }

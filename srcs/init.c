@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/14 00:09:39 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/17 16:18:58 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_god		*init(int fd)
 	ste = 0;
 	while ((r_v = file_steps(fd, &line)) > 0)
 	{
+		ft_progress(__func__, ste, 30000);
 		ste++;
 		time_exe(__func__);
 		if (r_v == INIT_SPEC)

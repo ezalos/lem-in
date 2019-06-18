@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/06/01 22:32:08 by root             ###   ########.fr       */
+/*   Updated: 2019/06/18 18:56:38 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,25 @@ int		print_matrix(t_tab *lem_in)
 	return (0);
 }
 
+void			print_room_infos(t_god *god)
+{
+	int	i;
+	int one_connexion;
+	int two_connexion;
+
+	time_exe("SOLVE");
+	one_connexion = 0;
+	two_connexion = 0;
+	i = -1;
+	while (++i < god->size)
+		if (god->rooms[i]->nb_of_connexions == 1)
+			one_connexion++;
+		else if (god->rooms[i]->nb_of_connexions == 2)
+			two_connexion++;
+	ft_printf("\nThis anthill has %~{155;155;255}%d%~{} rooms.\n\t%~{255;155;155}%d%~{} with 1 connexion and %~{255;155;155}%d%~{} with 2 connexions\n\tUseful nb of rooms is %~{155;255;155}%d%~{}/%~{155;155;255}%d%~{}-->%~{255;255;155}%d%%%~{}\n", god->size, one_connexion, two_connexion, god->size - (one_connexion + two_connexion), god->size, (god->size - (one_connexion + two_connexion)) * 100 / god->size);
+	ft_printf("There is %~{155;155;255}%d%~{} ants\n", god->start->ants);
+}
+
 void 			print_this_path(t_god *god, t_path *path)
 {
 	int			j;
@@ -87,7 +106,11 @@ void 			print_this_path(t_god *god, t_path *path)
 				ft_printf("%~{?*}", god->rooms[path->path[j]]);
 			ft_printf("%*d%~{}", name_size, god->rooms[path->path[j]]->id);
 			if (god->rooms[path->path[j]]->place != 1)
+			{
+				if (god->rooms[path->path[j]]->nb_of_connexions < 3)
+					ft_printf("%~{100;100;100}");
 				ft_printf(" --> ");
+			}
 		}
 		if (path->path[0])
 			ft_printf("\n\n");
