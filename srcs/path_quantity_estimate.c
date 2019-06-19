@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:16:14 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 00:38:59 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 13:46:43 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int				how_many_extremities(t_god *god, int side)
 
 int				how_many_entries_exits(t_god *god)
 {
-		god->extremities[1] = god->end;
 		how_many_extremities(god, 0);
 		how_many_extremities(god, 1);
 		full_clear(god);

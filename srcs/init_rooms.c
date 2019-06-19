@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 18:34:40 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 00:17:07 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 14:16:59 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	{
 		god->start = room;
 		god->extremities[0] = room;
-		room->ants = ants_nb;
+		// room->ants = ants_nb;
+		god->ants = ants_nb;
 		ft_tabadd_start(lem_in, new, 0);
 	}
 	else if (place > 0)

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/06/07 16:47:27 by root             ###   ########.fr       */
+/*   Updated: 2019/06/19 13:54:19 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int		main(int ac, char **av)
 		lets_calcul(god);
 	}
 	print_time();
+	ft_clean_garbage();
 	return (0);
 }

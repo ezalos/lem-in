@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/06/08 18:25:49 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/06/19 13:55:52 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,12 +40,13 @@ DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 ##############################################################################
 ##############################################################################
 
-SRCS_LI		=	main\
+SRCS_LI		=			main\
 						init\
 						init_links\
 						init_rooms\
 						init_data\
 						data\
+						ants\
 						graph_simplifier\
 						print\
 						solve\
@@ -74,7 +75,7 @@ A_OBJ		= $(patsubst %,$(DIR_OBJ)%.o,$(SRCS_LI))
 
 OBJ 		= $(patsubst %,%.o,$(SRCS_LI))
 
-LIB_DIR		= ./../../libft
+LIB_DIR		= ./libft
 LIB_DIR		= ./../libft
 HEAD		= head.h
 HEAD_DIR	= ./includes

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/01 18:16:43 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 00:34:58 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 18:32:16 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int			*block_room_list(t_god *god, t_ints room_list, t_ints open_list)
 	return(blocked_rooms);
 }
 
-int				complete_missing_paths(t_god *god, int missing_paths)
+t_ints			*complete_missing_paths(t_god *god, int missing_paths)
 {
 		t_ints	unblock;
 		t_ints	*new_combi;
@@ -101,7 +101,7 @@ int				complete_missing_paths(t_god *god, int missing_paths)
 		full_clear(god);
 		unblock = extremities_list_unused(god);
 		blocked_rooms = block_room_list(god, god->extremities_list[god->side], unblock);
-		new_combi = ft_memalloc(sizeof(void*) * (god->goulots + 1));
+		new_combi = ft_memalloc(sizeof(void*) * (god->goulots + 1 + 1));
 		i = -1;
 		while (++i <= god->goulots)
 			new_combi[i] = ft_memalloc(sizeof(int) * god->size);
@@ -118,5 +118,5 @@ int				complete_missing_paths(t_god *god, int missing_paths)
 			ft_printf("%~{155;255;155}\tThis is a complete set!%~{}\n\n");
 		else
 			ft_printf("%~{255;155;155}\t%d paths are still missing%~{}\n", god->goulots - (i - 1));
-		return (0);
+		return (new_combi);
 }

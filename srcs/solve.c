@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:35:56 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 00:38:24 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 19:19:20 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int				lets_calcul(t_god *god)
 {
 	int	i;
 	int	missing_paths;
+	t_ints	*set_two;
 
 	print_room_infos(god);
 	how_many_entries_exits(god);
@@ -64,7 +65,13 @@ int				lets_calcul(t_god *god)
 	i = -1;
 	while (++i < god->goulots)
 		missing_paths -= full_process(god, god->paths[i]);
+	i--;
+	while (++i < god->goulots)
+		god->paths[i] = NULL;
 	if (missing_paths)
-		complete_missing_paths(god, missing_paths);
+		set_two = complete_missing_paths(god, missing_paths);
+	ft_evaluate_set_of_path(god, god->paths);
+	if (missing_paths)
+		ft_evaluate_set_of_path(god, set_two);
 	return (0);
 }

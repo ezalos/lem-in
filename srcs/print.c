@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 00:32:20 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 14:17:07 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void			print_room_infos(t_god *god)
 		else if (god->rooms[i]->nb_of_connexions == 2)
 			two_connexion++;
 	ft_printf("\nThis anthill has %~{155;155;255}%d%~{} rooms.\n\t%~{255;155;155}%d%~{} with 1 connexion and %~{255;155;155}%d%~{} with 2 connexions\n\tUseful nb of rooms is %~{155;255;155}%d%~{}/%~{155;155;255}%d%~{}-->%~{255;255;155}%d%%%~{}\n", god->size, one_connexion, two_connexion, god->size - (one_connexion + two_connexion), god->size, (god->size - (one_connexion + two_connexion)) * 100 / god->size);
-	ft_printf("There is %~{155;155;255}%d%~{} ants\n", god->start->ants);
+	ft_printf("There is %~{155;155;255}%d%~{} ants\n", god->ants);
 }
 
 void 			print_this_path(t_god *god, t_ints path)

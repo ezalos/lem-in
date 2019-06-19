@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/17 16:18:58 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/19 13:45:31 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_god		*init(int fd)
 	}
 	close(fd);
 	god->end = ft_tab_reach_end(god->lem_in, 0)->content;
+	god->extremities[1] = ft_tab_reach_end(god->lem_in, 0)->content;
 	// print_matrix(god->lem_in);
 	time_exe(__func__);
 	order_my_little_connexions(god);
