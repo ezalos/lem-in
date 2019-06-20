@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 16:32:03 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 00:29:10 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/20 15:35:27 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ void		print_debug(t_lemin *here)
 	ft_printf("%d%~{}\n", here->id);
 }
 
-void		save_this_path(t_lemin *here, t_ints path)
+void		save_this_path(t_lemin *here, t_ints *path)
 {
-	path[++path[0]] = here->id;
+	if (!*path)
+		*path = ft_memalloc(sizeof(int) * (*ft_remember_god())->size);
+	(*path)[++(*path)[0]] = here->id;
 }
 
 int			compare_rooms(t_lemin *zero, t_lemin *one)
@@ -35,7 +37,7 @@ int			compare_rooms(t_lemin *zero, t_lemin *one)
 	return (0);
 }
 
-void			find_a_path(t_lemin *here, int id, t_ints path)
+void			find_a_path(t_lemin *here, int id, t_ints *path)
 {
 		int							winner;
 		int							i;

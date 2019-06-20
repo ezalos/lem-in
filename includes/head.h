@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/19 18:51:26 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/20 15:34:15 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int				how_many_entries_exits(t_god *god);
 **************
 */
 int				close_a_path(t_lemin *here);
-void			find_a_path(t_lemin *here, int id, t_ints path);
+void			find_a_path(t_lemin *here, int id, t_ints *path);
 int				get_rid_of_dead_ends(t_god *god);
 int			ft_evaluate_set_of_path(t_god *god, t_ints *set_of_paths);
 
@@ -155,7 +155,7 @@ int				refresh_a_star(t_god *god);
 int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end);
 
 int				lets_calcul(t_god *god);
-int				full_process(t_god *god, t_ints ptr);
+int				full_process(t_god *god, t_ints *ptr);
 
 t_ints			*complete_missing_paths(t_god *god, int missing_paths);
 int				is_there_a_path(t_god *god, int *kill_list, int point_a, int point_b);

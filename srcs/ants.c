@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 13:58:43 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/19 19:32:12 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/20 16:35:21 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void		sort_t_ints(t_ints *set_of_paths, int nb_of_paths)
 	int j;
 
 	j = 0;
-	while (++j <= nb_of_paths && set_of_paths[j][0])
+	while (++j < nb_of_paths)
 	{
 		if (set_of_paths[j][0] < set_of_paths[j - 1][0])
 		{
 			i = 0;
-			while (++i <= nb_of_paths && set_of_paths[i][0])
+			while (++i < nb_of_paths)
 				if (set_of_paths[i][0] < set_of_paths[i - 1][0])
 					ft_swap(&set_of_paths[i], &set_of_paths[i - 1], sizeof(void*));
 			j = 0;
@@ -51,55 +51,60 @@ void		sort_t_ints(t_ints *set_of_paths, int nb_of_paths)
 	}
 }
 
+int			send_using_n_path(t_god *god, t_ints *set_of_paths, int quant)
+{
+	int *time_before_arrival;
+	int	ants;
+	int	i;
+	int biggest;
+	int	turns;
+
+	time_before_arrival = ft_memalloc(sizeof(int) * (quant + 1));
+	i = -1;
+	while (++i <= quant)
+		time_before_arrival[i] = set_of_paths[i][0] - 1;
+	ants = god->ants;
+	turns = 0;
+	biggest = -1;
+	while (ants > 0)
+	{
+		turns++;
+		// ft_printf("Ants: %d\tTurn: %d\n", ants, turns);
+		i = -1;
+		while (++i <= quant)
+			if (!ants)
+				break;
+			else if (!time_before_arrival[i])
+			{
+				if (biggest < i)
+					biggest = i;
+				ants--;
+			}
+			else
+			{
+				time_before_arrival[i]--;
+				if (!time_before_arrival[i])
+					ants--;
+			}
+	}
+	ft_printf("\t%~{155;155;255}Longest path%~{} used is %~{155;155;255}%d%~{}\t with len %~{255;255;155}%d%~{}\n", biggest + 1, set_of_paths[biggest][0] - 1);
+	print_this_path(god, set_of_paths[biggest]);
+	ft_printf("\t\t%~{155;255;155}It took %~{255;155;255}%d%~{155;255;155} turns%~{}\n\n", turns);
+	return (turns);
+}
+
 int			ft_evaluate_set_of_path(t_god *god, t_ints *set_of_paths)
 {
 	int		nb_of_paths;
-	int		nb_of_ants;
 	int		turn;
-	int		i;
-	int		index;
 
 	nb_of_paths = 0;
 	turn = 0;
-	while (set_of_paths[nb_of_paths][0])
-	{
-		// if (!set_of_paths[nb_of_paths][0])
-		// 	set_of_paths[nb_of_paths] = NULL;
+	while (set_of_paths[nb_of_paths])
 		nb_of_paths++;
-	}
-	ft_printf("Nb of paths : %d\n", nb_of_paths);
-	nb_of_paths--;
+	ft_printf("%~{255;255;155}Nb of paths: %~{255;155;155}%d%~{}\n", nb_of_paths);
 	sort_t_ints(set_of_paths, nb_of_paths);
-	i = -1;
-	// while (set_of_paths[++i])
-	// 	print_this_path(god, set_of_paths[i]);
-	nb_of_ants = god->ants;
-	index = -1;
-	while (nb_of_ants > 0 && nb_of_paths >= 1)
-	{
-		if (nb_of_ants > set_of_paths[nb_of_paths][0] - 1 && ++turn)
-		{
-			ft_printf("%d\tWe currently have %d ants, and are considering path %d of len %d\n", turn, nb_of_ants, nb_of_paths, set_of_paths[nb_of_paths][0]);
-			if (index < set_of_paths[nb_of_paths][0])
-				index = set_of_paths[nb_of_paths][0];
-			else
-				index--;
-			ft_printf("\t\tWe pushed %d ants\n", nb_of_paths);
-			nb_of_ants -= nb_of_paths;
-		}
-		else
-		{
-			nb_of_paths--;
-		}
-	}
-	// while (index)
-	// {
-	// 	turn++;
-	// 	index--;
-	// }
-	ft_printf("Ants: %d : %d\n", nb_of_ants, god->ants);
-	ft_printf("Paths: %d\n", nb_of_paths);
-	ft_printf("Turns: %d\n", turn);
-	ft_printf("Index: %d\n", index);
+	nb_of_paths--;
+	turn = send_using_n_path(god, set_of_paths, nb_of_paths);
 	return (turn);
 }

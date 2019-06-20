@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/01 18:16:43 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 18:32:16 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/20 15:39:07 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,16 @@ t_ints			*complete_missing_paths(t_god *god, int missing_paths)
 		unblock = extremities_list_unused(god);
 		blocked_rooms = block_room_list(god, god->extremities_list[god->side], unblock);
 		new_combi = ft_memalloc(sizeof(void*) * (god->goulots + 1 + 1));
-		i = -1;
-		while (++i <= god->goulots)
-			new_combi[i] = ft_memalloc(sizeof(int) * god->size);
+		// i = -1;
+		// while (++i <= god->goulots)
+		// 	new_combi[i] = ft_memalloc(sizeof(int) * god->size);
 		i = 0;
-		while (full_process(god, new_combi[i]))
+		while (full_process(god, &new_combi[i]))
 			i++;
 		unblock_this_path(god, blocked_rooms);
 		ft_printf("%~{200;200;255}Let's unblock the rooms and complete our search%~{}\n\n");
-		while (++i <= god->goulots)
-			if (!full_process(god, new_combi[i]))
+		while (i <= god->goulots)
+			if (!full_process(god, &new_combi[i++]))
 				break ;
 		ft_printf("We found a total of %~{155;155;255}%d%~{} paths :", i - 1);
 		if (i >= god->goulots)

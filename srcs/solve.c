@@ -6,13 +6,13 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:35:56 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 19:19:20 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/20 15:34:18 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int				full_process(t_god *god, t_ints ptr)
+int				full_process(t_god *god, t_ints *ptr)
 {
 	int		r_v;
 	clear_data(god);
@@ -25,7 +25,7 @@ int				full_process(t_god *god, t_ints ptr)
 		find_a_path(god->start, god->end->id, ptr);
 		// ft_printf("%s\n", __func__);
 		clear_data(god);
-		print_this_path(god, ptr);
+		print_this_path(god, *ptr);
 		return (1);
 	}
 	return (0);
@@ -42,12 +42,12 @@ void			does_path_exist(t_god *god, int a, int b)
 
 void 			init_paths(t_god *god)
 {
-	int	i;
+	// int	i;
 
 	god->paths = ft_memalloc(sizeof(t_ints) * god->goulots);
-	i = -1;
-	while (++i < god->goulots)
-		god->paths[i] = ft_memalloc(sizeof(int) * god->size);
+	// i = -1;
+	// while (++i < god->goulots)
+	// 	god->paths[i] = ft_memalloc(sizeof(int) * god->size);
 }
 
 int				lets_calcul(t_god *god)
@@ -64,7 +64,7 @@ int				lets_calcul(t_god *god)
 	missing_paths = god->goulots;
 	i = -1;
 	while (++i < god->goulots)
-		missing_paths -= full_process(god, god->paths[i]);
+		missing_paths -= full_process(god, &god->paths[i]);
 	i--;
 	while (++i < god->goulots)
 		god->paths[i] = NULL;
