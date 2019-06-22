@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 13:58:43 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/20 16:35:21 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/22 16:10:37 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int			send_using_n_path(t_god *god, t_ints *set_of_paths, int quant)
 	}
 	ft_printf("\t%~{155;155;255}Longest path%~{} used is %~{155;155;255}%d%~{}\t with len %~{255;255;155}%d%~{}\n", biggest + 1, set_of_paths[biggest][0] - 1);
 	print_this_path(god, set_of_paths[biggest]);
-	ft_printf("\t\t%~{155;255;155}It took %~{255;155;255}%d%~{155;255;155} turns%~{}\n\n", turns);
+	ft_printf("\t\t%~{155;255;155}It took %~{255;155;255}%d%~{155;255;155} turns\t%~{}%d%~{155;255;155} is excpected%~{}\n\n", turns, god->expected_solution);
 	return (turns);
 }
 

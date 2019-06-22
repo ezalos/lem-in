@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 13:45:31 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/22 16:02:34 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_god		*init(int fd)
 	int			place;
 	int			ants_nb;
 	int			ste;
+	int			i;
 
 	time_exe(__func__);
 	god = ft_memalloc(sizeof(t_god));
@@ -68,6 +69,13 @@ t_god		*init(int fd)
 				place = START;
 			else if (!ft_strcmp(line + 2, "end"))
 				place = END;
+			else if (!ft_strncmp(line, "#Here is the number of lines required:", 38))
+			{
+				i = 0;
+				while (!ft_isdigit(line[i]))
+					i++;
+				god->expected_solution = ft_atoi(line + i);
+			}
 		}
 		else if (r_v == INIT_QANT)
 			ants_nb = ft_atoi(line);

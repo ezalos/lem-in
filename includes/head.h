@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/20 15:34:15 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/22 15:57:38 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct					s_god
 	t_lemin						*extremities[2];
 
 	int							size;
+	int							expected_solution;
 
 	int							name_len;
 
