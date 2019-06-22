@@ -6,11 +6,28 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/18 20:33:30 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/22 18:05:19 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
+
+t_lemin			*find_room_name_htable(char *line)
+{
+	t_lemin		*room;
+	int nb;
+
+	time_exe(__func__);
+	nb = ft_rand(HTABLE_SIZE, ft_seed_string(line));
+	room = (*ft_lemin_htable())[nb];
+	while (ft_strcmp(room->name, line))
+	{
+		if (nb >= HTABLE_SIZE - 1)
+			nb = 0;
+		room = (*ft_lemin_htable())[++nb];
+	}
+	return (room);
+}
 
 int			find_room_name(t_tab *lem_in, char *line, size_t dir)
 {
@@ -44,35 +61,35 @@ void		***first_call(t_tab *lem_in, t_god *god)
 	{
 		adjacent_matrix[i] = ft_memalloc(len * sizeof(void*));
 		((t_lemin*)ft_tab_dirth(lem_in, 0, i)->content)->connexions = adjacent_matrix[i];
+		((t_lemin*)ft_tab_dirth(lem_in, 0, i)->content)->id = i;
 	}
 	return (adjacent_matrix);
 }
 
 int			link_rooms(t_tab *lem_in, char *line, void ****adjacent_matrix, t_god *god)
 {
+	static int	*my_fs;
 	char		**split;
 	int			first;
-	int			second;
-	int			i;
+	t_lemin		*_first;
+	t_lemin		*_second;
 
 	time_exe(__func__);
 	if (!*adjacent_matrix)
 		*adjacent_matrix = first_call(lem_in, god);
+	if (!my_fs)
+		my_fs = ft_memalloc(sizeof(int) * (god->size + 1));
 	if (!(split = ft_strsplit(line, '-')))
 		return (ERROR);
-	first = find_room_name(lem_in, split[0], 0);
-	second = find_room_name(lem_in, split[1], 0);
-	i = 0;
-	while ((*adjacent_matrix)[first][i])
-		i++;
-	(*adjacent_matrix)[first][i] = ft_tab_dirth(lem_in, 0, second)->content;
-	i = 0;
-	while ((*adjacent_matrix)[second][i])
-		i++;
-	(*adjacent_matrix)[second][i] = ft_tab_dirth(lem_in, 0, first)->content;
+	_first = find_room_name_htable(split[0]);
+	_second = find_room_name_htable(split[1]);
+	time_exe(__func__);
+	(*adjacent_matrix)[_first->id][my_fs[_first->id]++] = _second;
+	(*adjacent_matrix)[_second->id][my_fs[_second->id]++] = _first;
 	first = -1;
 	while (split[++first])
 		ft_memdel((void**)&split[first]);
 	ft_memdel((void**)&split);
+	time_exe("END");
 	return (SUCCESS);
 }

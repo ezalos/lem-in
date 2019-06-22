@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 13:58:43 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/22 16:10:37 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/22 16:23:47 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ void		sort_t_ints(t_ints *set_of_paths, int nb_of_paths)
 int			send_using_n_path(t_god *god, t_ints *set_of_paths, int quant)
 {
 	int *time_before_arrival;
+	int *sent_ants;
 	int	ants;
 	int	i;
 	int biggest;
 	int	turns;
 
 	time_before_arrival = ft_memalloc(sizeof(int) * (quant + 1));
+	sent_ants = ft_memalloc(sizeof(int) * (quant + 1));
 	i = -1;
 	while (++i <= quant)
 		time_before_arrival[i] = set_of_paths[i][0] - 1;
@@ -69,7 +71,6 @@ int			send_using_n_path(t_god *god, t_ints *set_of_paths, int quant)
 	while (ants > 0)
 	{
 		turns++;
-		// ft_printf("Ants: %d\tTurn: %d\n", ants, turns);
 		i = -1;
 		while (++i <= quant)
 			if (!ants)
@@ -79,17 +80,26 @@ int			send_using_n_path(t_god *god, t_ints *set_of_paths, int quant)
 				if (biggest < i)
 					biggest = i;
 				ants--;
+				sent_ants[i]++;
+				if (!ants)
+					break;
 			}
 			else
 			{
 				time_before_arrival[i]--;
 				if (!time_before_arrival[i])
+				{
 					ants--;
+					sent_ants[i]++;
+				}
 			}
 	}
-	ft_printf("\t%~{155;155;255}Longest path%~{} used is %~{155;155;255}%d%~{}\t with len %~{255;255;155}%d%~{}\n", biggest + 1, set_of_paths[biggest][0] - 1);
+	i = -1;
+	while (++i <= quant && sent_ants[i])
+		ft_printf("\t%~{255;155;155}%*d ants%~{} has been through %~{255;255;155}path %*d%~{} of %~{155;255;255}len %d%~{}\n", ft_nb_len(god->ants, 10), sent_ants[i], ft_nb_len(god->goulots, 10), i, set_of_paths[i][0] - 1);
+	ft_printf("\t%~{155;155;255}Longest path%~{} used is %~{155;155;255}%d%~{}\t with len %~{255;255;155}%d%~{}\n", biggest, set_of_paths[biggest][0] - 1);
 	print_this_path(god, set_of_paths[biggest]);
-	ft_printf("\t\t%~{155;255;155}It took %~{255;155;255}%d%~{155;255;155} turns\t%~{}%d%~{155;255;155} is excpected%~{}\n\n", turns, god->expected_solution);
+	ft_printf("\t\t%~{155;255;155}It took %~{255;155;255}%d%~{155;255;155} turns.   %~{255;155;255}%d%~{155;255;155} is excpected%~{}\n\n", turns, god->expected_solution);
 	return (turns);
 }
 

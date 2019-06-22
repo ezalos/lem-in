@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/22 16:02:34 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/22 17:44:22 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int			file_steps(int fd, char **line)
 
 	time_exe(__func__);
 	i = -1;
-	if ((r_v = get_next_line(fd, line)) > 0)
+	if ((r_v = ft_gnl(fd, line)) > 0)
 	{
 		if ((*line)[0] == '#' || (*line)[0] == 'L')// && (*line)[1] == '#')
 			return (INIT_SPEC);

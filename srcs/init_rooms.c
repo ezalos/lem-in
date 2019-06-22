@@ -6,20 +6,34 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 18:34:40 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 14:16:59 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/22 17:25:29 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int machin(int nb)
+t_lemin		***ft_lemin_htable(void)
 {
-	static int bg[100000];
+	static t_lemin **bg;
 
-	if (bg[nb] == 0)
-		bg[nb] = 1;
+	if (!bg)
+		bg = ft_memalloc(sizeof(t_lemin*) * HTABLE_SIZE);
+	return (&bg);
+}
+
+int machin(int nb, t_lemin *ptr)
+{
+	if (!(*ft_lemin_htable())[nb])
+		(*ft_lemin_htable())[nb] = ptr;
 	else
-		return (0);
+	{
+		while ((*ft_lemin_htable())[nb])
+			if (nb >= HTABLE_SIZE - 1)
+				nb = 0;
+			else
+				nb++;
+		(*ft_lemin_htable())[nb] = ptr;
+	}
 	return (1);
 }
 
@@ -33,7 +47,6 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	int			nb;
 	static int	err;
 
-	nb = ft_rand(100000, ft_seed_string(line));
 	// if (!machin(nb) && ++err)
 	// 	ft_printf("%dERROR: %d\t%s\n", err, nb, line);
 	time_exe(__func__);
@@ -44,6 +57,8 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 		return (ERROR);
 	if (!(room->name = ft_strdup(split[0])))
 		return (ERROR);
+	nb = ft_rand(HTABLE_SIZE, ft_seed_string(split[0]));
+	machin(nb, room);
 	if ((int)ft_strlen(room->name) > god->name_len)
 		god->name_len = ft_strlen(room->name);
 	room->place = place;

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/22 15:57:38 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/22 17:10:29 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define INIT_ROOM				2
 # define INIT_LINK				3
 # define INIT_SPEC				4
+
+# define HTABLE_SIZE			262144
 
 # define RIGHT					0
 # define DOWN					1
@@ -107,6 +109,7 @@ int				link_rooms(t_tab *lem_in, char *line, void ****adjacent_matrix, t_god *go
 int				order_my_little_connexions(t_god *god);
 void			get_rooms_in_tab(t_god *god);
 t_god			**ft_remember_god(void);
+t_lemin		***ft_lemin_htable(void);
 
 /*
 **************
