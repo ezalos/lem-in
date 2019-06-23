@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/06/20 17:00:43 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/23 21:52:01 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void 			print_this_path(t_god *god, t_ints path)
 	name_size = ft_nb_len(god->end->id, 10);
 	if (path && path[0])
 	{
-		ft_printf("%~{155;155;255}Path of length %d\n", path[0]);
+		ft_printf("%~{155;155;255}Path of length %d\n", path[0] - 1);
 		j = 0;
 		while (++j <= path[0])
 		{

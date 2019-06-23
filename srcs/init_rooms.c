@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 18:34:40 by root              #+#    #+#             */
-/*   Updated: 2019/06/22 17:25:29 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/23 20:50:37 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,13 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	room->place = place;
 	room->y_coord = ft_atoi(split[1]);
 	room->x_coord = ft_atoi(split[2]);
-	ft_strdel_multi(4, &split[0], &split[1], &split[2], &split);//need to be protected against more than 3 str
+	//ft_strdel_multi(4, &split[0], &split[1], &split[2], &split);//need to be protected against more than 3 str
 	if (!(new = ft_tabnew_ptr(room, sizeof(void*))))
 		return (ERROR);
 	if (place < 0 || !(*lem_in))
 	{
 		god->start = room;
 		god->extremities[0] = room;
-		// room->ants = ants_nb;
 		god->ants = ants_nb;
 		ft_tabadd_start(lem_in, new, 0);
 	}

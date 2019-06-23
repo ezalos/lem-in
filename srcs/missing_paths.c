@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/01 18:16:43 by root              #+#    #+#             */
-/*   Updated: 2019/06/20 15:39:07 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/23 16:47:09 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_ints			*complete_missing_paths(t_god *god, int missing_paths)
 		t_ints	blocked_rooms;
 		int		i;
 
-		ft_printf("%~{255;155;155}Missing paths estimation : %d/%d%~{}\n", missing_paths, god->goulots);
+		ft_printf("%~{255;155;155}Missing paths estimation : %d -> %~{155;255;155}%d found%~{255;155;155} on %d%~{}\n", missing_paths, god->goulots - missing_paths, god->goulots);
 		full_clear(god);
 		unblock = extremities_list_unused(god);
 		blocked_rooms = block_room_list(god, god->extremities_list[god->side], unblock);

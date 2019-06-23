@@ -6,23 +6,25 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/22 17:44:22 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/23 20:37:17 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int			file_steps(int fd, char **line)
+int			file_steps(int fd, char **line, intmax_t total)
 {
 	static int				step;
+	static intmax_t			where;
 	int						r_v;
 	int						i;
 
-	time_exe(__func__);
 	i = -1;
+	time_exe(__func__);
 	if ((r_v = ft_gnl(fd, line)) > 0)
 	{
-		if ((*line)[0] == '#' || (*line)[0] == 'L')// && (*line)[1] == '#')
+		ft_progress(__func__, where += r_v + 1, total);
+		if ((*line)[0] == '#' || (*line)[0] == 'L')
 			return (INIT_SPEC);
 		else if (!step)
 		{
@@ -48,7 +50,8 @@ t_god		*init(int fd)
 	int			r_v;
 	int			place;
 	int			ants_nb;
-	int			ste;
+	intmax_t	ste;
+	intmax_t	total;
 	int			i;
 
 	time_exe(__func__);
@@ -56,9 +59,10 @@ t_god		*init(int fd)
 	place = 0;
 	line = NULL;
 	ste = 0;
-	while ((r_v = file_steps(fd, &line)) > 0)
+	total = lseek(fd, 0, SEEK_END);
+	lseek(fd, 0, SEEK_SET);
+	while ((r_v = file_steps(fd, &line, total)) > 0)
 	{
-		ft_progress(__func__, ste, 30000);
 		ste++;
 		time_exe(__func__);
 		if (r_v == INIT_SPEC)
@@ -85,10 +89,12 @@ t_god		*init(int fd)
 			link_rooms(god->lem_in, line, &god->adjacent_matrix, god);
 		else
 			return (PTR_ERROR);
-		ft_strdel(&line);
+		// ft_strdel(&line);
 		if (r_v != INIT_SPEC)
 			place = 0;
 	}
+	// ft_progress(__func__, 4, 4);
+	time_exe(__func__);
 	close(fd);
 	god->end = ft_tab_reach_end(god->lem_in, 0)->content;
 	god->extremities[1] = ft_tab_reach_end(god->lem_in, 0)->content;

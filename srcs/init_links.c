@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/22 18:05:19 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/23 20:51:07 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,22 @@ t_lemin			*find_room_name_htable(char *line)
 	return (room);
 }
 
-int			find_room_name(t_tab *lem_in, char *line, size_t dir)
-{
-	int		i;
-	t_tab	*tmp;
-
-	tmp = lem_in;
-	i = 0;
-	while (tmp)
-	{
-		if (!ft_strcmp(((t_lemin*)tmp->content)->name, line))
-			return (i);
-		i++;
-		tmp = tmp->dir[dir];
-	}
-	return (-1);
-}
+// int			find_room_name(t_tab *lem_in, char *line, size_t dir)
+// {
+// 	int		i;
+// 	t_tab	*tmp;
+//
+// 	tmp = lem_in;
+// 	i = 0;
+// 	while (tmp)
+// 	{
+// 		if (!ft_strcmp(((t_lemin*)tmp->content)->name, line))
+// 			return (i);
+// 		i++;
+// 		tmp = tmp->dir[dir];
+// 	}
+// 	return (-1);
+// }
 
 
 void		***first_call(t_tab *lem_in, t_god *god)
@@ -70,7 +70,6 @@ int			link_rooms(t_tab *lem_in, char *line, void ****adjacent_matrix, t_god *god
 {
 	static int	*my_fs;
 	char		**split;
-	int			first;
 	t_lemin		*_first;
 	t_lemin		*_second;
 
@@ -86,10 +85,5 @@ int			link_rooms(t_tab *lem_in, char *line, void ****adjacent_matrix, t_god *god
 	time_exe(__func__);
 	(*adjacent_matrix)[_first->id][my_fs[_first->id]++] = _second;
 	(*adjacent_matrix)[_second->id][my_fs[_second->id]++] = _first;
-	first = -1;
-	while (split[++first])
-		ft_memdel((void**)&split[first]);
-	ft_memdel((void**)&split);
-	time_exe("END");
 	return (SUCCESS);
 }
