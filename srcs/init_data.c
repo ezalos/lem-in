@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/14 00:26:27 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:42:59 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int			order_my_little_connexions(t_god *god)
 		t_tab *now;
 		t_lemin *here;
 
-		time_exe(__func__);
 		i = 0;
 		now = god->lem_in;
 		while (now)
@@ -49,7 +48,6 @@ void		get_rooms_in_tab(t_god *god)
 	t_tab		*now;
 	int 		i;
 
-	time_exe(__func__);
 	now = god->lem_in;
 	god->rooms = ft_memalloc(sizeof(t_lemin**) * (god->size + 1));
 	i = -1;

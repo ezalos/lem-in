@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:05:17 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 00:23:53 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:48:09 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end)
 	int		r_v;
 	// int		i;
 
+	time_exe(__func__);
 	depth = 0;
 	pile_a = ft_memalloc(sizeof(int) * god->size * 2);
 	pile_b = ft_memalloc(sizeof(int) * god->size * 2);
@@ -72,6 +73,7 @@ int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end)
 	}
 	ft_memdel((void**)&pile_a);
 	ft_memdel((void**)&pile_b);
+	time_exe("SOLVE");
 	return (r_v);
 }
 

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/06/23 21:52:01 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:48:57 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void			print_room_infos(t_god *god)
 	int one_connexion;
 	int two_connexion;
 
-	time_exe("SOLVE");
 	one_connexion = 0;
 	two_connexion = 0;
 	i = -1;

@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/06/23 21:41:43 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/06/24 19:51:56 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -220,7 +220,7 @@ last :	all
 
 unit_test :
 			./generator/tools/generator --big-superposition > ./maps/big_supperpo
-			./$(NAME) maps/big_supperpo
+			time ./$(NAME) maps/big_supperpo
 
 ten :
 		@$(MAKE) unit_test

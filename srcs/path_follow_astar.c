@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 16:32:03 by root              #+#    #+#             */
-/*   Updated: 2019/06/20 15:35:27 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:43:36 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void			find_a_path(t_lemin *here, int id, t_ints *path)
 		int							winner;
 		int							i;
 
+		time_exe(__func__);
 		i = -1;
 		winner = -1;
 		// print_debug(here);

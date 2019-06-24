@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 18:34:40 by root              #+#    #+#             */
-/*   Updated: 2019/06/23 20:50:37 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:53:47 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,7 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	char		**split;
 	int			len;
 	int			nb;
-	static int	err;
 
-	// if (!machin(nb) && ++err)
-	// 	ft_printf("%dERROR: %d\t%s\n", err, nb, line);
-	time_exe(__func__);
 	lem_in = &god->lem_in;
 	if (!(split = ft_strsplit(line, ' ')))
 		return (ERROR);
@@ -78,18 +74,19 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 		ft_tabadd_end(*lem_in, new, 0);
 	else
 	{
-		len = ft_tab_lendir(*lem_in, 0);
-		if (((t_lemin*)ft_tab_dirth(*lem_in, 0, len - 1)->content)->place == 1)
-		{
-			ft_tabadd(lem_in, new, 0, len - 1);
-		}
-		else
-		{
-			god->end = room;
-			god->extremities[1] = room;
-			ft_tabadd(lem_in, new, 0, len);
-		}
+		ft_tabadd(lem_in, new, 0, 1);
+		// len = ft_tab_lendir(*lem_in, 0);
+		// if (((t_lemin*)ft_tab_dirth(*lem_in, 0, len - 1)->content)->place == 1)
+		// {
+		// 	ft_tabadd(lem_in, new, 0, len - 1);
+		// }
+		// else
+		// {
+		// 	god->end = room;
+		// 	god->extremities[1] = room;
+		// 	ft_tabadd(lem_in, new, 0, len);
+		// }
 	}
 	return (VALID);
-	err++;
+	len++;
 }

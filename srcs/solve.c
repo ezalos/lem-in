@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:35:56 by root              #+#    #+#             */
-/*   Updated: 2019/06/20 15:34:18 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:48:19 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int				lets_calcul(t_god *god)
 	int	missing_paths;
 	t_ints	*set_two;
 
+	time_exe("SOLVE");
 	print_room_infos(god);
 	how_many_entries_exits(god);
 	if (!god->goulots && ft_printf("%~{255;155;155}There is no solution%~{}\n"))

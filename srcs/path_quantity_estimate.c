@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:16:14 by root              #+#    #+#             */
-/*   Updated: 2019/06/19 13:46:43 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:55:29 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int				how_many_extremities(t_god *god, int side)
 	int			name_size;
 
 	name_size = ft_nb_len(god->extremities[side]->id, 10);
-	if (!side)
-		ft_printf("\nStart goulot: ");
-	else
-		ft_printf("  End goulot: ");
+	// if (!side)
+		// ft_printf("\nStart goulot: ");
+	// else
+		// ft_printf("  End goulot: ");
 	i = -1;
 	god->extremities_list[side] = ft_memalloc(sizeof(int*) * (god->extremities[side]->nb_of_connexions + 1));
 	while (god->extremities[side]->connexions[++i])
@@ -41,12 +41,12 @@ int				how_many_extremities(t_god *god, int side)
 		god->extremities[side]->gone = 1;
 		if (alternate_piles(god, ((t_lemin*)god->extremities[side]->connexions[i])->id, god->extremities[!side]->id, 0))
 		{
-			ft_printf("%~{155;255;155}");
+			// ft_printf("%~{155;255;155}");
 			god->extremities_list[side][++(*god->extremities_list[side])] = ((t_lemin*)god->extremities[side]->connexions[i])->id;
 		}
-		else
-			ft_printf("%~{255;155;155}");
-		ft_printf("%*d%~{} ", name_size, ((t_lemin*)god->extremities[side]->connexions[i])->id);
+		// else
+			// ft_printf("%~{255;155;155}");
+		// ft_printf("%*d%~{} ", name_size, ((t_lemin*)god->extremities[side]->connexions[i])->id);
 	}
 	ft_printf("\n");
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/23 20:37:17 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:53:32 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int			file_steps(int fd, char **line, intmax_t total)
 	int						i;
 
 	i = -1;
-	time_exe(__func__);
 	if ((r_v = ft_gnl(fd, line)) > 0)
 	{
 		ft_progress(__func__, where += r_v + 1, total);
@@ -54,7 +53,6 @@ t_god		*init(int fd)
 	intmax_t	total;
 	int			i;
 
-	time_exe(__func__);
 	god = ft_memalloc(sizeof(t_god));
 	place = 0;
 	line = NULL;
@@ -64,7 +62,6 @@ t_god		*init(int fd)
 	while ((r_v = file_steps(fd, &line, total)) > 0)
 	{
 		ste++;
-		time_exe(__func__);
 		if (r_v == INIT_SPEC)
 		{
 			if (line[0] == 'L')
@@ -94,16 +91,12 @@ t_god		*init(int fd)
 			place = 0;
 	}
 	// ft_progress(__func__, 4, 4);
-	time_exe(__func__);
 	close(fd);
 	god->end = ft_tab_reach_end(god->lem_in, 0)->content;
 	god->extremities[1] = ft_tab_reach_end(god->lem_in, 0)->content;
 	// print_matrix(god->lem_in);
-	time_exe(__func__);
 	order_my_little_connexions(god);
-	time_exe(__func__);
 	get_rooms_in_tab(god);
-	time_exe(__func__);
 	*ft_remember_god() = god;
 	return (god);
 }
