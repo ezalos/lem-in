@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/22 17:10:29 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/06/24 17:13:12 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ typedef struct					s_lemin
 	int							from[2];
 	int							gone;
 }								t_lemin;
+
+typedef struct					s_meta
+{
+	int							turns;
+	t_ints						*set_of_path;
+	int							*ants_sent;
+}								t_meta;
 
 typedef struct					s_god
 {
