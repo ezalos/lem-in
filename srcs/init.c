@@ -12,6 +12,20 @@
 
 #include "../includes/head.h"
 
+void		init_used_tab(t_god *god)
+{
+	int i;
+
+	i = 0;
+	while (god->rooms[i])
+	{
+		god->rooms[i]->used = ft_memalloc(sizeof(int *) * god->rooms[i]->nb_of_connexions);
+		god->rooms[i]->tmp_used = ft_memalloc(sizeof(int *) * god->rooms[i]->nb_of_connexions);
+		god->surcharged_link = ft_memalloc(sizeof(t_ints) * god->size * 2);
+		i++;
+	}
+}
+
 int			file_steps(int fd, char **line, intmax_t total)
 {
 	static int				step;
@@ -94,9 +108,10 @@ t_god		*init(int fd)
 	close(fd);
 	god->end = ft_tab_reach_end(god->lem_in, 0)->content;
 	god->extremities[1] = ft_tab_reach_end(god->lem_in, 0)->content;
-	// print_matrix(god->lem_in);
+	//print_matrix(god->lem_in);
 	order_my_little_connexions(god);
 	get_rooms_in_tab(god);
 	*ft_remember_god() = god;
+	init_used_tab(god);
 	return (god);
 }

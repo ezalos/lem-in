@@ -90,42 +90,6 @@ int				refresh_a_star(t_god *god)
 	return (r_v);
 }
 
-// int				from_start(t_lemin *lem_in, int depth)
-// {
-// 		int				i;
-// 		int				r_v;
-//
-// 		r_v = 0;
-// 		if (!lem_in || lem_in->gone)
-// 			return (0);
-// 		if (!lem_in->from[0] || lem_in->from[0] > depth)
-// 		{
-// 			lem_in->from[0] = depth;
-// 			i = -1;
-// 			while (lem_in->connexions[++i])
-// 				r_v += from_start(lem_in->connexions[i], depth + 1);
-// 		}
-// 		return (r_v);
-// }
-//
-// int				from_end(t_lemin *lem_in, int depth)
-// {
-// 		int				i;
-// 		int				r_v;
-//
-// 		r_v = 0;
-// 		if (!lem_in || lem_in->gone)
-// 			return (0);
-// 		if (!lem_in->from[1] || lem_in->from[1] > depth)
-// 		{
-// 				lem_in->from[1] = depth;
-// 			i = -1;
-// 			while (lem_in->connexions[++i])
-// 				r_v += from_end(lem_in->connexions[i], depth + 1);
-// 		}
-// 		return (r_v);
-// }
-
 int			is_there_a_path(t_god *god, int *kill_list, int point_a, int point_b)
 {
 	int r_v;

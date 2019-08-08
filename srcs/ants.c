@@ -61,16 +61,20 @@ int			send_using_n_path(t_god *god, t_ints *set_of_paths, int quant)
 
 	time_before_arrival = ft_memalloc(sizeof(int) * (quant + 1));
 	sent_ants = ft_memalloc(sizeof(int) * (quant + 1));
-	i = -1;
-	while (++i <= quant)
-		time_before_arrival[i] = set_of_paths[i][0] - 1;
+	i = 0;
+	while (i < quant)
+	{
+		time_before_arrival[i] = set_of_paths[i][0];
+		i++;
+	}
 	ants = god->ants;
 	turns = 0;
 	while (ants > 0)
 	{
 		turns++;
-		i = -1;
-		while (++i <= quant)
+		i = 0;
+		while (i < quant)
+		{
 			if (!ants)
 				break;
 			else if (!time_before_arrival[i] || !(--time_before_arrival[i]))
@@ -78,31 +82,37 @@ int			send_using_n_path(t_god *god, t_ints *set_of_paths, int quant)
 				ants--;
 				sent_ants[i]++;
 			}
+			i++;
+		}
 	}
 	i = -1;
-	while (++i <= quant && sent_ants[i])
-		ft_printf("\t%~{255;155;155}%*d ants%~{} has been sent through %~{255;255;155}path %*d%~{} of %~{155;255;255}len %d%~{}\n", ft_nb_len(god->ants, 10), sent_ants[i], ft_nb_len(god->goulots, 10), i, set_of_paths[i][0] - 1);
+	// while (++i < quant && sent_ants[i])
+	// 	ft_printf("\t%~{255;155;155}%*d ants%~{} has been sent through %~{255;255;155}path %*d%~{} of %~{155;255;255}len %d%~{}\n", ft_nb_len(god->ants, 10), sent_ants[i], ft_nb_len(god->goulots, 10), i, set_of_paths[i][0] - 1);
 	// ft_printf("\t%~{155;155;255}Longest path%~{} used is %~{155;155;255}%d%~{}\t with len %~{255;255;155}%d%~{}\n", i - 1, set_of_paths[i - 1][0] - 1);
-	print_this_path(god, set_of_paths[i - 1]);
+	// print_this_path(god, set_of_paths[i - 1]);
 	ft_printf("\t%~{155;255;155}It took %~{255;155;255}%d%~{155;255;155} turns.", turns);
 	if (god->expected_solution)
 		ft_printf("   %~{255;155;255}%d%~{155;255;155} is excpected%~{}", god->expected_solution);
-	ft_printf("\n\n");
+	ft_printf("\n");
 	return (turns);
 }
 
-int			ft_evaluate_set_of_path(t_god *god, t_ints *set_of_paths)
+int			ft_evaluate_set_of_path(t_god *god)
 {
-	int		nb_of_paths;
+	int		set;
 	int		turn;
+	int 	tmp;
 
-	nb_of_paths = 0;
-	turn = 0;
-	while (set_of_paths[nb_of_paths])
-		nb_of_paths++;
-	ft_printf("%~{255;255;155}Nb of paths: %~{255;155;155}%d%~{}\n", nb_of_paths);
-	sort_t_ints(set_of_paths, nb_of_paths);
-	nb_of_paths--;
-	turn = send_using_n_path(god, set_of_paths, nb_of_paths);
+	set = 1;
+	turn = god->ants;
+	while (set <= god->goulots)
+	{
+		sort_t_ints(god->paths[set - 1], set);
+		tmp = send_using_n_path(god, god->paths[set - 1], set);
+		if (tmp < turn)
+			turn = tmp;
+		set++;
+	}
+	//ft_printf("%~{255;255;155}Nb of paths: %~{255;155;155}%d%~{}\n", set);
 	return (turn);
 }

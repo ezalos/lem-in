@@ -46,9 +46,9 @@ t_lemin			*find_room_name_htable(char *line)
 // }
 
 
-void		***first_call(t_tab *lem_in, t_god *god)
+t_lemin		***first_call(t_tab *lem_in, t_god *god)
 {
-	void		***adjacent_matrix;
+	t_lemin		***adjacent_matrix;
 	t_tab		*tmp;
 	int			i;
 	int			len;
@@ -68,7 +68,7 @@ void		***first_call(t_tab *lem_in, t_god *god)
 	return (adjacent_matrix);
 }
 
-int			link_rooms(t_tab *lem_in, char *line, void ****adjacent_matrix, t_god *god)
+int			link_rooms(t_tab *lem_in, char *line, t_lemin ****adjacent_matrix, t_god *god)
 {
 	static int	*my_fs;
 	char		**split;

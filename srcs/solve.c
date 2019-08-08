@@ -12,23 +12,21 @@
 
 #include "../includes/head.h"
 
-int				full_process(t_god *god, t_ints *ptr)
+int				full_process(t_god *god, int nb_max)
 {
-	int		r_v;
-	clear_data(god);
-	r_v = refresh_a_star(god);
+	int tmp;
+
+	clear_gone(god);
+	if (nb_max != 1)
+	{
+		clear_links(god);
+		clear_tmp_links(god);
+		clean_surcharged_tab(god->surcharged_link);
+	}
 	// ft_printf("%s\n", __func__);
 	// print_name_and_from_dist(god);
-	if (r_v)
-	{
-		// ft_printf("%s\n", __func__);
-		find_a_path(god->start, god->end->id, ptr);
-		// ft_printf("%s\n", __func__);
-		clear_data(god);
-		print_this_path(god, *ptr);
-		return (1);
-	}
-	return (0);
+	tmp = breadth_first_search(god, nb_max);
+	return (tmp);
 }
 
 void			does_path_exist(t_god *god, int a, int b)
@@ -42,37 +40,55 @@ void			does_path_exist(t_god *god, int a, int b)
 
 void 			init_paths(t_god *god)
 {
-	// int	i;
+	int i;
+	int j;
 
-	god->paths = ft_memalloc(sizeof(t_ints) * god->goulots);
-	// i = -1;
-	// while (++i < god->goulots)
-	// 	god->paths[i] = ft_memalloc(sizeof(int) * god->size);
+	i = 0;
+	god->paths = ft_memalloc(sizeof(t_ints **) * (god->goulots + 1));
+	while (i <= god->goulots)
+	{
+		god->paths[i] = ft_memalloc(sizeof(t_ints *) * (god->goulots + 1));
+		j = 0;
+		while (j < god->goulots)
+		{
+			god->paths[i][j] = ft_memalloc(sizeof(t_ints) * god->size * 2); // probleme ave clean garbage voir avec LOUIS
+			// En fait le probleme vient de l'allocation du 2 eme malloc de god->paths[i] essayer de comprendre pk pour utiliser moins de memoire.
+			j++;
+		}
+		i++;
+	}
 }
 
 int				lets_calcul(t_god *god)
 {
 	int	i;
-	int	missing_paths;
-	t_ints	*set_two;
+	int turn = 0;
+	int nb_found;
+	int tmp;
 
 	time_exe("SOLVE");
+	nb_found = 0;
 	print_room_infos(god);
 	how_many_entries_exits(god);
 	if (!god->goulots && ft_printf("%~{255;155;155}There is no solution%~{}\n"))
 		return (0);
 	init_paths(god);
-	missing_paths = god->goulots;
-	i = -1;
-	while (++i < god->goulots)
-		missing_paths -= full_process(god, &god->paths[i]);
-	i--;
-	while (++i < god->goulots)
-		god->paths[i] = NULL;
-	if (missing_paths)
-		set_two = complete_missing_paths(god, missing_paths);
-	ft_evaluate_set_of_path(god, god->paths);
-	if (missing_paths)
-		ft_evaluate_set_of_path(god, set_two);
+	i = 1;
+	while (i <= god->goulots)
+	{
+		// ft_printf("=======================\n");
+		// ft_printf("GOULOTS == %d\n", god->goulots);
+		// ft_printf("i = == %d\n", i);
+		// ft_printf("=======================\n");
+
+		if ((tmp = full_process(god, i)) <= nb_found)
+			break ;
+		nb_found = tmp;
+		i++;
+	}
+	god->goulots = nb_found; // FAIRE TRES ATTENTION ON PERD DU COUP LA TAILLE REEL DU NONMBRE DE SET DE PATHS
+	print_paths(god);
+	turn = ft_evaluate_set_of_path(god);
+	ft_printf("%~{255;155;155}Nombre de tour trouves [%d]%~{}\n", turn);
 	return (0);
 }

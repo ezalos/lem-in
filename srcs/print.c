@@ -12,6 +12,56 @@
 
 #include "../includes/head.h"
 
+void	print_used_link_state(t_god *god)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (god->rooms[i])
+	{
+		j = -1;
+		ft_printf("Room %~{255;255;155}%s%~{} a pour connexions : ", god->rooms[i]->name);
+		while (++j < god->rooms[i]->nb_of_connexions)
+			ft_printf("[%~{255;255;155}%s%~{} = %~{155;155;255}%d%~{}]", god->rooms[i]->connexions[j]->name, god->rooms[i]->used[j]);
+		ft_printf("\n");
+		i++;
+	}
+}
+
+void	print_tmp_used_link_state(t_god *god)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (god->rooms[i])
+	{
+		j = -1;
+		ft_printf("Room %~{255;255;155}%s%~{} a pour connexions : ", god->rooms[i]->name);
+		while (++j < god->rooms[i]->nb_of_connexions)
+			ft_printf("[%~{255;255;155}%s%~{} = %~{155;155;255}%d%~{}]", god->rooms[i]->connexions[j]->name, god->rooms[i]->tmp_used[j]);
+		ft_printf("\n");
+		i++;
+	}
+}
+
+void		print_surcharged_tab(t_god *god)
+{
+	int nb;
+	int i;
+
+	nb = god->surcharged_link[0];
+	i = 1;
+	ft_printf("\n");
+	while (i <= nb)
+	{
+		ft_printf("%~{100;100;200}[%s] %~{}", god->rooms[god->surcharged_link[i]]->name);
+		i++;
+	}
+	ft_printf("\n");
+}
+
 int		print_matrix(t_tab *lem_in)
 {
 	int				fd;
@@ -89,14 +139,12 @@ void 			print_this_path(t_god *god, t_ints path)
 	int			j;
 	int			name_size;
 
-	return ;
-	// ft_printf("HEY\n");
 	name_size = ft_nb_len(god->end->id, 10);
 	if (path && path[0])
 	{
 		ft_printf("%~{155;155;255}Path of length %d\n", path[0] - 1);
 		j = 0;
-		while (++j <= path[0])
+		while (++j <= path[0] + 1)
 		{
 			if (god->rooms[path[j]]->place == -1)
 				ft_printf("%~{255;155;155}");
@@ -104,7 +152,7 @@ void 			print_this_path(t_god *god, t_ints path)
 				ft_printf("%~{155;255;155}");
 			else
 				ft_printf("%~{?*}", god->rooms[path[j]]);
-			ft_printf("%*d%~{}", name_size, god->rooms[path[j]]->id);
+			ft_printf("%*s%~{}", god->name_len, god->rooms[path[j]]->name);
 			if (god->rooms[path[j]]->place != 1)
 			{
 				if (god->rooms[path[j]]->nb_of_connexions < 3)
@@ -120,10 +168,20 @@ void 			print_this_path(t_god *god, t_ints path)
 void 			print_paths(t_god *god)
 {
 	int 		i;
+	int 		j;
 
-	i = -1;
-	while (++i < god->goulots)
-		print_this_path(god, god->paths[i]);
+	i = 0;
+	while (i < god->goulots)
+	{
+		j = 1;
+		ft_printf("====== SET DE CHEMIN %d ======\n", i + 1);
+		while (j <= i)
+		{
+			print_this_path(god, god->paths[i][j]);
+			j++;
+		}
+		i++;
+	}
 }
 
 void 		print_name_and_from_dist(t_god *god)

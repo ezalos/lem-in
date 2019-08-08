@@ -51,11 +51,17 @@ typedef struct					s_lemin
 	int							y_coord;
 
 
-	void						**connexions;
+	struct s_lemin				**connexions;
 	int							nb_of_connexions;
+	int 						weight;
+	struct s_lemin				*last_room;
+	int 						*used; //de la taille du nb_of_xonnexions, used[i] correspondra donc a si la conexion de connexion[i] est utilisé
+	int 						*tmp_used;
+	int 						blocked;
 
 	int							from[2];
 	int							gone;
+	int 						surcharged;
 }								t_lemin;
 
 typedef struct					s_meta
@@ -65,13 +71,23 @@ typedef struct					s_meta
 	int							*ants_sent;
 }								t_meta;
 
+typedef struct 					s_piles
+{
+	t_ints 						pile_a;
+	t_ints 						pile_b;
+	int 						finish;
+	int 						deep;
+	int 						actual_room;
+}								t_piles;
+
 typedef struct					s_god
 {
 	t_tab						*lem_in;
 	t_lemin						**rooms;
-	void						***adjacent_matrix;
+	t_lemin						***adjacent_matrix;
+	t_ints						surcharged_link;
 
-	t_ints						*paths;
+	t_ints						**paths;
 	int							nb_of_paths;
 	int							ants;
 
@@ -85,6 +101,9 @@ typedef struct					s_god
 	int							name_len;
 
 	t_ints						extremities_list[2];
+
+	int 						trigger;
+	int 						variation;
 
 	int							goulots;
 	int							side;
@@ -110,8 +129,7 @@ t_god			*init(int fd);
 int				add_rooms(t_god *god, int place, int ants_nb, char *line);
 
 int				find_room_name(t_tab *lem_in, char *line, size_t dir);
-void			***first_call(t_tab *lem_in, t_god *god);
-int				link_rooms(t_tab *lem_in, char *line, void ****adjacent_matrix, t_god *god);
+int				link_rooms(t_tab *lem_in, char *line, t_lemin ****adjacent_matrix, t_god *god);
 
 int				order_my_little_connexions(t_god *god);
 void			get_rooms_in_tab(t_god *god);
@@ -128,6 +146,10 @@ void 			clear_data(t_god *god);
 void 			clear_gone(t_god *god);
 void 			add_gone_from_paths(t_god *god);
 void 			full_clear(t_god *god);
+void 			clear_links(t_god *god);
+void 			clear_tmp_links(t_god *god);
+void 			refresh_tmp_links(t_god *god);
+void			clean_surcharged_tab(t_ints tab);
 
 /*
 **************
@@ -139,6 +161,9 @@ void 			print_name_and_from_dist(t_god *god);
 void 			print_paths(t_god *god);
 void 			print_this_path(t_god *god, t_ints path);
 void			print_room_infos(t_god *god);
+void			print_used_link_state(t_god *god);
+void			print_tmp_used_link_state(t_god *god);
+void			print_surcharged_tab(t_god *god);
 
 /*
 **************
@@ -155,19 +180,30 @@ int				how_many_entries_exits(t_god *god);
 int				close_a_path(t_lemin *here);
 void			find_a_path(t_lemin *here, int id, t_ints *path);
 int				get_rid_of_dead_ends(t_god *god);
-int			ft_evaluate_set_of_path(t_god *god, t_ints *set_of_paths);
+int				ft_evaluate_set_of_path(t_god *god);
+
+/*
+*******************
+** 	CONNEXIONS		**
+*******************
+*/
+
+
 
 /*
 **************
 **   	A*		**
 **************
 */
+
+int 			breadth_first_search(t_god *god, int nb_max);
+
 int				refresh_a_star(t_god *god);
 int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end);
 
 int				lets_calcul(t_god *god);
-int				full_process(t_god *god, t_ints *ptr);
+int				full_process(t_god *god, int nb_max);
 
-t_ints			*complete_missing_paths(t_god *god, int missing_paths);
+t_ints			*get_second_set_of_paths(t_god *god);
 int				is_there_a_path(t_god *god, int *kill_list, int point_a, int point_b);
 #endif

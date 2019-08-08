@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/06/24 19:51:56 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/08/07 15:11:25 by ythomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 -Wmissing-noreturn -Wformat -Wmissing-format-attribute\
 -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs\
 -Winline -Wlong-long -Wunreachable-code
+
 
 # CFLAGS = $(DFLAGS)
 # CFLAGS =
@@ -54,7 +55,8 @@ SRCS_LI		=			main\
 						path_fill_astar\
 						path_quantity_estimate\
 						path_follow_astar\
-						missing_paths
+						connexion_tools\
+						new_algo
 
 # SRCS_VS		=	visu-hex
 
