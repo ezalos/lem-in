@@ -43,24 +43,24 @@ int  			find_pv_link(t_god *god, t_lemin *tmp, t_piles *stack)
 	return (-1);
 }
 
-void 			add_gone(t_god *god, int path_num)
+void 			add_gone(t_god *god, int nb_paths)
 {
 	int i;
 	int j;
 	int size;
 
 	i = 0;
-	while (i < path_num)
+	while (i < nb_paths)
 	{
 		j = 1;
-		size = god->paths[path_num][i][0];
+		size = god->paths[i][0];
 		if (size != 0)
 			while (j <= size)
 			{
-				god->rooms[god->paths[path_num][i][j]]->gone = 1;
-				god->rooms[god->paths[path_num][i][j]]->blocked = 1;
-				if (god->rooms[god->paths[path_num][i][j]]->last_room != NULL)
-					god->rooms[god->paths[path_num][i][j]]->tmp_used[find_link(god->rooms[god->paths[path_num][i][j]])] = 1;
+				god->rooms[god->paths[i][j]]->gone = 1;
+				god->rooms[god->paths[i][j]]->blocked = 1;
+				if (god->rooms[god->paths[i][j]]->last_room != NULL)
+					god->rooms[god->paths[i][j]]->tmp_used[find_link(god->rooms[god->paths[i][j]])] = 1;
 				j++;
 			}
 		i++;	
@@ -82,17 +82,17 @@ int 			get_len_path(t_god *god)
 	return (i);
 }
 
-void			add_path_to_set(t_god *god, int set, int path)
+void			add_path_to_set(t_god *god, int path)
 {
 	int i;
 	t_lemin *tmp;
 
 	i = get_len_path(god);
 	tmp = god->extremities[1];
-	god->paths[set][path][0] = i;
+	god->paths[path][0] = i;
 	while (tmp->last_room != NULL)
 	{
-		god->paths[set][path][i + 1] = tmp->id;
+		god->paths[path][i + 1] = tmp->id;
 		tmp->last_room->used[find_link(tmp)] = 1;
 		tmp = tmp->last_room;
 		i--;
@@ -118,13 +118,12 @@ void			gone_is_zero(t_god *god, t_piles *stack, t_ints new_p, int id)
 	god->rooms[id]->last_room = god->rooms[stack->actual_room];
 	if (id == god->extremities[1]->id)
 	{
-		//ft_printf("^^^^^^^^^^^^^^^^^^OK^^^^^^^^^^^^^^^^^^^\n");
 		stack->finish = 1;
 		return ;
 	}
 	god->rooms[stack->actual_room]->tmp_used[find_pv_link(god, god->rooms[id], stack)] = 1;
 	god->rooms[id]->gone = 1;
-	new_p[0] = new_p[0] + 1; // probleme a regler ici
+	new_p[0] = new_p[0] + 1;
 	nb = new_p[0];
 	new_p[nb] = id;
 }
@@ -186,17 +185,18 @@ int 			get_next_rooms(t_god *god, t_piles *stack, t_ints last_p, t_ints new_p)
 		j = 0;
 		while (j < god->rooms[last_p[i + 1]]->nb_of_connexions)
 		{
-			//ft_printf("%d\n", god->rooms[last_p[i + 1]]->tmp_used[j]);
+			// ft_printf("%d\n", god->rooms[last_p[i + 1]]->tmp_used[j]);
 			stack->actual_room = god->rooms[last_p[i + 1]]->id;
 			if (god->rooms[last_p[i + 1]]->tmp_used[j] == 0 && god->rooms[last_p[i + 1]]->connexions[j]->gone == 1
 				&& god->rooms[last_p[i + 1]]->id != god->extremities[0]->id
-				&& god->rooms[last_p[i + 1]]->last_room->surcharged != 1
+				&& ((god->rooms[last_p[i + 1]]->last_room->surcharged != 1) || ((god->rooms[last_p[i + 1]]->last_room->surcharged == 1)
+					&& (god->rooms[last_p[i + 1]]->nb_of_connexions == 2)))
 				&& is_it_connected(god, god->rooms[last_p[i + 1]]->id, god->rooms[last_p[i + 1]]->connexions[j]->id) == 1
 				&& god->rooms[last_p[i + 1]]->connexions[j]->id != god->extremities[0]->id
 				&& god->rooms[last_p[i + 1]]->connexions[j]->id != god->rooms[last_p[i + 1]]->last_room->id
 				&& god->rooms[last_p[i + 1]]->blocked == 1)
 			{
-				//ft_printf("%sIIIIIIIIIIIIIIIIIIIIInSIDE\n", god->rooms[last_p[i + 1]]->name); /// GONE IS 3rd CASE
+				// ft_printf("%sIIIIIIIIIIIIIIIIIIIIInSIDE\n", god->rooms[last_p[i + 1]]->name); /// GONE IS 3rd CASE
 				last_p[0] = last_p[0] + 1;
 				nb = last_p[0];
 				last_p[nb] = god->rooms[last_p[i + 1]]->connexions[j]->id;
@@ -204,10 +204,9 @@ int 			get_next_rooms(t_god *god, t_piles *stack, t_ints last_p, t_ints new_p)
 				god->rooms[last_p[i + 1]]->connexions[j]->last_room = god->rooms[last_p[i + 1]];
 				(god->trigger)++;
 				god->rooms[last_p[i + 1]]->surcharged = 1;
-				//creat_surcharged_link(god, god->rooms[last_p[i + 1]]->id, god->rooms[last_p[i + 1]]->connexions[j]->id);
-				//print_surcharged_tab(god);
+				// print_surcharged_tab(god);
 			}
-			//ft_printf("%s connected to %s ? => %d\n", god->rooms[last_p[i + 1]]->name, god->rooms[last_p[i + 1]]->connexions[j]->name, is_it_connected(god, god->rooms[last_p[i + 1]]->id, god->rooms[last_p[i + 1]]->connexions[j]->id));
+			// ft_printf("%s connected to %s ? => %d\n", god->rooms[last_p[i + 1]]->name, god->rooms[last_p[i + 1]]->connexions[j]->name, is_it_connected(god, god->rooms[last_p[i + 1]]->id, god->rooms[last_p[i + 1]]->connexions[j]->id));
 			j++;
 		}
 		i++;
@@ -220,25 +219,25 @@ int 			get_next_rooms(t_god *god, t_piles *stack, t_ints last_p, t_ints new_p)
 		while (j < god->rooms[last_p[i + 1]]->nb_of_connexions)
 		{
 			stack->actual_room = god->rooms[last_p[i + 1]]->id;
-			//ft_printf("room = %s et sa connection j = %s, used = %d gone = %d usrcharged = %d, weight actu %d, weight next %d\n", god->rooms[last_p[i + 1]]->name, god->rooms[last_p[i + 1]]->connexions[j]->name, god->rooms[last_p[i + 1]]->tmp_used[j], god->rooms[last_p[i + 1]]->gone, god->rooms[last_p[i + 1]]->surcharged, god->rooms[last_p[i + 1]]->weight, god->rooms[last_p[i + 1]]->connexions[j]->weight);
+			// ft_printf("room = %s et sa connection j = %s, used = %d gone = %d usrcharged = %d, weight actu %d, weight next %d\n", god->rooms[last_p[i + 1]]->name, god->rooms[last_p[i + 1]]->connexions[j]->name, god->rooms[last_p[i + 1]]->tmp_used[j], god->rooms[last_p[i + 1]]->gone, god->rooms[last_p[i + 1]]->surcharged, god->rooms[last_p[i + 1]]->weight, god->rooms[last_p[i + 1]]->connexions[j]->weight);
 			if (god->rooms[last_p[i + 1]]->connexions[j]->gone == 1 && god->rooms[last_p[i + 1]]->tmp_used[j] == 0
 				&& god->rooms[last_p[i + 1]]->connexions[j]->id != god->extremities[0]->id
-				//&& god->rooms[last_p[i + 1]]->last_room != NULL
+				&& god->rooms[last_p[i + 1]]->last_room != NULL
 				&& god->rooms[last_p[i + 1]]->connexions[j]->id != god->rooms[last_p[i + 1]]->last_room->id
 				&& (god->rooms[last_p[i + 1]]->nb_of_connexions == 2 || god->rooms[last_p[i + 1]]->last_room->surcharged == 1)
-				&& is_it_connected(god, god->rooms[last_p[i + 1]]->id, god->rooms[last_p[i + 1]]->connexions[j]->id) == 0
+				&& is_it_connected(god, god->rooms[last_p[i + 1]]->id, god->rooms[last_p[i + 1]]->connexions[j]->id) == 0 // A VOIR ET A VERIFIER
 				&& ((god->rooms[last_p[i + 1]]->weight + 1 <= god->rooms[last_p[i + 1]]->connexions[j]->weight)
 				|| god->rooms[last_p[i + 1]]->connexions[j]->weight == 0))
 			{
-				//ft_printf("%~{250;100;100}CAS ONE%~{}\n");
-				//	ft_printf("salle qui pqrt dqns lq fonction %s\n", god->rooms[last_p[i + 1]]->connexions[j]->name);
+				// ft_printf("%~{250;100;100}CAS ONE%~{}\n");
+					// ft_printf("salle qui pqrt dqns lq fonction %s\n", god->rooms[last_p[i + 1]]->connexions[j]->name);
 				gone_is_one(god, stack, new_p, god->rooms[last_p[i + 1]]->connexions[j]->id);
 			}
 			else if (god->rooms[last_p[i + 1]]->connexions[j]->gone == 0 && god->rooms[last_p[i + 1]]->tmp_used[j] == 0
 				&& god->rooms[last_p[i + 1]]->connexions[j]->id != god->extremities[0]->id
 				&& god->rooms[last_p[i + 1]]->surcharged == 0)
 			{
-				//ft_printf("%~{100;100;250}CAS ZERO%~{}\n");
+				// ft_printf("%~{100;100;250}CAS ZERO%~{}\n");
 				// ft_printf("salle qui pqrt dqns lq fonction %s\n", god->rooms[last_p[i + 1]]->connexions[j]->name);
 				gone_is_zero(god, stack, new_p, god->rooms[last_p[i + 1]]->connexions[j]->id);
 				if (stack->finish == 1)
@@ -266,7 +265,7 @@ int 			get_faster_path(t_god *god)
 	while (stack.finish == 0)
 	{
 		//print_tmp_used_link_state(god);
-		//ft_printf("DEEP IS ==== %d\n", stack.deep);
+		// ft_printf("DEEP IS ==== %d\n", stack.deep);
 		if (stack.deep % 2 == 0)
 		{
 			get_next_rooms(god, &stack, stack.pile_a, stack.pile_b);
@@ -281,21 +280,21 @@ int 			get_faster_path(t_god *god)
 	return (stack.finish);
 }
 
-void			reset_this_set(t_god *god, int set)
+void			reset_this_set(t_god *god, int nb_finish)
 {
 	int i;
 	int len;
 	int j;
 
 	i = 0;
-	//ft_printf("==============================RESETTTTTTTTTT======================\n");
-	len = god->size * 2 - 1;
-	while (i <= set)
+	// ft_printf("==============================RESETTTTTTTTTT======================\n");
+	while (i < nb_finish)
 	{
+		len = god->paths[i][0];
 		j = 0;
-		while (j < len)
+		while (j <= len)
 		{
-			god->paths[set][i][j] = 0;
+			god->paths[i][j] = 0;
 			j++;
 		}
 		i++;
@@ -324,33 +323,73 @@ int 				which_link_is_surcharged(t_god *god, t_ints path)
 	return (result);
 }
 
-int 			breadth_first_search(t_god *god, int nb_max)
+void 			save_actual_set(t_god *god, int nb_paths, int nb_of_turn)
+{
+	int i;
+	int j;
+
+	(god->variation)++;
+	god->nb_final_paths = nb_paths;
+	if (god->final_path != NULL)
+	{
+		i = -1;
+		while (god->final_path[++i] != NULL)
+			ft_memdel((void **)&(god->final_path[i]));
+		ft_memdel((void *)god->final_path);
+	}
+	god->turn = nb_of_turn;
+	god->final_path = ft_memalloc(sizeof(t_ints *) * (nb_paths + 1));
+	i = 0;
+	while (i < nb_paths)
+	{
+		j = 0;
+		god->final_path[i] = ft_memalloc(sizeof(t_ints) * (god->size * 2));
+		god->final_path[i][0] = god->paths[i][0];
+		while (j <= god->paths[i][0])
+		{
+			god->final_path[i][j + 1] = god->paths[i][j + 1]; 
+			j++;
+		}
+		i++;
+	}
+	god->final_path[i] = NULL;
+}
+
+int 			breadth_first_search(t_god *god)
 {
 	int 		nb_finish;
 	int 		stat;
+	int 		nb;
 
 	nb_finish = 0;
 	stat = 0;
 	god->trigger = 0;
-	god->variation = 0;
-	while (nb_finish < nb_max && stat != 2)
+	god->variation = 1;
+	while (nb_finish < god->goulots && stat != 2)
 	{
 		//print_used_link_state(god);
 		if ((stat = get_faster_path(god)) == 1)
 		{
-			add_path_to_set(god, nb_max - 1, nb_finish); // LINK FAIT ICI
-			//print_this_path(god, god->paths[nb_max - 1][nb_finish]);
+			add_path_to_set(god, nb_finish); // LINK FAIT ICI
+			// print_this_path(god, god->paths[nb_max - 1][nb_finish]);
 			nb_finish++;
+			if (which_link_is_surcharged(god, god->paths[nb_finish - 1]) == 1)
+			{
+				reset_this_set(god, nb_finish);
+				nb_finish = 0;
+			}
+			else
+			{
+				if (nb_finish == god->variation && (nb = ft_evaluate_set_of_path(god, nb_finish)) < god->turn)
+					save_actual_set(god, nb_finish, nb);
+			}
 		}
-		if (which_link_is_surcharged(god, god->paths[nb_max - 1][nb_finish - 1]) == 1)
-		{
-			reset_this_set(god, nb_max - 1);
-			nb_finish = 0;
-		}
+		//print_paths(god);
+		//ft_printf("========== SET FOR %d PATHS ============\n", nb_finish);
 		clear_gone(god); // clear gone basic
 		//print_surcharged_tab(god);
 		refresh_tmp_links(god);
-		add_gone(god, nb_max - 1); // ajout du gone de tout leschemin deja trouve
+		add_gone(god, nb_finish); // ajout du gone de tout leschemin deja trouve
 		//print_used_link_state(god);
 	}
 	return (nb_finish);

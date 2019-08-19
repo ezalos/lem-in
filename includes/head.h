@@ -61,6 +61,7 @@ typedef struct					s_lemin
 
 	int							from[2];
 	int							gone;
+	int 						gen;
 	int 						surcharged;
 }								t_lemin;
 
@@ -87,9 +88,12 @@ typedef struct					s_god
 	t_lemin						***adjacent_matrix;
 	t_ints						surcharged_link;
 
-	t_ints						**paths;
+	t_ints						*paths;
+	t_ints 						*final_path;
+	int 						nb_final_paths;
 	int							nb_of_paths;
 	int							ants;
+	long int 					turn;
 
 	t_lemin						*start;
 	t_lemin						*end;
@@ -108,6 +112,12 @@ typedef struct					s_god
 	int							goulots;
 	int							side;
 }								t_god;
+
+typedef struct 					s_print
+{
+	int 						index;
+	char 						buff[100000];
+} 								t_print;
 
 /*
 ******************************************************************************
@@ -134,7 +144,7 @@ int				link_rooms(t_tab *lem_in, char *line, t_lemin ****adjacent_matrix, t_god 
 int				order_my_little_connexions(t_god *god);
 void			get_rooms_in_tab(t_god *god);
 t_god			**ft_remember_god(void);
-t_lemin		***ft_lemin_htable(void);
+t_lemin			***ft_lemin_htable(void);
 
 /*
 **************
@@ -159,11 +169,20 @@ void			clean_surcharged_tab(t_ints tab);
 int				print_matrix(t_tab *lem_in);
 void 			print_name_and_from_dist(t_god *god);
 void 			print_paths(t_god *god);
+void 			print_final_paths(t_god *god);
 void 			print_this_path(t_god *god, t_ints path);
 void			print_room_infos(t_god *god);
 void			print_used_link_state(t_god *god);
 void			print_tmp_used_link_state(t_god *god);
 void			print_surcharged_tab(t_god *god);
+
+/*
+**************
+**   DISPLAY	**
+**************
+*/
+
+int 			display_result(t_god *god, char **av);
 
 /*
 **************
@@ -180,7 +199,8 @@ int				how_many_entries_exits(t_god *god);
 int				close_a_path(t_lemin *here);
 void			find_a_path(t_lemin *here, int id, t_ints *path);
 int				get_rid_of_dead_ends(t_god *god);
-int				ft_evaluate_set_of_path(t_god *god);
+int				ft_evaluate_set_of_path(t_god *god, int nb_paths);
+//int				ft_evaluate_set_of_paths(t_god *god, int nb_paths);
 
 /*
 *******************
@@ -196,7 +216,7 @@ int				ft_evaluate_set_of_path(t_god *god);
 **************
 */
 
-int 			breadth_first_search(t_god *god, int nb_max);
+int 			breadth_first_search(t_god *god);
 
 int				refresh_a_star(t_god *god);
 int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end);

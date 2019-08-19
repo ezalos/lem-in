@@ -168,18 +168,23 @@ void 			print_this_path(t_god *god, t_ints path)
 void 			print_paths(t_god *god)
 {
 	int 		i;
-	int 		j;
 
 	i = 0;
 	while (i < god->goulots)
 	{
-		j = 1;
-		ft_printf("====== SET DE CHEMIN %d ======\n", i + 1);
-		while (j <= i)
-		{
-			print_this_path(god, god->paths[i][j]);
-			j++;
-		}
+		print_this_path(god, god->paths[i]);
+		i++;
+	}
+}
+
+void 			print_final_paths(t_god *god)
+{
+	int 		i;
+
+	i = 0;
+	while (i < god->nb_final_paths)
+	{
+		print_this_path(god, god->final_path[i]);
 		i++;
 	}
 }

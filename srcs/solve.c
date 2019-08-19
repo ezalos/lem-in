@@ -25,7 +25,7 @@ int				full_process(t_god *god, int nb_max)
 	}
 	// ft_printf("%s\n", __func__);
 	// print_name_and_from_dist(god);
-	tmp = breadth_first_search(god, nb_max);
+	tmp = breadth_first_search(god);
 	return (tmp);
 }
 
@@ -41,54 +41,31 @@ void			does_path_exist(t_god *god, int a, int b)
 void 			init_paths(t_god *god)
 {
 	int i;
-	int j;
 
 	i = 0;
-	god->paths = ft_memalloc(sizeof(t_ints **) * (god->goulots + 1));
+	god->turn = 1000000000;
+	god->final_path = NULL;
+	god->nb_final_paths = 0;
+	god->paths = ft_memalloc(sizeof(t_ints *) * (god->goulots + 1));
 	while (i <= god->goulots)
 	{
-		god->paths[i] = ft_memalloc(sizeof(t_ints *) * (god->goulots + 1));
-		j = 0;
-		while (j < god->goulots)
-		{
-			god->paths[i][j] = ft_memalloc(sizeof(t_ints) * god->size * 2); // probleme ave clean garbage voir avec LOUIS
-			// En fait le probleme vient de l'allocation du 2 eme malloc de god->paths[i] essayer de comprendre pk pour utiliser moins de memoire.
-			j++;
-		}
+		god->paths[i] = ft_memalloc(sizeof(t_ints) * god->size * 2); // probleme ave clean garbage voir avec LOUIS
+		// En fait le probleme vient de l'allocation du 2 eme malloc de god->paths[i] essayer de comprendre pk pour utiliser moins de memoire.
 		i++;
 	}
 }
 
 int				lets_calcul(t_god *god)
 {
-	int	i;
-	int turn = 0;
-	int nb_found;
-	int tmp;
-
 	time_exe("SOLVE");
-	nb_found = 0;
 	print_room_infos(god);
 	how_many_entries_exits(god);
 	if (!god->goulots && ft_printf("%~{255;155;155}There is no solution%~{}\n"))
 		return (0);
 	init_paths(god);
-	i = 1;
-	while (i <= god->goulots)
-	{
-		// ft_printf("=======================\n");
-		// ft_printf("GOULOTS == %d\n", god->goulots);
-		// ft_printf("i = == %d\n", i);
-		// ft_printf("=======================\n");
-
-		if ((tmp = full_process(god, i)) <= nb_found)
-			break ;
-		nb_found = tmp;
-		i++;
-	}
-	god->goulots = nb_found; // FAIRE TRES ATTENTION ON PERD DU COUP LA TAILLE REEL DU NONMBRE DE SET DE PATHS
-	print_paths(god);
-	turn = ft_evaluate_set_of_path(god);
-	ft_printf("%~{255;155;155}Nombre de tour trouves [%d]%~{}\n", turn);
+	full_process(god, god->goulots);
+	// print_paths(god);
+	ft_printf("%~{255;155;155}Nombre de tour trouves [%d]%~{}\n", god->turn);
+	//print_final_paths(god);
 	return (0);
 }

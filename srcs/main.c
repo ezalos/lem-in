@@ -23,10 +23,10 @@ int		main(int ac, char **av)
 	if ((fd = open(av[1], O_RDONLY)) > 0)
 	{
 		god = init(fd);
-			ft_printf("INNNN\n");
 		lets_calcul(god);
+		display_result(god, av);
 	}
 	print_time();
-	//ft_clean_garbage();
+	ft_clean_garbage();
 	return (0);
 }

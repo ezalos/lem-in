@@ -55,8 +55,8 @@ SRCS_LI		=			main\
 						path_fill_astar\
 						path_quantity_estimate\
 						path_follow_astar\
-						connexion_tools\
-						new_algo
+						new_algo\
+						display_result
 
 # SRCS_VS		=	visu-hex
 
