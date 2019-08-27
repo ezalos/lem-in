@@ -26,92 +26,261 @@ void		init_used_tab(t_god *god)
 	}
 }
 
-int			file_steps(int fd, char **line, intmax_t total)
+void 		print_whole_buffer(t_print *print)
 {
-	static int				step;
-	static intmax_t			where;
-	int						r_v;
-	int						i;
+	t_print *tmp;
 
-	i = -1;
-	if ((r_v = ft_gnl(fd, line)) > 0)
+	tmp = print;
+	while (tmp != NULL)
 	{
-		ft_progress(__func__, where += r_v + 1, total);
-		if ((*line)[0] == '#' || (*line)[0] == 'L')
-			return (INIT_SPEC);
-		else if (!step)
-		{
-			while ((*line)[++i])
-				if (!ft_isdigit((*line)[i]))
-					return (ERROR);
-			return (step = INIT_QANT);
-		}
-		else if (step && ft_char_srch('-', (*line)))
-			return ((step = INIT_LINK));
-		else if (step + 1 == INIT_ROOM)
-			return (INIT_ROOM);
-		else
-			return (ERROR);
+		write(1, tmp->buff, tmp->index);
+		tmp = tmp->next;
 	}
-	return (r_v);
 }
 
-t_god		*init(int fd)
+int 		is_it_link_part(char *str)
 {
-	t_god		*god;
-	char		*line;
-	int			r_v;
-	int			place;
-	int			ants_nb;
-	intmax_t	ste;
-	intmax_t	total;
-	int			i;
+	int i;
 
-	god = ft_memalloc(sizeof(t_god));
-	place = 0;
-	line = NULL;
-	ste = 0;
-	total = lseek(fd, 0, SEEK_END);
-	lseek(fd, 0, SEEK_SET);
-	while ((r_v = file_steps(fd, &line, total)) > 0)
+	i = 0;
+	if (str[i] == '#' || str[i] == 'L')
+		return (0);
+	while (str[i] != '\0')
 	{
-		ste++;
-		if (r_v == INIT_SPEC)
-		{
-			if (line[0] == 'L')
-				(void)place;
-			else if (!ft_strcmp(line + 2, "start"))
-				place = START;
-			else if (!ft_strcmp(line + 2, "end"))
-				place = END;
-			else if (!ft_strncmp(line, "#Here is the number of lines required:", 38))
-			{
-				i = 0;
-				while (!ft_isdigit(line[i]))
-					i++;
-				god->expected_solution = ft_atoi(line + i);
-			}
-		}
-		else if (r_v == INIT_QANT)
-			ants_nb = ft_atoi(line);
-		else if (r_v == INIT_ROOM)
-			add_rooms(god, place, ants_nb, line);
-		else if (r_v == INIT_LINK)
-			link_rooms(god->lem_in, line, &god->adjacent_matrix, god);
-		else
-			return (PTR_ERROR);
-		// ft_strdel(&line);
-		if (r_v != INIT_SPEC)
-			place = 0;
+		if (str[i] == ' ')
+			return (0);
+		i++;
 	}
-	// ft_progress(__func__, 4, 4);
-	close(fd);
-	god->end = ft_tab_reach_end(god->lem_in, 0)->content;
-	god->extremities[1] = ft_tab_reach_end(god->lem_in, 0)->content;
+	return (1);
+}
+
+t_print 	*init_print(void)
+{
+	t_print *print;
+
+	print = ft_memalloc(sizeof(t_print));
+	print->next = NULL;
+	print->index = 0;
+	return (print);
+}
+
+void 		add_to_buffer(t_print *print, char *str)
+{
+	int i;
+	t_print *tmp;
+
+	tmp = print;
+	while (print->next != NULL)
+		print = print->next;
+	if (ft_strlen(str) + print->index > P_BUFF - 5)
+	{
+		print->next = init_print();
+		print = print->next;
+	}
+	i = 0;
+	while (str[i] != '\0')
+		print->buff[print->index++] = str[i++];
+	print->buff[print->index++] = '\n';
+	print = tmp;
+}
+
+int			parse_ants(t_god *god, int fd, t_print *print)
+{
+	int i;
+	char *line;
+	int tmp;
+
+	i = 0;
+	if (ft_gnl(fd, &line) > 0)
+	{
+		while (line[i] != '\0')
+		{
+			if (line[i] < '0' || line[i] > '9')
+				return (-1);
+			i++;
+		}
+	}
+	else
+		return (-1);
+	if ((tmp = ft_atol(line)) == -1)
+		return (-1);
+	god->ants = tmp;
+	add_to_buffer(print, line);
+	ft_memdel((void **)&line);
+	god->dbt = 0;
+	god->fin = 0;
+	return (1);
+}
+int 		check_room_parsing_suit(char *str, int i, int step)
+{
+	if (str[i] == ' ' && str[i] == ' ')
+		return (-1);
+	if ((int)(str[i]) < 32 || (int)(str[i]) > 127)
+		return (-1);
+	if (str[i] == '-' && step == 0)
+		return (-1);
+	return (0);
+}
+int 		check_room_parsing(t_print *print, char *str)
+{
+	int i;
+	int step;
+
+	i = 0;
+	step = 0;
+	if (str[i] == 'L')
+		return (-1);
+	while (str[i] != '\0')
+	{
+		if (str[i] == ' ' && str[i + 1] != ' ' && str[i + 1] != '\0')
+			step++;
+		else if (check_room_parsing_suit(str, i, step) == -1)
+			return (-1);
+		if (step > 0 && (str[i] == '-' || str[i] == '+') && (str[i + 1] == '-' || str[i + 1] == '+'))
+			return (-1);
+		if (step > 0 && !(str[i] == '-' || str[i] == '+' || str[i] == ' ' || (str[i] >= '0' && str[i] <= '9')))
+			return (-1);
+		i++;
+	}
+	if (step != 2)
+		return (-1);
+	add_to_buffer(print, str);
+	return (0);
+}
+
+int 		check_link_parsing(t_print *print, char *str)
+{
+	int i;
+	int nb;
+
+	i = 0;
+	nb = 0;
+	if (str[i] == 'L')
+		return (-1);
+	while (str[i] != '\0')
+	{
+		if (str[i] == ' ')
+			return (-1);
+		if (str[i] == '-')
+			nb++;
+		i++;
+	}
+	if (nb == 0)
+		return (-1);
+	add_to_buffer(print, str);
+	return (0);
+}
+
+int 		parse_extremity(t_god *god, t_print *print, int fd, int place, char *line)
+{
+	char *str;
+	int ret;
+
+	add_to_buffer(print, line);
+	while ((ret = ft_gnl(fd, &str)) > 0 && str[0] == '#' && ft_strcmp(str + 1, "#start") && ft_strcmp(str + 1, "#end"))
+	{
+		add_to_buffer(print, str);
+		ft_memdel((void **)&str);
+	}
+	if (ret > 0)
+	{
+		if (check_room_parsing(print, str) != -1)
+			add_rooms(god, place, god->ants, str);
+		else
+			return (-1);
+	}
+	else
+		return (-1);
+	ft_memdel((void **)&str);
+	return (0);
+}
+
+int 		parse_rooms(t_god *god, int fd, t_print *print, char *line)
+{
+	int ret;
+
+time_exe(__func__);
+	ret = 0;
+	if (line[0] == '#' && (line[1] != '#' || (line[1] == '#' && !ft_strcmp(line + 2, "start") && !ft_strcmp(line + 2, "end"))))
+		add_to_buffer(print, line);
+	else if (god->dbt == 0 && line[0] == '#' && line[1] == '#' && !ft_strcmp(line + 2, "start") && (god->dbt = 1) == 1)
+		ret = parse_extremity(god, print, fd, START, line);
+	else if (god->fin == 0 &&line[0] == '#' && line[1] == '#' && !ft_strcmp(line + 2, "end") && (god->fin = 1) == 1)
+		ret = parse_extremity(god, print, fd, END, line);
+	else if ((ret = check_room_parsing(print, line)) != -1)
+		add_rooms(god, 0, god->ants, line);
+	if (ret == -1)
+		return (-1);
+	return (0);
+}
+
+int 		parse_links(t_god *god, int fd, t_print *print, char *line)
+{
+	char *str;
+	int ret;
+
+	time_exe(__func__);
+
+	if (check_link_parsing(print, line) != -1)
+		ret = link_rooms(god->lem_in, line, &god->adjacent_matrix, god);
+	else
+		return (-1);
+	while ((ret = ft_gnl(fd, &str)) > 0)
+	{
+		if (str[0] == '#' && str[1] != '#')
+			add_to_buffer(print, str);
+		else if ((ret = check_link_parsing(print, str)) != -1)
+			ret = link_rooms(god->lem_in, str, &god->adjacent_matrix, god);
+		if (ret == -1)
+			return (-1);
+		ft_memdel((void **)&str);
+	}
+	return (0);
+}
+
+int 		init_suit(t_god *god, t_print *print)
+{
+	god->end = ft_tab_reach_end(god->lem_in, 0)->content; // NE PAS TOUCHER
+	god->extremities[1] = ft_tab_reach_end(god->lem_in, 0)->content; // NE PAS TOUCHER
 	//print_matrix(god->lem_in);
-	order_my_little_connexions(god);
-	get_rooms_in_tab(god);
-	*ft_remember_god() = god;
-	init_used_tab(god);
-	return (god);
+	order_my_little_connexions(god);// NE PAS TOUCHER
+	get_rooms_in_tab(god);// NE PAS TOUCHER
+	how_many_entries_exits(god);
+	if (!god->goulots)
+		return (-1);
+	*ft_remember_god() = god;// NE PAS TOUCHER
+	init_used_tab(god);// NE PAS TOUCHER
+	print_whole_buffer(print);
+	write(1, "\n", 1); // JUSTE POUR CHECKER
+	return (0);
+}
+
+int 		init(t_god *god, int fd)
+{
+	t_print *print;
+	char *line;
+	int ret;
+
+	time_exe(__func__);
+	print = init_print();
+	if (parse_ants(god, fd, print) == -1)
+		return (-1);
+	while ((ret = ft_gnl(fd, &line)) > 0 && is_it_link_part(line) == 0)
+	{
+		if (parse_rooms(god, fd, print, line) == -1)
+			return (-1);
+		ft_memdel((void **)&line);
+	}
+	if (god->dbt != 1 || god->fin != 1)
+		return (-1);
+	if (ret <= 0)
+		return (-1);
+	if (parse_links(god, fd, print, line) == -1)
+		return (-1);
+	if (fd != 1)
+		close(fd);
+	time_exe(__func__);
+	if (init_suit(god, print) == -1)
+		return (-1);
+	return (0);
 }

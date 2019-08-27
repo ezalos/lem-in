@@ -23,6 +23,7 @@ t_lemin		***ft_lemin_htable(void)
 
 int machin(int nb, t_lemin *ptr)
 {
+		time_exe(__func__);
 	if (!(*ft_lemin_htable())[nb])
 		(*ft_lemin_htable())[nb] = ptr;
 	else
@@ -43,9 +44,9 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	t_tab		*new;
 	t_lemin		*room;
 	char		**split;
-	int			len;
 	int			nb;
 
+	time_exe(__func__);
 	lem_in = &god->lem_in;
 	if (!(split = ft_strsplit(line, ' ')))
 		return (ERROR);
@@ -60,7 +61,7 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	room->place = place;
 	room->y_coord = ft_atoi(split[1]);
 	room->x_coord = ft_atoi(split[2]);
-	//ft_strdel_multi(4, &split[0], &split[1], &split[2], &split);//need to be protected against more than 3 str
+	ft_strdel_multi(4, &split[0], &split[1], &split[2], &split);
 	if (!(new = ft_tabnew_ptr(room, sizeof(void*))))
 		return (ERROR);
 	if (place < 0 || !(*lem_in))
@@ -73,20 +74,6 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	else if (place > 0)
 		ft_tabadd_end(*lem_in, new, 0);
 	else
-	{
 		ft_tabadd(lem_in, new, 0, 1);
-		// len = ft_tab_lendir(*lem_in, 0);
-		// if (((t_lemin*)ft_tab_dirth(*lem_in, 0, len - 1)->content)->place == 1)
-		// {
-		// 	ft_tabadd(lem_in, new, 0, len - 1);
-		// }
-		// else
-		// {
-		// 	god->end = room;
-		// 	god->extremities[1] = room;
-		// 	ft_tabadd(lem_in, new, 0, len);
-		// }
-	}
 	return (VALID);
-	len++;
 }

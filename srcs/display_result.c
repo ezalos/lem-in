@@ -12,22 +12,6 @@
 
 #include "../includes/head.h"
 
-int				display_map(t_god *god, char **av)
-{
-	int fd;
-	char buffer[10000];
-	int len;
-
-	(void)god;
-	if ((fd = open(av[1], O_RDONLY)) < 0)
-		return (-1);
-	while ((len = read(fd, buffer, 10000)) > 0)
-		write(1, buffer, len);
-	close(fd);
-	write(1, "\n", 1);
-	return (0);
-}
-
 void 			fill_buffer(t_print *print, char *nb, char *name)
 {
 	int i;
@@ -69,7 +53,6 @@ int				moove_one_turn(t_god *god, t_print *print)
 			if (god->rooms[god->final_path[i][j]]->gen != -1)
 			{
 				fill_buffer(print, ft_itoa(god->rooms[god->final_path[i][j]]->gen), god->rooms[god->final_path[i][j + 1]]->name);
-				//ft_printf("L%d-%s ", god->rooms[god->final_path[i][j]]->gen, god->rooms[god->final_path[i][j + 1]]->name);
 				god->rooms[god->final_path[i][j + 1]]->gen = god->rooms[god->final_path[i][j]]->gen;
 				god->rooms[god->final_path[i][j]]->gen = -1;
 				tmp++;
@@ -113,11 +96,20 @@ int 			*init_waiting_tab(t_god *god)
 
 	tab = ft_memalloc(sizeof(int *) * god->nb_final_paths);
 	i = 0;
+	len = 0;
 	while (i < god->nb_final_paths)
 		len = len + god->final_path[i++][0];
 	i = -1;
-	while (++i < god->nb_final_paths)
-		tab[i] = god->turn - god->final_path[i][0] + 2;
+	if ((mod = ((god->ants + len) % god->nb_final_paths)) == 0)
+	{
+		while (++i < god->nb_final_paths)
+			tab[i] = god->turn - god->final_path[i][0] + 1;
+	}
+	else
+	{
+		while (++i < god->nb_final_paths)
+			tab[i] = god->turn - god->final_path[i][0];
+	}
 	if ((mod = ((god->ants + len) % god->nb_final_paths)) != 0)
 	{
 		i = -1;
@@ -144,12 +136,13 @@ void			print_buffer(t_print *print)
 
 int				display_ants_turn(t_god *god)
 {
-	int genome = 1;
+	int genome;
 	int tmp;
 	int t_ants;
 	int *waiting_ant;
 	t_print print;
 
+	genome = 1;
 	print.index = 0;
 	waiting_ant = init_waiting_tab(god);
 	tmp = 0;
@@ -158,7 +151,12 @@ int				display_ants_turn(t_god *god)
 	{
 		tmp = moove_one_turn(god, &print);
 		if (t_ants != 0)
+		{
 			t_ants = t_ants - push_ants(god, &genome, waiting_ant, &print);
+			tmp = 1;
+		}
+		else if (tmp == 0)
+			break ;
 		print_buffer(&print);
 	}
 	return (0);
@@ -166,8 +164,10 @@ int				display_ants_turn(t_god *god)
 
 int 			display_result(t_god *god, char **av)
 {
-	display_map(god, av);
+	//display_map(god, av);
+	time_exe(__func__);
 	(void)av;
 	display_ants_turn(god);
+	//ft_printf("%~{100;255;255}[%d]%~{}\n", god->ants);
 	return (0);
 }

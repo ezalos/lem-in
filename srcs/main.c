@@ -12,20 +12,35 @@
 
 #include "../includes/head.h"
 
+int 	clean_error(void)
+{
+	ft_clean_garbage();
+	write(2, "ERROR\n", 6);
+	return (-1);
+}
+
 int		main(int ac, char **av)
 {
 	t_god			*god;
 	int				fd;
 
-	if (ac != 2)
-		return (0);
-	time_exe("INIT");
-	if ((fd = open(av[1], O_RDONLY)) > 0)
+	fd = 0;
+	god = ft_memalloc(sizeof(t_god));
+	if (ac < 2)
 	{
-		god = init(fd);
-		lets_calcul(god);
-		display_result(god, av);
+		if (init(god, fd) == -1)
+			return (clean_error());
 	}
+	else if (ac == 2)
+	{
+		if ((fd = open(av[1], O_RDONLY)) <= 0 || init(god, fd) == -1)
+			return (clean_error());
+	}
+	else
+		return (0);
+	if (lets_calcul(god) == -1)
+		return (clean_error());
+	display_result(god, av);
 	print_time();
 	ft_clean_garbage();
 	return (0);

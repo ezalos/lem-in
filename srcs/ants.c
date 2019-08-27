@@ -12,26 +12,6 @@
 
 #include "../includes/head.h"
 
-// func : donne le nb de ligne pour un set
-//
-// func : qui imprime la reponse au bon format
-
-/*
-** int			cumulative_length_of_n_paths(t_ints *set, int path_quant)
-** {
-** 	int sum;
-** 	int i;
-**
-** 	sum = 0;
-** 	i = -1;
-** 	while (++i < path_quant)
-** 	{
-** 		(void)set;
-** 	}
-** 	return (sum);
-** }
-*/
-
 void		sort_t_ints(t_ints *set_of_paths, int nb_of_paths)
 {
 	int i;
@@ -124,6 +104,7 @@ int			ft_evaluate_set_of_path(t_god *god, int nb_paths)
 
 	sort_t_ints(god->paths, nb_paths);
 	turn = send_using_n_path(god, god->paths, nb_paths);
+	//ft_printf("%d\n", turn);
 	//ft_printf("%~{255;255;155}Nb of paths: %~{255;155;155}%d%~{}\n", set);
 	return (turn);
 }

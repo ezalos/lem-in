@@ -57,15 +57,12 @@ void 			init_paths(t_god *god)
 
 int				lets_calcul(t_god *god)
 {
-	time_exe("SOLVE");
-	print_room_infos(god);
-	how_many_entries_exits(god);
-	if (!god->goulots && ft_printf("%~{255;155;155}There is no solution%~{}\n"))
-		return (0);
+	time_exe(__func__);
+	//print_room_infos(god);
 	init_paths(god);
 	full_process(god, god->goulots);
-	// print_paths(god);
-	ft_printf("%~{255;155;155}Nombre de tour trouves [%d]%~{}\n", god->turn);
+	//ft_printf("[%d]\n", god->turn);
+	//print_paths(god);
 	//print_final_paths(god);
 	return (0);
 }

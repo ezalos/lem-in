@@ -18,6 +18,8 @@ t_lemin			*find_room_name_htable(char *line)
 	int nb;
 
 	nb = ft_rand(HTABLE_SIZE, ft_seed_string(line));
+	if ((*ft_lemin_htable())[nb] == NULL)
+		return (NULL);
 	room = (*ft_lemin_htable())[nb];
 	while (ft_strcmp(room->name, line))
 	{
@@ -27,24 +29,6 @@ t_lemin			*find_room_name_htable(char *line)
 	}
 	return (room);
 }
-
-// int			find_room_name(t_tab *lem_in, char *line, size_t dir)
-// {
-// 	int		i;
-// 	t_tab	*tmp;
-//
-// 	tmp = lem_in;
-// 	i = 0;
-// 	while (tmp)
-// 	{
-// 		if (!ft_strcmp(((t_lemin*)tmp->content)->name, line))
-// 			return (i);
-// 		i++;
-// 		tmp = tmp->dir[dir];
-// 	}
-// 	return (-1);
-// }
-
 
 t_lemin		***first_call(t_tab *lem_in, t_god *god)
 {
@@ -75,14 +59,17 @@ int			link_rooms(t_tab *lem_in, char *line, t_lemin ****adjacent_matrix, t_god *
 	t_lemin		*_first;
 	t_lemin		*_second;
 
+	time_exe(__func__);
 	if (!*adjacent_matrix)
 		*adjacent_matrix = first_call(lem_in, god);
 	if (!my_fs)
 		my_fs = ft_memalloc(sizeof(int) * (god->size + 1));
 	if (!(split = ft_strsplit(line, '-')))
 		return (ERROR);
-	_first = find_room_name_htable(split[0]);
-	_second = find_room_name_htable(split[1]);
+	if ((_first = find_room_name_htable(split[0])) == NULL)
+		return (-1);
+	if ((_second = find_room_name_htable(split[1])) == NULL)
+		return (-1);
 	(*adjacent_matrix)[_first->id][my_fs[_first->id]++] = _second;
 	(*adjacent_matrix)[_second->id][my_fs[_second->id]++] = _first;
 	return (SUCCESS);

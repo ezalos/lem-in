@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/08/07 15:11:25 by ythomas          ###   ########.fr        #
+#    Updated: 2019/08/27 15:36:23 by ythomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,9 @@ SRCS_LI		=			main\
 						path_quantity_estimate\
 						path_follow_astar\
 						new_algo\
-						display_result
+						display_result\
+						tools\
+						link_data
 
 # SRCS_VS		=	visu-hex
 

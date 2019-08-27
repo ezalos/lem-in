@@ -37,6 +37,8 @@
 # define LEFT					2
 # define UP						3
 
+# define P_BUFF					5000
+
 # include "../../libft/includes/libft.h"
 
 typedef int* 					t_ints;
@@ -102,6 +104,9 @@ typedef struct					s_god
 	int							size;
 	int							expected_solution;
 
+	int 						dbt;
+	int 						fin;
+
 	int							name_len;
 
 	t_ints						extremities_list[2];
@@ -116,7 +121,8 @@ typedef struct					s_god
 typedef struct 					s_print
 {
 	int 						index;
-	char 						buff[100000];
+	char 						buff[10000];
+	struct s_print 				*next;
 } 								t_print;
 
 /*
@@ -134,7 +140,7 @@ typedef struct 					s_print
 **   INIT	**
 **************
 */
-t_god			*init(int fd);
+int 			init(t_god *god, int fd);
 
 int				add_rooms(t_god *god, int place, int ants_nb, char *line);
 
@@ -204,12 +210,10 @@ int				ft_evaluate_set_of_path(t_god *god, int nb_paths);
 
 /*
 *******************
-** 	CONNEXIONS		**
+** 	TOOLS		**
 *******************
 */
-
-
-
+long			ft_atol(char *src);
 /*
 **************
 **   	A*		**

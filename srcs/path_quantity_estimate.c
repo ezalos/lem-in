@@ -48,7 +48,6 @@ int				how_many_extremities(t_god *god, int side)
 			// ft_printf("%~{255;155;155}");
 		// ft_printf("%*d%~{} ", name_size, ((t_lemin*)god->extremities[side]->connexions[i])->id);
 	}
-	ft_printf("\n");
 	return (1);
 }
 
@@ -68,6 +67,6 @@ int				how_many_entries_exits(t_god *god)
 			god->side = 0;
 		}
 		clear_gone(god);
-		ft_printf("Goulots %d\tEntry %d\tExit %d\n\n", god->goulots, god->extremities_list[0][0], god->extremities_list[1][0]);
+		//ft_printf("Goulots %d\tEntry %d\tExit %d\n\n", god->goulots, god->extremities_list[0][0], god->extremities_list[1][0]);
 		return (god->goulots);
 }
