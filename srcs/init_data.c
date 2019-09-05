@@ -24,15 +24,6 @@ int			order_my_little_connexions(t_god *god)
 		while (now)
 		{
 			here = now->content;
-			i = -1;
-			// while (++i < god->size)
-			// 	if (!here->connexions[i])
-			// 	{
-			// 		j = -1;
-			// 		while (++j + i < god->size)
-			// 			if (here->connexions[i + j])
-			// 				ft_swap(&here->connexions[i], &here->connexions[i + j], sizeof(void*));
-			// 	}
 			i = 0;
 			while (here->connexions[i])
 				i++;
@@ -53,7 +44,6 @@ void		get_rooms_in_tab(t_god *god)
 	i = -1;
 	while (++i < god->size)
 	{
-		// god->rooms = ft_memalloc(sizeof(t_lemin*));
 		god->rooms[i] = now->content;
 		god->rooms[i]->id = i;
 		now = now->dir[0];

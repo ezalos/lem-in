@@ -15,7 +15,7 @@ VISU	= visu-hex
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O0 -g
 
 DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 -O2 -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int\
@@ -58,7 +58,13 @@ SRCS_LI		=			main\
 						new_algo\
 						display_result\
 						tools\
-						link_data
+						link_data\
+						visual_setup\
+						creat_position\
+						get_param\
+						hashtable\
+						init_checking\
+						init_parsing
 
 # SRCS_VS		=	visu-hex
 

@@ -162,12 +162,9 @@ int				display_ants_turn(t_god *god)
 	return (0);
 }
 
-int 			display_result(t_god *god, char **av)
+int 			display_result(t_god *god)
 {
-	//display_map(god, av);
 	time_exe(__func__);
-	(void)av;
 	display_ants_turn(god);
-	//ft_printf("%~{100;255;255}[%d]%~{}\n", god->ants);
 	return (0);
 }

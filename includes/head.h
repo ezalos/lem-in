@@ -16,6 +16,8 @@
 
 # define FAILURE				0
 # define SUCCESS				1
+# define F_V 					1
+# define F_H 					2
 
 # define START					-1
 # define END					1
@@ -38,6 +40,15 @@
 # define UP						3
 
 # define P_BUFF					5000
+
+/********** VISUAL DEFINE ************/
+
+#define H_SCREEN				1080
+#define W_SCREEN				1920
+#define MAX_PIX					2073600
+
+/*************************************/
+
 
 # include "../../libft/includes/libft.h"
 
@@ -74,6 +85,10 @@ typedef struct					s_meta
 	int							*ants_sent;
 }								t_meta;
 
+
+
+
+
 typedef struct 					s_piles
 {
 	t_ints 						pile_a;
@@ -81,7 +96,35 @@ typedef struct 					s_piles
 	int 						finish;
 	int 						deep;
 	int 						actual_room;
+	int 						ste;
 }								t_piles;
+
+
+
+
+
+
+typedef struct 					s_hashelement
+{
+	void						*data;
+	const void					*key;
+	size_t						key_length;
+	struct s_hashelement		*next;
+}								t_hashelement;
+# define HASHTABLE_DEFAULT_SIZE 4096
+
+typedef struct 					s_hashtable
+{
+	struct s_hashelement		**elements;
+	size_t						elements_size;
+	size_t						elements_count;
+}								t_hashtable;
+
+struct s_hashtable				*hashtable_init(void);
+void							hashtable_append(struct s_hashtable *const hashtable, void *const data, const void *const key, const size_t key_length);
+void							*hashtable_value(struct s_hashtable *const hashtable, const void *const key, const size_t key_length);
+void							hashtable_deinit(struct s_hashtable *const hashtable);
+void                     		print_hashtable(struct s_hashtable *const hashtable);
 
 typedef struct					s_god
 {
@@ -92,10 +135,13 @@ typedef struct					s_god
 
 	t_ints						*paths;
 	t_ints 						*final_path;
+	int 						*waiting_ant;
 	int 						nb_final_paths;
 	int							nb_of_paths;
 	int							ants;
 	long int 					turn;
+
+	struct s_hashtable			*hashtable;
 
 	t_lemin						*start;
 	t_lemin						*end;
@@ -113,6 +159,7 @@ typedef struct					s_god
 
 	int 						trigger;
 	int 						variation;
+	int 						visu;
 
 	int							goulots;
 	int							side;
@@ -124,6 +171,32 @@ typedef struct 					s_print
 	char 						buff[10000];
 	struct s_print 				*next;
 } 								t_print;
+
+
+
+
+
+typedef struct 					s_room
+{
+	double 						x;
+	double 						y;
+	char 						*name;
+	int 						nb_rooms;
+}								t_room;
+
+typedef struct 					s_visu
+{
+	int 						nb_paths;
+	t_room 						***paths;
+	int 						ants;
+	int 						turn;
+	int 						nb_h;
+	int 						rate_x;
+	int 						rate_y;
+}								t_visu;
+
+
+
 
 /*
 ******************************************************************************
@@ -141,16 +214,33 @@ typedef struct 					s_print
 **************
 */
 int 			init(t_god *god, int fd);
+int 			lem_in(t_god *god, char **av, int fd);
 
 int				add_rooms(t_god *god, int place, int ants_nb, char *line);
 
+int 			parse_links(t_god *god, int fd, t_print *print, char *line);
+int 			parse_rooms(t_god *god, int fd, t_print *print, char *line);
+int 			parse_extremity(t_god *god, t_print *print,
+				int fd, int place, char *line);
+int				parse_ants(t_god *god, int fd, t_print *print);
+void 			print_whole_buffer(t_print *print);
+int 			is_it_link_part(char *str);
+int 			check_room_parsing_suit(char *str, int i, int step);
+int 			check_room_parsing(t_print *print, char *str);
+int 			check_link_parsing(t_print *print, char *str);
+
+
 int				find_room_name(t_tab *lem_in, char *line, size_t dir);
-int				link_rooms(t_tab *lem_in, char *line, t_lemin ****adjacent_matrix, t_god *god);
+int				link_rooms(t_tab *lem_in, char *line,
+				t_lemin ****adjacent_matrix, t_god *god);
+void			init_stack(int size, t_piles *stack, int id);
 
 int				order_my_little_connexions(t_god *god);
 void			get_rooms_in_tab(t_god *god);
 t_god			**ft_remember_god(void);
 t_lemin			***ft_lemin_htable(void);
+
+int 			clean_help(int err);
 
 /*
 **************
@@ -188,7 +278,12 @@ void			print_surcharged_tab(t_god *god);
 **************
 */
 
-int 			display_result(t_god *god, char **av);
+int 			display_result(t_god *god);
+void 			add_to_buffer(t_print *print, char *str);
+
+int 			ft_setup_visu(t_god *god);
+int 			launch_visual(t_visu *visu);
+void			init_new_coord(t_visu *visu);
 
 /*
 **************

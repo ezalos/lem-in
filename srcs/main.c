@@ -24,24 +24,19 @@ int		main(int ac, char **av)
 	t_god			*god;
 	int				fd;
 
+	(void)ac;
 	fd = 0;
 	god = ft_memalloc(sizeof(t_god));
-	if (ac < 2)
-	{
-		if (init(god, fd) == -1)
-			return (clean_error());
-	}
-	else if (ac == 2)
-	{
-		if ((fd = open(av[1], O_RDONLY)) <= 0 || init(god, fd) == -1)
-			return (clean_error());
-	}
-	else
-		return (0);
+	god->visu = 0;
+	if (lem_in(god, av, fd) == -1)
+		return (clean_error());
 	if (lets_calcul(god) == -1)
 		return (clean_error());
-	display_result(god, av);
-	print_time();
+	if (!god->visu)
+		display_result(god);
+	else
+		ft_setup_visu(god);
+	//print_time();
 	ft_clean_garbage();
 	return (0);
 }

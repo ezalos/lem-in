@@ -49,8 +49,7 @@ void 			init_paths(t_god *god)
 	god->paths = ft_memalloc(sizeof(t_ints *) * (god->goulots + 1));
 	while (i <= god->goulots)
 	{
-		god->paths[i] = ft_memalloc(sizeof(t_ints) * god->size * 2); // probleme ave clean garbage voir avec LOUIS
-		// En fait le probleme vient de l'allocation du 2 eme malloc de god->paths[i] essayer de comprendre pk pour utiliser moins de memoire.
+		god->paths[i] = ft_memalloc(sizeof(t_ints) * god->size * 2);
 		i++;
 	}
 }

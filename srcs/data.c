@@ -53,7 +53,7 @@ void 		clear_gone(t_god *god)
 			god->rooms[i]->last_room = NULL;
 			god->rooms[i]->surcharged = 0;
 			god->rooms[i]->blocked = 0;
-			god->rooms[i]->gen = -1; //faire une fonction jsute pour ca de toue urgence et ne pqs oublier !!
+			god->rooms[i]->gen = -1;
 		}
 }
 

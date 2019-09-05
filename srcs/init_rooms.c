@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/head.h"
-
+/*
 t_lemin		***ft_lemin_htable(void)
 {
 	static t_lemin **bg;
@@ -21,22 +21,50 @@ t_lemin		***ft_lemin_htable(void)
 	return (&bg);
 }
 
-int machin(int nb, t_lemin *ptr)
+// int machin(int nb, t_lemin *ptr)
+// {
+// 		time_exe(__func__);
+// 	if (!(*ft_lemin_htable())[nb])
+// 		(*ft_lemin_htable())[nb] = ptr;
+// 	else
+// 	{
+// 		while ((*ft_lemin_htable())[nb])
+// 			if (nb >= HTABLE_SIZE - 1)
+// 				nb = 0;
+// 			else
+// 				nb++;
+// 		(*ft_lemin_htable())[nb] = ptr;
+// 	}
+// 	return (1);
+// }
+
+t_hash		*init_bucket(t_lemin *ptr)
 {
-		time_exe(__func__);
-	if (!(*ft_lemin_htable())[nb])
-		(*ft_lemin_htable())[nb] = ptr;
+	t_hash *tmp;
+
+	tmp = ft_memalloc(sizeof(t_hash));
+	tmp->room = ptr;
+	tmp->next = NULL;
+	tmp->key = 0;
+	return (tmp);
+}
+
+int 		machin(t_god *god, int nb, t_lemin *ptr)
+{
+	t_hash *tmp;
+	tmp = god->hash[nb];
+	if (!god->hash[nb])
+	{
+		god->hash[nb] = init_bucket(ptr);
+	}
 	else
 	{
-		while ((*ft_lemin_htable())[nb])
-			if (nb >= HTABLE_SIZE - 1)
-				nb = 0;
-			else
-				nb++;
-		(*ft_lemin_htable())[nb] = ptr;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = init_bucket(ptr);
 	}
 	return (1);
-}
+}*/
 
 int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 {
@@ -44,7 +72,6 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	t_tab		*new;
 	t_lemin		*room;
 	char		**split;
-	int			nb;
 
 	time_exe(__func__);
 	lem_in = &god->lem_in;
@@ -54,8 +81,7 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 		return (ERROR);
 	if (!(room->name = ft_strdup(split[0])))
 		return (ERROR);
-	nb = ft_rand(HTABLE_SIZE, ft_seed_string(split[0]));
-	machin(nb, room);
+	hashtable_append(god->hashtable, room, room->name, ft_strlen(room->name));
 	if ((int)ft_strlen(room->name) > god->name_len)
 		god->name_len = ft_strlen(room->name);
 	room->place = place;

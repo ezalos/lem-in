@@ -12,23 +12,37 @@
 
 #include "../includes/head.h"
 
-t_lemin			*find_room_name_htable(char *line)
+// t_lemin			*find_room_name_htable(char *line)
+// {
+// 	t_lemin		*room;
+// 	int nb;
+
+// 	nb = ft_rand(HTABLE_SIZE, ft_seed_string(line));
+// 	if ((*ft_lemin_htable())[nb] == NULL)
+// 		return (NULL);
+// 	room = (*ft_lemin_htable())[nb];
+// 	while (ft_strcmp(room->name, line))
+// 	{
+// 		if (nb >= HTABLE_SIZE - 1)
+// 			nb = 0;
+// 		room = (*ft_lemin_htable())[++nb];
+// 	}
+// 	return (room);
+// }
+/*
+t_lemin			*find_room_name_htable(t_god *god, char *line)
 {
-	t_lemin		*room;
+	t_hash	*tmp;
 	int nb;
 
 	nb = ft_rand(HTABLE_SIZE, ft_seed_string(line));
-	if ((*ft_lemin_htable())[nb] == NULL)
+	if (god->hash[nb] == NULL)
 		return (NULL);
-	room = (*ft_lemin_htable())[nb];
-	while (ft_strcmp(room->name, line))
-	{
-		if (nb >= HTABLE_SIZE - 1)
-			nb = 0;
-		room = (*ft_lemin_htable())[++nb];
-	}
-	return (room);
-}
+	tmp = god->hash[nb];
+	while (ft_strcmp(tmp->room->name, line))
+		tmp = tmp->next;
+	return (tmp->room);
+}*/
 
 t_lemin		***first_call(t_tab *lem_in, t_god *god)
 {
@@ -66,9 +80,9 @@ int			link_rooms(t_tab *lem_in, char *line, t_lemin ****adjacent_matrix, t_god *
 		my_fs = ft_memalloc(sizeof(int) * (god->size + 1));
 	if (!(split = ft_strsplit(line, '-')))
 		return (ERROR);
-	if ((_first = find_room_name_htable(split[0])) == NULL)
+	if ((_first = hashtable_value(god->hashtable, split[0], ft_strlen(split[0]))) == NULL)
 		return (-1);
-	if ((_second = find_room_name_htable(split[1])) == NULL)
+	if ((_second = hashtable_value(god->hashtable, split[1], ft_strlen(split[1]))) == NULL)
 		return (-1);
 	(*adjacent_matrix)[_first->id][my_fs[_first->id]++] = _second;
 	(*adjacent_matrix)[_second->id][my_fs[_second->id]++] = _first;
