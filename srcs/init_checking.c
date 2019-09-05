@@ -12,18 +12,6 @@
 
 #include "../includes/head.h"
 
-void 		print_whole_buffer(t_print *print)
-{
-	t_print *tmp;
-
-	tmp = print;
-	while (tmp != NULL)
-	{
-		write(1, tmp->buff, tmp->index);
-		tmp = tmp->next;
-	}
-}
-
 int 		is_it_link_part(char *str)
 {
 	int i;
@@ -42,9 +30,9 @@ int 		is_it_link_part(char *str)
 
 int 		check_room_parsing_suit(char *str, int i, int step)
 {
-	if (str[i] == ' ' && str[i] == ' ')
+	if (str[i] == ' ' && str[i + 1] == ' ')
 		return (-1);
-	if ((int)(str[i]) < 32 || (int)(str[i]) > 127)
+	if ((int)(str[i]) < 32 || (int)(str[i]) >= 127)
 		return (-1);
 	if (str[i] == '-' && step == 0)
 		return (-1);
@@ -97,7 +85,7 @@ int 		check_link_parsing(t_print *print, char *str)
 			nb++;
 		i++;
 	}
-	if (nb == 0)
+	if (nb != 1)
 		return (-1);
 	add_to_buffer(print, str);
 	return (0);

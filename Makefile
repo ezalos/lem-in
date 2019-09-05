@@ -64,7 +64,11 @@ SRCS_LI		=			main\
 						get_param\
 						hashtable\
 						init_checking\
-						init_parsing
+						init_parsing\
+						buffer_function\
+						algo_tools\
+						algo_tools_2\
+						algo_paths_tools
 
 # SRCS_VS		=	visu-hex
 

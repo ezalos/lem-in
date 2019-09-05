@@ -25,11 +25,13 @@ int				get_rid_of_dead_ends(t_god *god)
 	{
 		nb = 0;
 		while (++i < god->size)
-			if (god->rooms[i]->nb_of_connexions == 1 && !god->rooms[i]->place && ++nb)
+			if (god->rooms[i]->nb_of_connexions == 1 &&
+				!god->rooms[i]->place && ++nb)
 				god->rooms[i]->connexions[0] = NULL;
 		total += nb;
 	}
 	god->size -= total;
-	ft_printf("Dead_ends_remover deleted %~{255;155;155}%d%~{} rooms\n", total);
+	ft_printf("Dead_ends_remover deleted %~{255;155;155}%d%~{} rooms\n",
+		total);
 	return (total);
 }

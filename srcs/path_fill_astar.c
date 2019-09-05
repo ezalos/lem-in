@@ -19,22 +19,18 @@ int				execute_pile(t_god *god, t_piles *stack,
 	int				*a;
 	int				*b;
 	int				i;
-	int				r_v;
 
 	a = (void*)pile_a;
 	b = (void*)pile_b;
-	r_v = 0;
+	stack->r_v = 0;
 	while (*a > 0)
 	{
 		lem_in = god->rooms[pile_a[*a]];
 		if (!lem_in || lem_in->gone)
-		{
 			pile_a[(*a)--] = 0;
-			continue;
-		}
 		if (lem_in->id == stack->finish)
-			r_v++;
-		if (!lem_in->from[stack->ste]) // 0 is start to end
+			stack->r_v++;
+		if (!lem_in->from[stack->ste])
 		{
 			lem_in->from[stack->ste] = stack->deep;
 			i = -1;
@@ -43,7 +39,7 @@ int				execute_pile(t_god *god, t_piles *stack,
 		}
 		pile_a[(*a)--] = 0;
 	}
-	return (r_v);
+	return (stack->r_v);
 }
 
 int				alternate_piles(t_god *god, int id_start,
@@ -80,7 +76,8 @@ int				refresh_a_star(t_god *god)
 	return (r_v);
 }
 
-int			is_there_a_path(t_god *god, int *kill_list, int point_a, int point_b)
+int			is_there_a_path(t_god *god, int *kill_list,
+	int point_a, int point_b)
 {
 	int r_v;
 	int	i;

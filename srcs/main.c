@@ -37,6 +37,7 @@ int		main(int ac, char **av)
 	else
 		ft_setup_visu(god);
 	//print_time();
+	ft_printf("turn = %d\n", god->turn);
 	ft_clean_garbage();
 	return (0);
 }

@@ -28,36 +28,6 @@ void		init_used_tab(t_god *god)
 	}
 }
 
-t_print 	*init_print(void)
-{
-	t_print *print;
-
-	print = ft_memalloc(sizeof(t_print));
-	print->next = NULL;
-	print->index = 0;
-	return (print);
-}
-
-void 		add_to_buffer(t_print *print, char *str)
-{
-	int i;
-	t_print *tmp;
-
-	tmp = print;
-	while (print->next != NULL)
-		print = print->next;
-	if (ft_strlen(str) + print->index > P_BUFF - 5)
-	{
-		print->next = init_print();
-		print = print->next;
-	}
-	i = 0;
-	while (str[i] != '\0')
-		print->buff[print->index++] = str[i++];
-	print->buff[print->index++] = '\n';
-	print = tmp;
-}
-
 int 		init_suit(t_god *god, t_print *print)
 {
 	time_exe(__func__);

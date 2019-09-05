@@ -55,14 +55,16 @@ int 			init_visu_paths(t_god *god, t_visu *visu)
 	i = 0;
 	while (i < visu->nb_paths)
 	{
-		visu->paths[i] = ft_memalloc(sizeof(void *) * (god->final_path[i][0] + 2));
+		visu->paths[i] = ft_memalloc(sizeof(void *)
+			* (god->final_path[i][0] + 2));
 		j = 0;
 		while (j <= god->final_path[i][0])
 		{
 			visu->paths[i][j] = ft_memalloc(sizeof(t_room));
 			visu->paths[i][j]->x = 0.0;
 			visu->paths[i][j]->y = 0.0;
-			visu->paths[i][j]->name = ft_strdup(god->rooms[god->final_path[i][j + 1]]->name);
+			visu->paths[i][j]->name
+			= ft_strdup(god->rooms[god->final_path[i][j + 1]]->name);
 			visu->paths[i][j]->nb_rooms = god->final_path[i][0] + 1;
 			j++;
 		}

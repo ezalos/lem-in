@@ -12,59 +12,37 @@
 
 #include "../includes/head.h"
 
-void 			fill_buffer(t_print *print, char *nb, char *name)
-{
-	int i;
-	int j;
-
-	print->buff[print->index] = 'L';
-	(print->index)++;
-	i = 0;
-	while (nb[i] != '\0')
-	{
-		print->buff[print->index] = nb[i++];
-		(print->index)++;
-	}
-	print->buff[print->index] = '-';
-	(print->index)++;
-	j = 0;
-	while (name[j] != '\0')
-	{
-		print->buff[print->index] = name[j++];
-		(print->index)++;
-	}
-	print->buff[print->index] = ' ';
-	(print->index)++;
-
-}
 int				moove_one_turn(t_god *god, t_print *print)
 {
 	int i;
 	int j;
 	int tmp;
 
-	i = 0;
+	i = -1;
 	tmp = 0;
-	while (i < god->nb_final_paths)
+	while (++i < god->nb_final_paths)
 	{
 		j = god->final_path[i][0];
 		while (j > 1)
 		{
 			if (god->rooms[god->final_path[i][j]]->gen != -1)
 			{
-				fill_buffer(print, ft_itoa(god->rooms[god->final_path[i][j]]->gen), god->rooms[god->final_path[i][j + 1]]->name);
-				god->rooms[god->final_path[i][j + 1]]->gen = god->rooms[god->final_path[i][j]]->gen;
+				fill_line_buffer(print,
+				ft_itoa(god->rooms[god->final_path[i][j]]->gen),
+				god->rooms[god->final_path[i][j + 1]]->name);
+				god->rooms[god->final_path[i][j + 1]]->gen
+				= god->rooms[god->final_path[i][j]]->gen;
 				god->rooms[god->final_path[i][j]]->gen = -1;
 				tmp++;
 			}
 			j--;
 		}
-		i++;
 	}
 	return (tmp);
 }
 
-int 			push_ants(t_god *god, int *genome, int *waiting_ant, t_print *print)
+int 			push_ants(t_god *god, int *genome,
+	int *waiting_ant, t_print *print)
 {
 	int i;
 	int pushed;
@@ -75,8 +53,8 @@ int 			push_ants(t_god *god, int *genome, int *waiting_ant, t_print *print)
 	{
 		if (waiting_ant[i] > 0)
 		{
-			fill_buffer(print, ft_itoa(*genome), god->rooms[god->final_path[i][2]]->name);
-			//ft_printf("L%d-%s ", *genome, god->rooms[god->final_path[i][2]]->name);
+			fill_line_buffer(print, ft_itoa(*genome),
+				god->rooms[god->final_path[i][2]]->name);
 			god->rooms[god->final_path[i][2]]->gen = *genome;
 			(*genome)++;
 			(waiting_ant[i])--;
@@ -119,52 +97,37 @@ int 			*init_waiting_tab(t_god *god)
 	return (tab);
 }
 
-void			print_buffer(t_print *print)
-{
-	int i;
-
-	if (print->index != 0)
-		(print->index)--;
-	print->buff[print->index] = '\n';
-		(print->index)++;
-	write(1, print->buff, print->index);
-	i = 0;
-	while (i < print->index)
-		print->buff[i++] = '\0';
-	print->index = 0;
-}
-
-int				display_ants_turn(t_god *god)
+int				display_result_suit(t_god *god, int *tmp, int *t_ants)
 {
 	int genome;
-	int tmp;
-	int t_ants;
 	int *waiting_ant;
 	t_print print;
 
 	genome = 1;
 	print.index = 0;
 	waiting_ant = init_waiting_tab(god);
-	tmp = 0;
-	t_ants = god->ants;
-	while (t_ants > 0 || tmp > 0)
+	while (*t_ants > 0 || *tmp > 0)
 	{
-		tmp = moove_one_turn(god, &print);
-		if (t_ants != 0)
+		*tmp = moove_one_turn(god, &print);
+		if (*t_ants != 0)
 		{
-			t_ants = t_ants - push_ants(god, &genome, waiting_ant, &print);
-			tmp = 1;
+			*t_ants = *t_ants - push_ants(god, &genome, waiting_ant, &print);
+			*tmp = 1;
 		}
-		else if (tmp == 0)
+		else if (*tmp == 0)
 			break ;
-		print_buffer(&print);
+		print_buffer_with_refresh(&print);
 	}
 	return (0);
 }
 
-int 			display_result(t_god *god)
+int				display_result(t_god *god)
 {
-	time_exe(__func__);
-	display_ants_turn(god);
+	int tmp;
+	int t_ants;
+
+	tmp = 0;
+	t_ants = god->ants;
+	display_result_suit(god, &tmp, &t_ants);
 	return (0);
 }

@@ -12,20 +12,16 @@
 
 #include "../includes/head.h"
 
-int				full_process(t_god *god, int nb_max)
+int				full_process(t_god *god)
 {
 	int tmp;
+	int stat;
 
 	clear_gone(god);
-	if (nb_max != 1)
-	{
-		clear_links(god);
-		clear_tmp_links(god);
-		clean_surcharged_tab(god->surcharged_link);
-	}
-	// ft_printf("%s\n", __func__);
-	// print_name_and_from_dist(god);
-	tmp = breadth_first_search(god);
+	stat = 0;
+	god->trigger = 0;
+	god->variation = 1;
+	tmp = breadth_first_search(god, &stat);
 	return (tmp);
 }
 
@@ -59,7 +55,7 @@ int				lets_calcul(t_god *god)
 	time_exe(__func__);
 	//print_room_infos(god);
 	init_paths(god);
-	full_process(god, god->goulots);
+	full_process(god);
 	//ft_printf("[%d]\n", god->turn);
 	//print_paths(god);
 	//print_final_paths(god);

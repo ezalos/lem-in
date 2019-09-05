@@ -12,29 +12,28 @@
 
 #include "../includes/head.h"
 
-struct s_hashtable      *hashtable_init(void)
+t_hashtable         *hashtable_init(void)
 {
-    struct s_hashtable *const   h = ft_memalloc(sizeof(struct s_hashtable));
-    
-    
-    h->elements = ft_memalloc(sizeof(struct s_hashelement *)
-        * HASHTABLE_DEFAULT_SIZE);
+    t_hashtable *h;
+
+    h = ft_memalloc(sizeof(t_hashtable));
+    h->elements = ft_memalloc(sizeof(t_hashelement *) * HASHTABLE_DEFAULT_SIZE);
     h->elements_size = HASHTABLE_DEFAULT_SIZE;
     h->elements_count = 0;
     return (h);
 }
 
-void                    hashtable_deinit(struct s_hashtable *const hashtable)
+void                hashtable_deinit(t_hashtable *hashtable)
 {
     if (hashtable)
     {
         if (hashtable->elements)
-            free(hashtable->elements);
-        free(hashtable);
+            ft_memdel((void **)&hashtable->elements);
+        ft_memdel((void **)&hashtable);
     }
 }
 
-static size_t           hash(const char *key, size_t key_length)
+static size_t       hash(char *key, size_t key_length)
 {
     size_t                      hash;
     
@@ -44,14 +43,13 @@ static size_t           hash(const char *key, size_t key_length)
     return (hash);
 }
 
-void                    hashtable_expand_append(struct s_hashtable *const hashtable,
-    struct s_hashelement *const element)
+void                hashtable_expand_append(t_hashtable *hashtable, t_hashelement *element)
 {
-    const size_t                key_hash = hash(element->key,
-        element->key_length) % hashtable->elements_size;
-    struct s_hashelement        *current_element;
+    size_t          key_hash;
+    t_hashelement        *current_element;
 
-    //element->next = NULL;
+    key_hash = hash(element->key,
+        element->key_length) % hashtable->elements_size;
     current_element = *(hashtable->elements + key_hash);
     if (current_element)
     {
@@ -65,13 +63,13 @@ void                    hashtable_expand_append(struct s_hashtable *const hashta
         *(hashtable->elements + key_hash) = element;
 }
 
-static void                     hashtable_expand(struct s_hashtable *const hashtable)
+static void         hashtable_expand(t_hashtable *hashtable)
 {
     const size_t                elements_size = hashtable->elements_size;
     size_t                      index;
-    struct s_hashelement        **elements;
-    struct s_hashelement        *element;
-    struct s_hashelement        *tmp;
+    t_hashelement        **elements;
+    t_hashelement        *element;
+    t_hashelement        *tmp;
 
     index = 0;
     elements = hashtable->elements;
@@ -91,12 +89,11 @@ static void                     hashtable_expand(struct s_hashtable *const hasht
 
 }
 
-struct s_hashelement            *hashelement_init_param(void *const data,
-    const void *const key, const size_t key_length)
+t_hashelement       *hashelement_init_param(void *data, void *key, size_t key_length)
 {
-    struct s_hashelement        *element;
+    t_hashelement        *element;
 
-    element = ft_memalloc(sizeof(struct s_hashelement));
+    element = ft_memalloc(sizeof(t_hashelement));
     element->data = data;
     element->key = key;
     element->key_length = key_length;
@@ -104,11 +101,10 @@ struct s_hashelement            *hashelement_init_param(void *const data,
     return (element);
 }
 
-void                            hashtable_append(struct s_hashtable *const hashtable,
-    void *const data, const void *const key, const size_t key_length)
+void                hashtable_append(t_hashtable *hashtable, void *data, void *key, size_t key_length)
 {
     size_t                      key_hash;
-    struct s_hashelement        *element;
+    t_hashelement        *element;
     
     time_exe(__func__);
     if (++hashtable->elements_count >= hashtable->elements_size)
@@ -124,7 +120,7 @@ void                            hashtable_append(struct s_hashtable *const hasht
     {
         while (element && element->next)
             element = element->next;
-        element->next = ft_memalloc(sizeof(struct s_hashelement));
+        element->next = ft_memalloc(sizeof(t_hashelement));
         element->next->data = data;
         element->next->key = key;
         element->next->key_length = key_length;
@@ -132,13 +128,13 @@ void                            hashtable_append(struct s_hashtable *const hasht
     }
 }
 
-void                            *hashtable_value(struct s_hashtable *const hashtable,
-    const void *const key, const size_t key_length)
+void                *hashtable_value(t_hashtable *hashtable, void *key, size_t key_length)
 {
     struct s_hashelement    *element;
-    const size_t            key_hash = hash(key, key_length) % hashtable->elements_size;
-    
+    size_t            key_hash;
+
     time_exe(__func__);
+    key_hash = hash(key, key_length) % hashtable->elements_size;
     element = *(hashtable->elements + key_hash);
     while (element) {
         if (element->key_length == key_length

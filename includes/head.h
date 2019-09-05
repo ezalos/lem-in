@@ -97,6 +97,7 @@ typedef struct 					s_piles
 	int 						deep;
 	int 						actual_room;
 	int 						ste;
+	int 						r_v;
 }								t_piles;
 
 
@@ -107,10 +108,11 @@ typedef struct 					s_piles
 typedef struct 					s_hashelement
 {
 	void						*data;
-	const void					*key;
+	void						*key;
 	size_t						key_length;
 	struct s_hashelement		*next;
 }								t_hashelement;
+
 # define HASHTABLE_DEFAULT_SIZE 4096
 
 typedef struct 					s_hashtable
@@ -121,10 +123,10 @@ typedef struct 					s_hashtable
 }								t_hashtable;
 
 struct s_hashtable				*hashtable_init(void);
-void							hashtable_append(struct s_hashtable *const hashtable, void *const data, const void *const key, const size_t key_length);
-void							*hashtable_value(struct s_hashtable *const hashtable, const void *const key, const size_t key_length);
-void							hashtable_deinit(struct s_hashtable *const hashtable);
-void                     		print_hashtable(struct s_hashtable *const hashtable);
+void							hashtable_append(t_hashtable *hashtable, void *data, void *key, size_t key_length);
+void							*hashtable_value(t_hashtable *hashtable, void *key, size_t key_length);
+void							hashtable_deinit(t_hashtable *hashtable);
+void                     		print_hashtable(t_hashtable *hashtable);
 
 typedef struct					s_god
 {
@@ -168,7 +170,7 @@ typedef struct					s_god
 typedef struct 					s_print
 {
 	int 						index;
-	char 						buff[10000];
+	char 						buff[P_BUFF];
 	struct s_print 				*next;
 } 								t_print;
 
@@ -280,6 +282,11 @@ void			print_surcharged_tab(t_god *god);
 
 int 			display_result(t_god *god);
 void 			add_to_buffer(t_print *print, char *str);
+t_print 		*init_print(void);
+void 			print_whole_buffer(t_print *print);
+void 			add_to_buffer(t_print *print, char *str);
+void			print_buffer_with_refresh(t_print *print);
+void 			fill_line_buffer(t_print *print, char *nb, char *name);
 
 int 			ft_setup_visu(t_god *god);
 int 			launch_visual(t_visu *visu);
@@ -301,27 +308,41 @@ int				close_a_path(t_lemin *here);
 void			find_a_path(t_lemin *here, int id, t_ints *path);
 int				get_rid_of_dead_ends(t_god *god);
 int				ft_evaluate_set_of_path(t_god *god, int nb_paths);
-//int				ft_evaluate_set_of_paths(t_god *god, int nb_paths);
-
 /*
 *******************
 ** 	TOOLS		**
 *******************
 */
 long			ft_atol(char *src);
+int 			which_link_is_surcharged(t_god *god, t_ints path);
+void			creat_surcharged_link(t_god *god, int room1, int room2);
+int 			is_it_connected(t_god *god, int room1, int room2);
+int  			find_pv_link(t_god *god, t_lemin *tmp, t_piles *stack);
+int 			find_link(t_lemin *tmp);
+
+int 			reset_this_set(t_god *god, int nb_finish);
+void			init_stack(int size, t_piles *stack, int id);
+void			gone_is_one(t_god *god, t_piles *stack, t_ints new_p, int id);
+void			gone_is_zero(t_god *god, t_piles *stack, t_ints new_p, int id);
+void 			add_gone(t_god *god, int nb_paths);
+
+void 			save_actual_set(t_god *god, int nb_paths, int nb_of_turn);
+int 			get_faster_path(t_god *god);
+void			add_path_to_set(t_god *god, int path);
+int 			get_len_path(t_god *god);
 /*
 **************
 **   	A*		**
 **************
 */
 
-int 			breadth_first_search(t_god *god);
+int 			breadth_first_search(t_god *god, int *stat);
 
 int				refresh_a_star(t_god *god);
 int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end);
 
 int				lets_calcul(t_god *god);
-int				full_process(t_god *god, int nb_max);
+int				full_process(t_god *god);
 
 t_ints			*get_second_set_of_paths(t_god *god);
 int				is_there_a_path(t_god *god, int *kill_list, int point_a, int point_b);
