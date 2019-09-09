@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/24 17:13:12 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/09 18:26:09 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,18 @@ typedef struct					s_lemin
 
 	struct s_lemin				**connexions;
 	int							nb_of_connexions;
-	int 						weight;
+	int 						weight;//depth
+	int 						dist_to_end;
 	struct s_lemin				*last_room;
-	int 						*used; //de la taille du nb_of_xonnexions, used[i] correspondra donc a si la conexion de connexion[i] est utilisé
+	int 						*used; //tableau de la taille du nb_of_xonnexions, val 0 ou 1 si connexion utilise
 	int 						*tmp_used;
-	int 						blocked;
+	int 						blocked;// fait parti d'un chemin deja valide
 
 	int							from[2];
-	int							gone;
+	int							gone;//chemin en train detre considere (dans Yohan est on aussi pour old path)
 	int 						gen;
-	int 						surcharged;
+	int 						search;
+	int 						surcharged;//room a ete remonte
 }								t_lemin;
 
 typedef struct					s_meta
@@ -94,9 +96,9 @@ typedef struct 					s_piles
 	t_ints 						pile_a;
 	t_ints 						pile_b;
 	int 						finish;
-	int 						deep;
+	int 						deep;//depth
 	int 						actual_room;
-	int 						ste;
+	int 						ste;//start to end :dir
 	int 						r_v;
 }								t_piles;
 
