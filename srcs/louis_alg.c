@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 17:45:56 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/09 18:36:51 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/10 12:34:29 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,54 +65,97 @@ void			get_dist_from_end(t_god *god)
 	ft_memdel((void**)&pile_b);
 }
 
+int			room_compare(t_lemin *one, t_lemin *two)
+{
+//IS ONE BETTER THAN TWO ?
+	if (one->dist_to_end == two->dist_to_end)
+		return (FAILURE);
+	if (one->dist_to_end == -1)
+		return (SUCCESS);
+	if (two->dist_to_end == -1)
+		return (FAILURE);
+	if (one->dist_to_end < two->dist_to_end)
+		return (FAILURE);
+	else
+		return (SUCCESS);
+}
+
+void		room_connexions_sort(t_lemin *here)
+{
+	int i;
+	int j;
+
+	j = 0;
+	while (++j < here->nb_of_connexions)
+	{
+		if (room_compare(here->connexions[j - 1], here->connexions[j]) == SUCCESS)
+		{
+			i = 0;
+			while (++i < here->nb_of_connexions)
+				if (room_compare(here->connexions[i - 1], here->connexions[i]) == SUCCESS)
+					ft_swap(&here->connexions[i - 1], &here->connexions[i], sizeof(void*));
+			j = 0;
+		}
+	}
+}
+
+int			is_room_valid(t_god *god, t_lemin *room, int surcharge_mode)
+{
+	if (room->search)
+		return(FAILURE);
+	if (room->dist_to_end == -1)
+		return(FAILURE);
+	if (room->id == god->extremities[0]->id)
+		return(FAILURE);
+
+	if (!surcharge_mode)
+   	{
+   		if (room->gone)
+   			return (FAILURE);
+
+
+
+   		return (SUCCESS);
+	}
+	else
+	{
+		if (!room->gone)
+			return (FAILURE);
+		if (room->surcharged)
+			return (FAILURE);
+
+
+		return (SUCCESS);
+	}
+}
+
 int			search_a_path(t_god *god, t_lemin *here, t_lemin *daddy)
 {
 	int							r_v;
-	int							winner;
 	int							i;
 
-	time_exe(__func__);
+	// time_exe(__func__);
 	// save_this_path(here, path);
 
 	//init
 	here->last_room = daddy;
 	here->search = 1;	//need to mark passage differently during search
 	if (here->id == god->extremities[1]->id)
-		return (1);
-	//NEED TO HAVE TOOL TO ORDER CONNEXIONS
-	
-
+		return (SUCCESS);//GET A SAVE OF
+	room_connexions_sort(here);
 	i = -1;
-	winner = -1;
-	while (here->connexions[++i] && winner < 0)
-		if (!((t_lemin*)here->connexions[i])->gone && !((t_lemin*)here->connexions[i])->search)
-			winner = i;
-	if (winner != -1)//normally go through
-	{
-		i = winner;
-		while (here->connexions[++i])
-			if (!((t_lemin*)here->connexions[i])->gone && !((t_lemin*)here->connexions[i])->search)
-				if (here->connexions[winner]->dist_to_end >
-					here->connexions[i]->dist_to_end)//need to check more than best
-					winner = i;
-		if ((r_v = search_a_path(god, here->connexions[winner], here)))
-			return (r_v);
-	}
-
-
-	//if nothing: search already passed point
-	i = -1;
-	winner = -1;
-	while (here->connexions[++i] && winner < 0)
-		if (((t_lemin*)here->connexions[i])->gone && !((t_lemin*)here->connexions[i])->search
-		&& !here->connexions[i]->surcharged //cant surcharge twice
-		&& ((t_lemin*)here->connexions[i])->id != god->extremities[0]->id)//cant pass by start
-			winner = i;
+	while (here->connexions[++i])
+		if (is_room_valid(god, here->connexions[i], 0))
+			if ((r_v = search_a_path(god, here->connexions[i], here)))
+				return (r_v);
 	here->surcharged = 1;
-	if ((r_v = search_a_path(god, here->connexions[winner], here)))
-		return (r_v);
-
-	here->search = 0;	//need to mark passage differently during search
+	i = -1;
+	while (here->connexions[++i])
+		if (is_room_valid(god, here->connexions[i], 1))
+			if ((r_v = search_a_path(god, here->connexions[i], here)))
+				return (r_v);
+	here->surcharged = 0;
+	here->search = 0;
 	here->last_room = NULL;
-	return (0);//NOTHING
+	return (FAILURE);//NOTHING
 }
