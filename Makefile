@@ -70,11 +70,8 @@ SRCS_LI		=			main\
 						algo_tools\
 						algo_tools_2\
 						algo_paths_tools\
-<<<<<<< HEAD
-						launch_visual
-=======
+						launch_visual\
 						louis_alg
->>>>>>> d163c1de263ae8f0ed0160cc8ff2a9d56acac96d
 
 # SRCS_VS		=	visu-hex
 

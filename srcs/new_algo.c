@@ -6,11 +6,7 @@
 /*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 14:52:16 by ythomas           #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2019/09/11 16:34:15 by ythomas          ###   ########.fr       */
-=======
-/*   Updated: 2019/09/09 16:00:45 by ldevelle         ###   ########.fr       */
->>>>>>> d163c1de263ae8f0ed0160cc8ff2a9d56acac96d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +67,11 @@ void			check_possible_trigger(t_god *god,
 		j = 0;
 		while (j < god->rooms[last_p[i + 1]]->nb_of_connexions)
 		{
-<<<<<<< HEAD
 			stack->actual_room = god->rooms[last_p[i + 1]]->id;
 			if (basic_test_do_trigger(god, god->rooms[last_p[i + 1]], i, j) == 1
 				&& ((god->rooms[last_p[i + 1]]->last_room->surcharged != 1)
 				|| ((god->rooms[last_p[i + 1]]->last_room->surcharged == 1)
 				&& (god->rooms[last_p[i + 1]]->nb_of_connexions == 2))))
-=======
-			stack->actual_room = god->rooms[last_p[i + 1]]->id; //last_p list of room to explore, new_p rooms to explore next
-			if (god->rooms[last_p[i + 1]]->tmp_used[j] == 0 && god->rooms[last_p[i + 1]]->connexions[j]->gone == 1 //tmp_used is connexion already used ? (1/0)
-				&& god->rooms[last_p[i + 1]]->id != god->extremities[0]->id //NE PAS ETRE AU DEBUT
-				&& ((god->rooms[last_p[i + 1]]->last_room->surcharged != 1) || ((god->rooms[last_p[i + 1]]->last_room->surcharged == 1)
-					&& (god->rooms[last_p[i + 1]]->nb_of_connexions == 2)))//surcharge = remonter un chemin deja utilise. Pour l'instant surcharge unique
-				&& is_it_connected(god, god->rooms[last_p[i + 1]]->id, god->rooms[last_p[i + 1]]->connexions[j]->id) == 1 //is room directly connected to other room, and path has been used (int *used;).
-				&& god->rooms[last_p[i + 1]]->connexions[j]->id != god->extremities[0]->id //is room inderectly (len 1) connected to START.
-				&& god->rooms[last_p[i + 1]]->connexions[j]->id != god->rooms[last_p[i + 1]]->last_room->id //dont go back directly where you are from
-				&& god->rooms[last_p[i + 1]]->blocked == 1)//everything set at block, needed to explore
->>>>>>> d163c1de263ae8f0ed0160cc8ff2a9d56acac96d
 			{
 				do_the_trigger(god->rooms[last_p[i + 1]], last_p, i, j);
 				(god->trigger)++;
