@@ -6,7 +6,7 @@
 /*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 13:15:14 by ythomas           #+#    #+#             */
-/*   Updated: 2019/08/16 13:15:42 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/11 16:18:02 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int				moove_one_turn(t_god *god, t_print *print)
 				fill_line_buffer(print,
 				ft_itoa(god->rooms[god->final_path[i][j]]->gen),
 				god->rooms[god->final_path[i][j + 1]]->name);
-				god->rooms[god->final_path[i][j + 1]]->gen
-				= god->rooms[god->final_path[i][j]]->gen;
+				god->rooms[god->final_path[i][j + 1]]->gen =
+				god->rooms[god->final_path[i][j]]->gen;
 				god->rooms[god->final_path[i][j]]->gen = -1;
 				tmp++;
 			}
@@ -41,7 +41,7 @@ int				moove_one_turn(t_god *god, t_print *print)
 	return (tmp);
 }
 
-int 			push_ants(t_god *god, int *genome,
+int				push_ants(t_god *god, int *genome,
 	int *waiting_ant, t_print *print)
 {
 	int i;
@@ -58,19 +58,19 @@ int 			push_ants(t_god *god, int *genome,
 			god->rooms[god->final_path[i][2]]->gen = *genome;
 			(*genome)++;
 			(waiting_ant[i])--;
-			pushed++; 
+			pushed++;
 		}
 		i++;
 	}
 	return (pushed);
 }
 
-int 			*init_waiting_tab(t_god *god)
+int				*init_waiting_tab(t_god *god)
 {
-	int *tab;
-	int i;
-	int len;
-	int mod;
+	int		*tab;
+	int		i;
+	int		len;
+	int		mod;
 
 	tab = ft_memalloc(sizeof(int *) * god->nb_final_paths);
 	i = 0;
@@ -99,9 +99,9 @@ int 			*init_waiting_tab(t_god *god)
 
 int				display_result_suit(t_god *god, int *tmp, int *t_ants)
 {
-	int genome;
-	int *waiting_ant;
-	t_print print;
+	int			genome;
+	int			*waiting_ant;
+	t_print		print;
 
 	genome = 1;
 	print.index = 0;

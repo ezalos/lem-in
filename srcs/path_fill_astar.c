@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:05:17 by root              #+#    #+#             */
-/*   Updated: 2019/06/24 19:48:09 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/11 16:39:42 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int				execute_pile(t_god *god, t_piles *stack,
 	t_ints pile_a, t_ints pile_b)
 {
-	t_lemin		*lem_in;
+	t_lemin			*lem_in;
 	int				*a;
 	int				*b;
 	int				i;
@@ -35,7 +35,7 @@ int				execute_pile(t_god *god, t_piles *stack,
 			lem_in->from[stack->ste] = stack->deep;
 			i = -1;
 			while (lem_in->connexions[++i])
-					pile_b[++(*b)] = ((t_lemin*)lem_in->connexions[i])->id;
+				pile_b[++(*b)] = ((t_lemin*)lem_in->connexions[i])->id;
 		}
 		pile_a[(*a)--] = 0;
 	}
@@ -45,9 +45,9 @@ int				execute_pile(t_god *god, t_piles *stack,
 int				alternate_piles(t_god *god, int id_start,
 	int id_end, int start_to_end)
 {
-	t_piles stack;
-	int 	depth;
-	int		r_v;
+	t_piles		stack;
+	int			depth;
+	int			r_v;
 
 	depth = 0;
 	init_stack(god->size * 2, &stack, id_start);
@@ -76,7 +76,7 @@ int				refresh_a_star(t_god *god)
 	return (r_v);
 }
 
-int			is_there_a_path(t_god *god, int *kill_list,
+int				is_there_a_path(t_god *god, int *kill_list,
 	int point_a, int point_b)
 {
 	int r_v;

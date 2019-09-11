@@ -6,13 +6,13 @@
 /*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:08:52 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/05 13:08:53 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/11 16:11:18 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-void 			add_gone(t_god *god, int nb_paths)
+void		add_gone(t_god *god, int nb_paths)
 {
 	int i;
 	int j;
@@ -33,11 +33,11 @@ void 			add_gone(t_god *god, int nb_paths)
 					->tmp_used[find_link(god->rooms[god->paths[i][j]])] = 1;
 				j++;
 			}
-		i++;	
+		i++;
 	}
 }
 
-void			gone_is_zero(t_god *god, t_piles *stack, t_ints new_p, int id)
+void		gone_is_zero(t_god *god, t_piles *stack, t_ints new_p, int id)
 {
 	int nb;
 
@@ -56,7 +56,7 @@ void			gone_is_zero(t_god *god, t_piles *stack, t_ints new_p, int id)
 	new_p[nb] = id;
 }
 
-void			gone_is_one(t_god *god, t_piles *stack, t_ints new_p, int id)
+void		gone_is_one(t_god *god, t_piles *stack, t_ints new_p, int id)
 {
 	int nb;
 
@@ -73,7 +73,7 @@ void			gone_is_one(t_god *god, t_piles *stack, t_ints new_p, int id)
 	new_p[nb] = id;
 }
 
-void			init_stack(int size, t_piles *stack, int id)
+void		init_stack(int size, t_piles *stack, int id)
 {
 	stack->pile_a = ft_memalloc(sizeof(t_ints) * size * 2);
 	stack->pile_b = ft_memalloc(sizeof(t_ints) * size * 2);
@@ -84,7 +84,7 @@ void			init_stack(int size, t_piles *stack, int id)
 	stack->actual_room = 0;
 }
 
-int				reset_this_set(t_god *god, int nb_finish)
+int			reset_this_set(t_god *god, int nb_finish)
 {
 	int i;
 	int len;

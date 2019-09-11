@@ -43,14 +43,15 @@
 
 /********** VISUAL DEFINE ************/
 
-#define H_SCREEN				1080
-#define W_SCREEN				1920
+#define H_SCREEN				1080.0
+#define W_SCREEN				1920.0
 #define MAX_PIX					2073600
 
 /*************************************/
 
 
 # include "../../libft/includes/libft.h"
+# include <mlx.h>
 
 typedef int* 					t_ints;
 
@@ -113,7 +114,7 @@ typedef struct 					s_hashelement
 	struct s_hashelement		*next;
 }								t_hashelement;
 
-# define HASHTABLE_DEFAULT_SIZE 4096
+# define HASHTABLE_DEFAULT_SIZE 8200
 
 typedef struct 					s_hashtable
 {
@@ -193,8 +194,9 @@ typedef struct 					s_visu
 	int 						ants;
 	int 						turn;
 	int 						nb_h;
-	int 						rate_x;
-	int 						rate_y;
+	double 						rate_x;
+	double 						rate_y;
+	double 						range;
 }								t_visu;
 
 

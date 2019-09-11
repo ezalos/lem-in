@@ -106,7 +106,6 @@ void                hashtable_append(t_hashtable *hashtable, void *data, void *k
     size_t                      key_hash;
     t_hashelement        *element;
     
-    time_exe(__func__);
     if (++hashtable->elements_count >= hashtable->elements_size)
         hashtable_expand(hashtable);
     key_hash = hash(key, key_length) % hashtable->elements_size;
@@ -133,7 +132,6 @@ void                *hashtable_value(t_hashtable *hashtable, void *key, size_t k
     struct s_hashelement    *element;
     size_t            key_hash;
 
-    time_exe(__func__);
     key_hash = hash(key, key_length) % hashtable->elements_size;
     element = *(hashtable->elements + key_hash);
     while (element) {

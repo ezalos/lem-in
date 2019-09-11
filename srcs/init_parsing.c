@@ -6,18 +6,17 @@
 /*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:41:02 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/03 13:41:07 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/11 16:25:26 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int 		parse_links(t_god *god, int fd, t_print *print, char *line)
+int			parse_links(t_god *god, int fd, t_print *print, char *line)
 {
-	char *str;
-	int ret;
+	char		*str;
+	int			ret;
 
-	time_exe(__func__);
 	if (check_link_parsing(print, line) != -1)
 		ret = link_rooms(god->lem_in, line, &god->adjacent_matrix, god);
 	else
@@ -35,11 +34,10 @@ int 		parse_links(t_god *god, int fd, t_print *print, char *line)
 	return (0);
 }
 
-int 		parse_rooms(t_god *god, int fd, t_print *print, char *line)
+int			parse_rooms(t_god *god, int fd, t_print *print, char *line)
 {
 	int ret;
 
-time_exe(__func__);
 	ret = 0;
 	if (line[0] == '#' && (line[1] != '#' || (line[1] == '#'
 	&& !ft_strcmp(line + 2, "start") && !ft_strcmp(line + 2, "end"))))
@@ -47,7 +45,7 @@ time_exe(__func__);
 	else if (god->dbt == 0 && line[0] == '#' && line[1] == '#'
 	&& !ft_strcmp(line + 2, "start") && (god->dbt = 1) == 1)
 		ret = parse_extremity(god, print, fd, START, line);
-	else if (god->fin == 0 &&line[0] == '#' && line[1] == '#'
+	else if (god->fin == 0 && line[0] == '#' && line[1] == '#'
 	&& !ft_strcmp(line + 2, "end") && (god->fin = 1) == 1)
 		ret = parse_extremity(god, print, fd, END, line);
 	else if ((ret = check_room_parsing(print, line)) != -1)
@@ -57,11 +55,11 @@ time_exe(__func__);
 	return (0);
 }
 
-int 		parse_extremity(t_god *god, t_print *print,
+int			parse_extremity(t_god *god, t_print *print,
 	int fd, int place, char *line)
 {
-	char *str;
-	int ret;
+	char	*str;
+	int		ret;
 
 	add_to_buffer(print, line);
 	while ((ret = ft_gnl(fd, &str)) > 0 && str[0] == '#'
@@ -85,9 +83,9 @@ int 		parse_extremity(t_god *god, t_print *print,
 
 int			parse_ants(t_god *god, int fd, t_print *print)
 {
-	int i;
-	char *line;
-	int tmp;
+	int		i;
+	char	*line;
+	int		tmp;
 
 	i = 0;
 	if (ft_gnl(fd, &line) > 0)

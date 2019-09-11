@@ -19,7 +19,6 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	t_lemin		*room;
 	char		**split;
 
-	time_exe(__func__);
 	lem_in = &god->lem_in;
 	if (!(split = ft_strsplit(line, ' ')))
 		return (ERROR);

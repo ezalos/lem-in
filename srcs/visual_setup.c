@@ -39,7 +39,7 @@ void 			print_this_fucking_path(t_visu *visu)
 		j = 0;
 		while (visu->paths[i][j])
 		{
-			ft_printf("%s  ", visu->paths[i][j]->name);
+			ft_printf("%s ", visu->paths[i][j]->name);
 			j++;
 		}
 		ft_printf("\n");
@@ -84,12 +84,11 @@ int 			ft_setup_visu(t_god *god)
 	visu->ants = god->ants;
 	visu->turn = god->turn;
 	visu->nb_h = get_max_room_in_path(god);
-	ft_printf("h = %d, w = %d\n", visu->nb_h, visu->nb_paths);
 	if (init_visu_paths(god, visu) == -1)
 		return (-1);
-	//visu->rate_x = 
-	print_this_fucking_path(visu);
-	//init_new_coord(visu);
-	//launch_visual(visu);
+	visu->rate_x = (W_SCREEN - 100) / visu->nb_paths / 2;
+	init_new_coord(visu);
+	//print_this_fucking_path(visu);
+	launch_visual(visu);
 	return (0);
 }

@@ -6,16 +6,16 @@
 /*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:18:48 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/05 13:18:49 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/11 16:06:44 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int 			get_len_path(t_god *god)
+int					get_len_path(t_god *god)
 {
-	int 	i;
-	t_lemin 	*tmp;
+	int			i;
+	t_lemin		*tmp;
 
 	i = 0;
 	tmp = god->extremities[1];
@@ -27,10 +27,10 @@ int 			get_len_path(t_god *god)
 	return (i);
 }
 
-void			add_path_to_set(t_god *god, int path)
+void				add_path_to_set(t_god *god, int path)
 {
-	int i;
-	t_lemin *tmp;
+	int				i;
+	t_lemin			*tmp;
 
 	i = get_len_path(god);
 	tmp = god->extremities[1];
@@ -44,10 +44,10 @@ void			add_path_to_set(t_god *god, int path)
 	}
 }
 
-void 			save_actual_set(t_god *god, int nb_paths, int nb_of_turn)
+void				save_actual_set(t_god *god, int nb_paths, int nb_of_turn)
 {
-	int i;
-	int j;
+	int			i;
+	int			j;
 
 	(god->variation)++;
 	god->nb_final_paths = nb_paths;

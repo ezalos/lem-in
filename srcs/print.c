@@ -152,6 +152,8 @@ void 			print_this_path(t_god *god, t_ints path)
 				ft_printf("%~{155;255;155}");
 			else
 				ft_printf("%~{?*}", god->rooms[path[j]]);
+			if (!(ft_strcmp(god->rooms[path[j]]->name, "Ioy9")))
+					ft_rgb_bcolor(255,255,255);
 			ft_printf("%*s%~{}", god->name_len, god->rooms[path[j]]->name);
 			if (god->rooms[path[j]]->place != 1)
 			{

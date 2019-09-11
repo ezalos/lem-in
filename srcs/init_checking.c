@@ -6,13 +6,13 @@
 /*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:40:55 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/03 13:40:56 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/11 16:20:19 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int 		is_it_link_part(char *str)
+int				is_it_link_part(char *str)
 {
 	int i;
 
@@ -28,7 +28,7 @@ int 		is_it_link_part(char *str)
 	return (1);
 }
 
-int 		check_room_parsing_suit(char *str, int i, int step)
+int				check_room_parsing_suit(char *str, int i, int step)
 {
 	if (str[i] == ' ' && str[i + 1] == ' ')
 		return (-1);
@@ -39,7 +39,7 @@ int 		check_room_parsing_suit(char *str, int i, int step)
 	return (0);
 }
 
-int 		check_room_parsing(t_print *print, char *str)
+int				check_room_parsing(t_print *print, char *str)
 {
 	int i;
 	int step;
@@ -68,7 +68,7 @@ int 		check_room_parsing(t_print *print, char *str)
 	return (0);
 }
 
-int 		check_link_parsing(t_print *print, char *str)
+int				check_link_parsing(t_print *print, char *str)
 {
 	int i;
 	int nb;

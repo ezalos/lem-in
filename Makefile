@@ -15,7 +15,8 @@ VISU	= visu-hex
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -O0 -g
+CFLAGS =
+LIBX = -lmlx -framework OpenGL -framework AppKit
 
 DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 -O2 -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int\
@@ -68,7 +69,8 @@ SRCS_LI		=			main\
 						buffer_function\
 						algo_tools\
 						algo_tools_2\
-						algo_paths_tools
+						algo_paths_tools\
+						launch_visual
 
 # SRCS_VS		=	visu-hex
 
@@ -184,13 +186,13 @@ endef
 all :	$(NAME) #$(VISU)
 
 $(NAME): $(LIB) Makefile $(A_OBJ)
-		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(A_OBJ) $(LIB) -o $(NAME))
+		@$(call run_and_test, $(CC) $(CFLAGS) $(LIBX) -I./$(HEAD_DIR) $(A_OBJ) $(LIB) -o $(NAME))
 
 # $(VISU): $(LIB) Makefile $(B_OBJ)
 # 		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(B_OBJ) $(LIB) -o $(VISU))
 
 $(DIR_OBJ)%.o:$(SRC_PATH)/%.c $(HEAD_PATH)
-		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)
+		@$(call run_and_test, $(CC) $(CFLAGS) $(LIBX) -o $@ -c $<)
 
 $(LIB): FORCE
 		@$(MAKE) -C $(LIB_DIR)

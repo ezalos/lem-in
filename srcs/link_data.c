@@ -6,13 +6,13 @@
 /*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 18:06:03 by ythomas           #+#    #+#             */
-/*   Updated: 2019/08/27 18:06:06 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/11 16:29:12 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-void clear_links(t_god *god)
+void			clear_links(t_god *god)
 {
 	int i;
 	int j;
@@ -30,7 +30,7 @@ void clear_links(t_god *god)
 	}
 }
 
-void 		clear_tmp_links(t_god *god)
+void			clear_tmp_links(t_god *god)
 {
 	int i;
 	int j;
@@ -48,7 +48,7 @@ void 		clear_tmp_links(t_god *god)
 	}
 }
 
-void		set_link(t_god *god, int r1, int r2)
+void			set_link(t_god *god, int r1, int r2)
 {
 	int i;
 
@@ -61,7 +61,7 @@ void		set_link(t_god *god, int r1, int r2)
 	}
 }
 
-void		add_surcharged_link(t_god *god)
+void			add_surcharged_link(t_god *god)
 {
 	int i;
 	int nb;
@@ -76,7 +76,7 @@ void		add_surcharged_link(t_god *god)
 	}
 }
 
-void 		refresh_tmp_links(t_god *god)
+void			refresh_tmp_links(t_god *god)
 {
 	int i;
 	int j;

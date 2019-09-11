@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 16:32:03 by root              #+#    #+#             */
-/*   Updated: 2019/06/24 19:43:36 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/11 16:41:13 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ int			compare_rooms(t_lemin *zero, t_lemin *one)
 	return (0);
 }
 
-void			find_a_path(t_lemin *here, int id, t_ints *path)
+void		find_a_path(t_lemin *here, int id, t_ints *path)
 {
-	int							winner;
-	int							i;
+	int		winner;
+	int		i;
 
-	time_exe(__func__);
 	i = -1;
 	winner = -1;
 	save_this_path(here, path);

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 13:58:43 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/06/24 19:44:03 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/11 16:12:01 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int			send_using_n_path(t_god *god, t_ints *set_of_paths, int quant)
 	turn = ((god->ants + len_paths) / quant) - 1;
 	if (((god->ants + len_paths) % quant) != 0)
 		turn++;
-	//ft_printf("new = [%d]\n", turn);
 	return (turn);
 }
 

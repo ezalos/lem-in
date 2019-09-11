@@ -6,20 +6,20 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/06/24 19:53:11 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/11 16:30:05 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int 	clean_error(void)
+int			clean_error(void)
 {
 	ft_clean_garbage();
 	write(2, "ERROR\n", 6);
 	return (-1);
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_god			*god;
 	int				fd;
@@ -37,7 +37,7 @@ int		main(int ac, char **av)
 	else
 		ft_setup_visu(god);
 	//print_time();
-	ft_printf("turn = %d\n", god->turn);
+	//ft_printf("turn = %d\n", god->turn);
 	ft_clean_garbage();
 	return (0);
 }

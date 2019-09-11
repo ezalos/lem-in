@@ -6,13 +6,13 @@
 /*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:08:45 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/05 13:08:46 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/11 16:08:14 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int 			find_link(t_lemin *tmp)
+int				find_link(t_lemin *tmp)
 {
 	int i;
 
@@ -26,7 +26,7 @@ int 			find_link(t_lemin *tmp)
 	return (-1);
 }
 
-int  			find_pv_link(t_god *god, t_lemin *tmp, t_piles *stack)
+int				find_pv_link(t_god *god, t_lemin *tmp, t_piles *stack)
 {
 	int i;
 
@@ -40,7 +40,7 @@ int  			find_pv_link(t_god *god, t_lemin *tmp, t_piles *stack)
 	return (-1);
 }
 
-int 			is_it_connected(t_god *god, int room1, int room2)
+int				is_it_connected(t_god *god, int room1, int room2)
 {
 	int i;
 
@@ -67,7 +67,7 @@ void			creat_surcharged_link(t_god *god, int room1, int room2)
 	god->surcharged_link[0] = god->surcharged_link[0] + 2;
 }
 
-int 			which_link_is_surcharged(t_god *god, t_ints path)
+int				which_link_is_surcharged(t_god *god, t_ints path)
 {
 	int i;
 	int len;

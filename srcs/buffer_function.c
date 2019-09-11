@@ -6,13 +6,13 @@
 /*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:07:27 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/05 12:07:29 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/11 16:13:14 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-t_print 	*init_print(void)
+t_print				*init_print(void)
 {
 	t_print *print;
 
@@ -20,7 +20,7 @@ t_print 	*init_print(void)
 	return (print);
 }
 
-void 		print_whole_buffer(t_print *print)
+void				print_whole_buffer(t_print *print)
 {
 	t_print *tmp;
 
@@ -32,10 +32,10 @@ void 		print_whole_buffer(t_print *print)
 	}
 }
 
-void 		add_to_buffer(t_print *print, char *str)
+void				add_to_buffer(t_print *print, char *str)
 {
-	int i;
-	t_print *tmp;
+	int			i;
+	t_print		*tmp;
 
 	tmp = print;
 	while (print->next != NULL)
@@ -52,14 +52,14 @@ void 		add_to_buffer(t_print *print, char *str)
 	print = tmp;
 }
 
-void			print_buffer_with_refresh(t_print *print)
+void				print_buffer_with_refresh(t_print *print)
 {
 	int i;
 
 	if (print->index != 0)
 		(print->index)--;
 	print->buff[print->index] = '\n';
-		(print->index)++;
+	(print->index)++;
 	write(1, print->buff, print->index);
 	i = 0;
 	while (i < print->index)
@@ -67,7 +67,7 @@ void			print_buffer_with_refresh(t_print *print)
 	print->index = 0;
 }
 
-void 			fill_line_buffer(t_print *print, char *nb, char *name)
+void				fill_line_buffer(t_print *print, char *nb, char *name)
 {
 	int i;
 	int j;
