@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/24 19:53:32 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/10 18:43:56 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void		init_used_tab(t_god *god)
 
 int 		init_suit(t_god *god, t_print *print)
 {
-	time_exe(__func__);
 	god->end = ft_tab_reach_end(god->lem_in, 0)->content;
 	god->extremities[1] = ft_tab_reach_end(god->lem_in, 0)->content;
 	//print_matrix(god->lem_in);
@@ -40,7 +39,7 @@ int 		init_suit(t_god *god, t_print *print)
 	if (!god->goulots)
 		return (-1);
 	*ft_remember_god() = god;
-	init_used_tab(god);
+	init_used_tab(god);//LONG TIME
 	print_whole_buffer(print);
 	write(1, "\n", 1);
 	return (0);
@@ -52,14 +51,13 @@ int 		init(t_god *god, int fd)
 	char *line;
 	int ret;
 
-	time_exe(__func__);
 	print = init_print();
 	if (parse_ants(god, fd, print) == -1)
 		return (-1);
 	god->hashtable = hashtable_init();
-	while ((ret = ft_gnl(fd, &line)) > 0 && is_it_link_part(line) == 0)
+	while ((ret = ft_gnl(fd, &line)) > 0 && is_it_link_part(line) == 0)//LONG TIME HERE OR/AND DOWN
 	{
-		if (parse_rooms(god, fd, print, line) == -1)
+		if (parse_rooms(god, fd, print, line) == -1)//LONG TIME HERE OR/AND UP
 			return (-1);
 		ft_memdel((void **)&line);
 	}
@@ -67,7 +65,7 @@ int 		init(t_god *god, int fd)
 		return (-1);
 	if (ret <= 0)
 		return (-1);
-	if (parse_links(god, fd, print, line) == -1)
+	if (parse_links(god, fd, print, line) == -1)//LONG TIME
 		return (-1);
 	if (fd != 1)
 		close(fd);

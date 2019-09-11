@@ -6,7 +6,7 @@
 /*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 14:52:16 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/09 16:00:45 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/11 14:25:33 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int 			get_next_rooms(t_god *god, t_piles *stack,
 			if (god->rooms[last_p[i + 1]]->tmp_used[j] == 0 && god->rooms[last_p[i + 1]]->connexions[j]->gone == 1 //tmp_used is connexion already used ? (1/0)
 				&& god->rooms[last_p[i + 1]]->id != god->extremities[0]->id //NE PAS ETRE AU DEBUT
 				&& ((god->rooms[last_p[i + 1]]->last_room->surcharged != 1) || ((god->rooms[last_p[i + 1]]->last_room->surcharged == 1)
-					&& (god->rooms[last_p[i + 1]]->nb_of_connexions == 2)))//surcharge = remonter un chemin deja utilise. Pour l'instant surcharge unique
+				&& (god->rooms[last_p[i + 1]]->nb_of_connexions == 2)))//surcharge = remonter un chemin deja utilise. Pour l'instant surcharge unique
 				&& is_it_connected(god, god->rooms[last_p[i + 1]]->id, god->rooms[last_p[i + 1]]->connexions[j]->id) == 1 //is room directly connected to other room, and path has been used (int *used;).
 				&& god->rooms[last_p[i + 1]]->connexions[j]->id != god->extremities[0]->id //is room inderectly (len 1) connected to START.
 				&& god->rooms[last_p[i + 1]]->connexions[j]->id != god->rooms[last_p[i + 1]]->last_room->id //dont go back directly where you are from

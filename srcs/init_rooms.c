@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 18:34:40 by root              #+#    #+#             */
-/*   Updated: 2019/06/24 19:53:47 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/10 18:39:51 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	t_lemin		*room;
 	char		**split;
 
-	time_exe(__func__);
 	lem_in = &god->lem_in;
 	if (!(split = ft_strsplit(line, ' ')))
 		return (ERROR);

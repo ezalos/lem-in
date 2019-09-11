@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/06/24 19:48:57 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/10 16:19:41 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,16 +144,16 @@ void 			print_this_path(t_god *god, t_ints path)
 	{
 		ft_printf("%~{155;155;255}Path of length %d\n", path[0] - 1);
 		j = 0;
-		while (++j <= path[0] + 1)
+		while (++j <= path[0])
 		{
-			if (god->rooms[path[j]]->place == -1)
+			if (god->rooms[path[j]]->id == god->extremities[0]->id)
 				ft_printf("%~{255;155;155}");
-			else if (god->rooms[path[j]]->place == 1)
+			else if (god->rooms[path[j]]->id == god->extremities[1]->id)
 				ft_printf("%~{155;255;155}");
 			else
 				ft_printf("%~{?*}", god->rooms[path[j]]);
 			ft_printf("%*s%~{}", god->name_len, god->rooms[path[j]]->name);
-			if (god->rooms[path[j]]->place != 1)
+			if (god->rooms[path[j]]->id != god->extremities[1]->id)
 			{
 				if (god->rooms[path[j]]->nb_of_connexions < 3)
 					ft_printf("%~{50;50;50}");

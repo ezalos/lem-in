@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/06/24 19:53:11 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/10 18:44:04 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int		main(int ac, char **av)
 		return (clean_error());
 	if (lets_calcul(god) == -1)
 		return (clean_error());
-	if (!god->visu)
-		display_result(god);
-	else
-		ft_setup_visu(god);
-	//print_time();
+	// if (!god->visu)
+	// 	display_result(god);
+	// else
+	// 	ft_setup_visu(god);
+	// print_time();
 	ft_printf("turn = %d\n", god->turn);
 	ft_clean_garbage();
 	return (0);

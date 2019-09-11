@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 14:40:38 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/02 14:40:40 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/10 18:38:48 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void                hashtable_deinit(t_hashtable *hashtable)
 static size_t       hash(char *key, size_t key_length)
 {
     size_t                      hash;
-    
+
     hash = 5381;
     while (key_length--)
         hash = ((hash << 5) + hash) + (size_t)*key++;
@@ -105,8 +105,7 @@ void                hashtable_append(t_hashtable *hashtable, void *data, void *k
 {
     size_t                      key_hash;
     t_hashelement        *element;
-    
-    time_exe(__func__);
+
     if (++hashtable->elements_count >= hashtable->elements_size)
         hashtable_expand(hashtable);
     key_hash = hash(key, key_length) % hashtable->elements_size;
@@ -133,7 +132,6 @@ void                *hashtable_value(t_hashtable *hashtable, void *key, size_t k
     struct s_hashelement    *element;
     size_t            key_hash;
 
-    time_exe(__func__);
     key_hash = hash(key, key_length) % hashtable->elements_size;
     element = *(hashtable->elements + key_hash);
     while (element) {

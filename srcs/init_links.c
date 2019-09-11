@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/06/24 19:53:38 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/10 18:38:35 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int			link_rooms(t_tab *lem_in, char *line,
 	t_lemin		*_first;
 	t_lemin		*_second;
 
-	time_exe(__func__);
 	if (!*adjacent_matrix)
 		*adjacent_matrix = first_call(lem_in, god);
 	if (!my_fs)

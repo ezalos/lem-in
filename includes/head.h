@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/09 18:26:09 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/11 16:21:04 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct					s_lemin
 	int							id;
 	char						*name;
 	int							place;
+	int							orientation;
 
 	int							x_coord;
 	int							y_coord;
@@ -69,6 +70,8 @@ typedef struct					s_lemin
 	int 						weight;//depth
 	int 						dist_to_end;
 	struct s_lemin				*last_room;
+	struct s_lemin				*next_room;
+	struct s_lemin				*surcharge;
 	int 						*used; //tableau de la taille du nb_of_xonnexions, val 0 ou 1 si connexion utilise
 	int 						*tmp_used;
 	int 						blocked;// fait parti d'un chemin deja valide
@@ -137,12 +140,14 @@ typedef struct					s_god
 	t_lemin						***adjacent_matrix;
 	t_ints						surcharged_link;
 
-	t_ints						*paths;
+	t_ints						used_goulots;
+
 	t_ints 						*final_path;
-	int 						*waiting_ant;
+	t_ints						*paths;
 	int 						nb_final_paths;
 	int							nb_of_paths;
 	int							ants;
+	int 						*waiting_ant;
 	long int 					turn;
 
 	struct s_hashtable			*hashtable;
@@ -211,6 +216,13 @@ typedef struct 					s_visu
 **																			**
 ******************************************************************************
 */
+/*
+**************
+**   LOU	**
+**************
+*/
+void	loulou(t_god *god);
+int		search_a_path(t_god *god, t_lemin *here, t_lemin *daddy);
 
 /*
 **************
@@ -310,6 +322,8 @@ int				close_a_path(t_lemin *here);
 void			find_a_path(t_lemin *here, int id, t_ints *path);
 int				get_rid_of_dead_ends(t_god *god);
 int				ft_evaluate_set_of_path(t_god *god, int nb_paths);
+int				evaluate_set_of_path(t_god *god, t_ints *set_of_paths, int nb_paths);
+
 /*
 *******************
 ** 	TOOLS		**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:41:02 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/03 13:41:07 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/10 18:38:26 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int 		parse_links(t_god *god, int fd, t_print *print, char *line)
 	char *str;
 	int ret;
 
-	time_exe(__func__);
 	if (check_link_parsing(print, line) != -1)
 		ret = link_rooms(god->lem_in, line, &god->adjacent_matrix, god);
 	else
@@ -39,7 +38,6 @@ int 		parse_rooms(t_god *god, int fd, t_print *print, char *line)
 {
 	int ret;
 
-time_exe(__func__);
 	ret = 0;
 	if (line[0] == '#' && (line[1] != '#' || (line[1] == '#'
 	&& !ft_strcmp(line + 2, "start") && !ft_strcmp(line + 2, "end"))))

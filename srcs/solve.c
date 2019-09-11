@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:35:56 by root              #+#    #+#             */
-/*   Updated: 2019/09/09 17:45:41 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/10 18:39:23 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void 			init_paths(t_god *god)
 	god->final_path = NULL;
 	god->nb_final_paths = 0;
 	god->paths = ft_memalloc(sizeof(t_ints *) * (god->goulots + 1));
+	god->used_goulots = ft_memalloc(sizeof(int) * (god->goulots + 10));
 	while (i <= god->goulots)
 	{
 		god->paths[i] = ft_memalloc(sizeof(t_ints) * god->size * 2);
@@ -52,10 +53,12 @@ void 			init_paths(t_god *god)
 
 int				lets_calcul(t_god *god)
 {
-	time_exe(__func__);
 	//print_room_infos(god);
 	init_paths(god);
-	full_process(god);
+	// full_process(god);
+	// ft_printf("%s-%s\n", god->extremities[0]->name, god->extremities[1]->name);
+	loulou(god);
+	DEBUG_FUNC;
 	//ft_printf("[%d]\n", god->turn);
 	//print_paths(god);
 	//print_final_paths(god);
