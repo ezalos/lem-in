@@ -1,0 +1,9 @@
+srcs/path_fill_astar.c:29:		if (!lem_in || lem_in->gone)
+srcs/path_fill_astar.c:31:		if (lem_in->id == stack->finish)
+srcs/path_fill_astar.c:33:		if (!lem_in->from[stack->ste])
+srcs/path_fill_astar.c:35:			lem_in->from[stack->ste] = stack->deep;
+srcs/path_fill_astar.c:37:			while (lem_in->connexions[++i])
+srcs/path_fill_astar.c:38:					pile_b[++(*b)] = ((t_lemin*)lem_in->connexions[i])->id;
+srcs/print.c:74:	fd = ft_strlen(((t_lemin*)lem_in->content)->name);
+srcs/print.c:78:	// 	if (fd < (int)ft_strlen(((t_lemin*)lem_in->content)->name))
+srcs/print.c:79:	// 		fd = ft_strlen(((t_lemin*)lem_in->content)->name);

@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/08/27 15:36:23 by ythomas          ###   ########.fr        #
+#    Updated: 2019/09/09 18:22:07 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,11 @@ SRCS_LI		=			main\
 						algo_tools\
 						algo_tools_2\
 						algo_paths_tools\
+<<<<<<< HEAD
 						launch_visual
+=======
+						louis_alg
+>>>>>>> d163c1de263ae8f0ed0160cc8ff2a9d56acac96d
 
 # SRCS_VS		=	visu-hex
 
