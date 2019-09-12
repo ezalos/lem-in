@@ -90,7 +90,7 @@ int					ft_get_flag(char **av, char **const file)
 	return (flags);
 }
 
-int					lem_in(t_god *god, char **av, int fd)
+int					lem_in(t_god *god, char **av)
 {
 	char			*file;
 	const int		flags = ft_get_flag(av, &file);
@@ -99,9 +99,9 @@ int					lem_in(t_god *god, char **av, int fd)
 		ft_print_error(NULL);
 	if (flags & F_V)
 		god->visu = flags;
-	if (file && ((fd = open(file, O_RDONLY)) <= 0 || init(god, fd) == -1))
+	if (file && ((god->fd = open(file, O_RDONLY)) <= 0 || init(god) == -1))
 		return (-1);
-	else if (file == NULL && (init(god, fd) == -1))
+	else if (file == NULL && (init(god) == -1))
 		return (-1);
 	return (0);
 }

@@ -12,6 +12,13 @@
 
 #include "../includes/head.h"
 
+void				refresh_package(t_god *god, int nb_finish)
+{
+	clear_gone(god);
+	refresh_tmp_links(god);
+	add_gone(god, nb_finish);
+}
+
 int					get_len_path(t_god *god)
 {
 	int			i;

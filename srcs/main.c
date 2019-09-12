@@ -22,13 +22,12 @@ int			clean_error(void)
 int			main(int ac, char **av)
 {
 	t_god			*god;
-	int				fd;
 
 	(void)ac;
-	fd = 0;
 	god = ft_memalloc(sizeof(t_god));
+	god->fd = 0;
 	god->visu = 0;
-	if (lem_in(god, av, fd) == -1)
+	if (lem_in(god, av) == -1)
 		return (clean_error());
 	if (lets_calcul(god) == -1)
 		return (clean_error());

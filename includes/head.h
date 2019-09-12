@@ -41,17 +41,8 @@
 
 # define P_BUFF					5000
 
-/********** VISUAL DEFINE ************/
-
-#define H_SCREEN				1080.0
-#define W_SCREEN				1920.0
-#define MAX_PIX					2073600
-
-/*************************************/
-
-
 # include "../../libft/includes/libft.h"
-# include <mlx.h>
+# include "../../visu/visu.h"
 
 typedef int* 					t_ints;
 
@@ -129,10 +120,14 @@ struct s_hashtable				*hashtable_init(void);
 void							hashtable_append(t_hashtable *hashtable, void *data, void *key, size_t key_length);
 void							*hashtable_value(t_hashtable *hashtable, void *key, size_t key_length);
 void							hashtable_deinit(t_hashtable *hashtable);
-void                     		print_hashtable(t_hashtable *hashtable);
+size_t      					hash(char *key, size_t key_length);
+void             			   hashtable_expand_append(t_hashtable *hashtable, t_hashelement *element);
+void       						  hashtable_expand(t_hashtable *hashtable);
 
 typedef struct					s_god
 {
+	int 						fd;
+
 	t_tab						*lem_in;
 	t_lemin						**rooms;
 	t_lemin						***adjacent_matrix;
@@ -177,33 +172,6 @@ typedef struct 					s_print
 	struct s_print 				*next;
 } 								t_print;
 
-
-
-
-
-typedef struct 					s_room
-{
-	double 						x;
-	double 						y;
-	char 						*name;
-	int 						nb_rooms;
-}								t_room;
-
-typedef struct 					s_visu
-{
-	int 						nb_paths;
-	t_room 						***paths;
-	int 						ants;
-	int 						turn;
-	int 						nb_h;
-	double 						rate_x;
-	double 						rate_y;
-	double 						range;
-}								t_visu;
-
-
-
-
 /*
 ******************************************************************************
 **																			**
@@ -219,16 +187,16 @@ typedef struct 					s_visu
 **   INIT	**
 **************
 */
-int 			init(t_god *god, int fd);
-int 			lem_in(t_god *god, char **av, int fd);
+int 			init(t_god *god);
+int 			lem_in(t_god *god, char **av);
 
-int				add_rooms(t_god *god, int place, int ants_nb, char *line);
+int				add_rooms(t_god *god, int place, char *line);
 
-int 			parse_links(t_god *god, int fd, t_print *print, char *line);
-int 			parse_rooms(t_god *god, int fd, t_print *print, char *line);
+int 			parse_links(t_god *god, t_print *print, char *line);
+int 			parse_rooms(t_god *god, t_print *print, char *line);
 int 			parse_extremity(t_god *god, t_print *print,
-				int fd, int place, char *line);
-int				parse_ants(t_god *god, int fd, t_print *print);
+				int place, char *line);
+int				parse_ants(t_god *god, t_print *print);
 void 			print_whole_buffer(t_print *print);
 int 			is_it_link_part(char *str);
 int 			check_room_parsing_suit(char *str, int i, int step);
@@ -293,7 +261,6 @@ void			print_buffer_with_refresh(t_print *print);
 void 			fill_line_buffer(t_print *print, char *nb, char *name);
 
 int 			ft_setup_visu(t_god *god);
-int 			launch_visual(t_visu *visu);
 void			init_new_coord(t_visu *visu);
 
 /*
@@ -323,6 +290,7 @@ void			creat_surcharged_link(t_god *god, int room1, int room2);
 int 			is_it_connected(t_god *god, int room1, int room2);
 int  			find_pv_link(t_god *god, t_lemin *tmp, t_piles *stack);
 int 			find_link(t_lemin *tmp);
+void			refresh_package(t_god *god, int nb_finish);
 
 int 			reset_this_set(t_god *god, int nb_finish);
 void			init_stack(int size, t_piles *stack, int id);
@@ -334,6 +302,12 @@ void 			save_actual_set(t_god *god, int nb_paths, int nb_of_turn);
 int 			get_faster_path(t_god *god);
 void			add_path_to_set(t_god *god, int path);
 int 			get_len_path(t_god *god);
+
+void			do_the_trigger(t_lemin *room, t_ints tab, int i, int j);
+int				basic_test_do_trigger(t_god *god, t_lemin *room, int i, int j);
+int				next_is_it_trigger(t_god *god, int room, int last_one);
+int				test_g_one(t_god *god, t_lemin *room, int i, int j);
+int				zero_tst(t_god *god, t_lemin *room, int i, int j);
 /*
 **************
 **   	A*		**
@@ -342,12 +316,7 @@ int 			get_len_path(t_god *god);
 
 int 			breadth_first_search(t_god *god, int *stat);
 
-int				refresh_a_star(t_god *god);
-int				alternate_piles(t_god *god, int id_start, int id_end, int start_to_end);
-
 int				lets_calcul(t_god *god);
 int				full_process(t_god *god);
 
-t_ints			*get_second_set_of_paths(t_god *god);
-int				is_there_a_path(t_god *god, int *kill_list, int point_a, int point_b);
 #endif

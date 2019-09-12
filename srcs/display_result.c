@@ -65,11 +65,10 @@ int				push_ants(t_god *god, int *genome,
 	return (pushed);
 }
 
-int				*init_waiting_tab(t_god *god)
+int				*init_waiting_tab(t_god *god, int len)
 {
 	int		*tab;
 	int		i;
-	int		len;
 	int		mod;
 
 	tab = ft_memalloc(sizeof(int *) * god->nb_final_paths);
@@ -79,10 +78,8 @@ int				*init_waiting_tab(t_god *god)
 		len = len + god->final_path[i++][0];
 	i = -1;
 	if ((mod = ((god->ants + len) % god->nb_final_paths)) == 0)
-	{
 		while (++i < god->nb_final_paths)
 			tab[i] = god->turn - god->final_path[i][0] + 1;
-	}
 	else
 	{
 		while (++i < god->nb_final_paths)
@@ -105,7 +102,7 @@ int				display_result_suit(t_god *god, int *tmp, int *t_ants)
 
 	genome = 1;
 	print.index = 0;
-	waiting_ant = init_waiting_tab(god);
+	waiting_ant = init_waiting_tab(god, genome);
 	while (*t_ants > 0 || *tmp > 0)
 	{
 		*tmp = moove_one_turn(god, &print);

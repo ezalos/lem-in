@@ -11,12 +11,10 @@
 # **************************************************************************** #
 
 NAME 	= lem-in
-VISU	= visu-hex
 
 CC = gcc
 
 CFLAGS =
-LIBX = -lmlx -framework OpenGL -framework AppKit
 
 DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 -O2 -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int\
@@ -53,9 +51,7 @@ SRCS_LI		=			main\
 						graph_simplifier\
 						print\
 						solve\
-						path_fill_astar\
 						path_quantity_estimate\
-						path_follow_astar\
 						new_algo\
 						display_result\
 						tools\
@@ -70,7 +66,8 @@ SRCS_LI		=			main\
 						algo_tools\
 						algo_tools_2\
 						algo_paths_tools\
-						launch_visual\
+						new_algo_function_content\
+						hash_tools\
 						louis_alg
 
 # SRCS_VS		=	visu-hex
@@ -178,22 +175,27 @@ endef
 ##############################################################################
 ##############################################################################
 
+VISU = ../visu/visu.o
+VISU_SOURCE = ../visu/visu.mm
+VISU_HEADER = ../visu/visu.h
+VISU_FRAMEWORK = -framework Foundation -framework AppKit -framework SceneKit
+
 ##########################
 ##						##
 ##		  BASIC			##
 ##						##
 ##########################
 
-all :	$(NAME) #$(VISU)
+all :	$(NAME)
 
-$(NAME): $(LIB) Makefile $(A_OBJ)
-		@$(call run_and_test, $(CC) $(CFLAGS) $(LIBX) -I./$(HEAD_DIR) $(A_OBJ) $(LIB) -o $(NAME))
+$(NAME): $(VISU) $(LIB) Makefile $(A_OBJ)
+		@$(call run_and_test, $(CC) $(CFLAGS) -I $(VISU_HEADER) -I./$(HEAD_DIR) $(VISU_FRAMEWORK) $(VISU) $(A_OBJ) $(LIB) -o $(NAME))
 
-# $(VISU): $(LIB) Makefile $(B_OBJ)
-# 		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(B_OBJ) $(LIB) -o $(VISU))
+$(VISU): $(VISU_SOURCE) $(VISU_HEADER)
+	clang -O0 -g -x objective-c $(VISU_SOURCE) -c -o $(VISU)
 
 $(DIR_OBJ)%.o:$(SRC_PATH)/%.c $(HEAD_PATH)
-		@$(call run_and_test, $(CC) $(CFLAGS) $(LIBX) -o $@ -c $<)
+		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)
 
 $(LIB): FORCE
 		@$(MAKE) -C $(LIB_DIR)

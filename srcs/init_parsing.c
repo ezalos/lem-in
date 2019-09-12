@@ -6,13 +6,13 @@
 /*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:41:02 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/11 16:25:26 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/12 13:36:43 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int			parse_links(t_god *god, int fd, t_print *print, char *line)
+int			parse_links(t_god *god, t_print *print, char *line)
 {
 	char		*str;
 	int			ret;
@@ -21,7 +21,7 @@ int			parse_links(t_god *god, int fd, t_print *print, char *line)
 		ret = link_rooms(god->lem_in, line, &god->adjacent_matrix, god);
 	else
 		return (-1);
-	while ((ret = ft_gnl(fd, &str)) > 0)
+	while ((ret = ft_gnl(god->fd, &str)) > 0)
 	{
 		if (str[0] == '#' && str[1] != '#')
 			add_to_buffer(print, str);
@@ -29,12 +29,11 @@ int			parse_links(t_god *god, int fd, t_print *print, char *line)
 			ret = link_rooms(god->lem_in, str, &god->adjacent_matrix, god);
 		if (ret == -1)
 			return (-1);
-		ft_memdel((void **)&str);
 	}
 	return (0);
 }
 
-int			parse_rooms(t_god *god, int fd, t_print *print, char *line)
+int			parse_rooms(t_god *god, t_print *print, char *line)
 {
 	int ret;
 
@@ -44,25 +43,24 @@ int			parse_rooms(t_god *god, int fd, t_print *print, char *line)
 		add_to_buffer(print, line);
 	else if (god->dbt == 0 && line[0] == '#' && line[1] == '#'
 	&& !ft_strcmp(line + 2, "start") && (god->dbt = 1) == 1)
-		ret = parse_extremity(god, print, fd, START, line);
+		ret = parse_extremity(god, print, START, line);
 	else if (god->fin == 0 && line[0] == '#' && line[1] == '#'
 	&& !ft_strcmp(line + 2, "end") && (god->fin = 1) == 1)
-		ret = parse_extremity(god, print, fd, END, line);
+		ret = parse_extremity(god, print, END, line);
 	else if ((ret = check_room_parsing(print, line)) != -1)
-		add_rooms(god, 0, god->ants, line);
+		add_rooms(god, 0, line);
 	if (ret == -1)
 		return (-1);
 	return (0);
 }
 
-int			parse_extremity(t_god *god, t_print *print,
-	int fd, int place, char *line)
+int			parse_extremity(t_god *god, t_print *print, int place, char *line)
 {
 	char	*str;
 	int		ret;
 
 	add_to_buffer(print, line);
-	while ((ret = ft_gnl(fd, &str)) > 0 && str[0] == '#'
+	while ((ret = ft_gnl(god->fd, &str)) > 0 && str[0] == '#'
 	&& ft_strcmp(str + 1, "#start") && ft_strcmp(str + 1, "#end"))
 	{
 		add_to_buffer(print, str);
@@ -71,7 +69,7 @@ int			parse_extremity(t_god *god, t_print *print,
 	if (ret > 0)
 	{
 		if (check_room_parsing(print, str) != -1)
-			add_rooms(god, place, god->ants, str);
+			add_rooms(god, place, str);
 		else
 			return (-1);
 	}
@@ -81,14 +79,14 @@ int			parse_extremity(t_god *god, t_print *print,
 	return (0);
 }
 
-int			parse_ants(t_god *god, int fd, t_print *print)
+int			parse_ants(t_god *god, t_print *print)
 {
 	int		i;
 	char	*line;
 	int		tmp;
 
 	i = 0;
-	if (ft_gnl(fd, &line) > 0)
+	if (ft_gnl(god->fd, &line) > 0)
 	{
 		while (line[i] != '\0')
 		{

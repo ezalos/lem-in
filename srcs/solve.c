@@ -43,11 +43,7 @@ void			init_paths(t_god *god)
 
 int				lets_calcul(t_god *god)
 {
-	//print_room_infos(god);
 	init_paths(god);
 	full_process(god);
-	//ft_printf("[%d]\n", god->turn);
-	//print_paths(god);
-	//print_final_paths(god);
 	return (0);
 }

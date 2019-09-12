@@ -6,13 +6,23 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 18:34:40 by root              #+#    #+#             */
-/*   Updated: 2019/06/24 19:53:47 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/12 14:43:22 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-int		add_rooms(t_god *god, int place, int ants_nb, char *line)
+void		set_room_in_tab(t_god *god, int place, t_tab *new, t_tab **lem_in)
+{
+	if (place < 0 || !(*lem_in))
+		ft_tabadd_start(lem_in, new, 0);
+	else if (place > 0)
+		ft_tabadd_end(*lem_in, new, 0);
+	else
+		ft_tabadd(lem_in, new, 0, 1);
+}
+
+int			add_rooms(t_god *god, int place, char *line)
 {
 	t_tab		**lem_in;
 	t_tab		*new;
@@ -36,15 +46,7 @@ int		add_rooms(t_god *god, int place, int ants_nb, char *line)
 	if (!(new = ft_tabnew_ptr(room, sizeof(void*))))
 		return (ERROR);
 	if (place < 0 || !(*lem_in))
-	{
-		god->start = room;
 		god->extremities[0] = room;
-		god->ants = ants_nb;
-		ft_tabadd_start(lem_in, new, 0);
-	}
-	else if (place > 0)
-		ft_tabadd_end(*lem_in, new, 0);
-	else
-		ft_tabadd(lem_in, new, 0, 1);
+	set_room_in_tab(god, place, new, lem_in);
 	return (VALID);
 }
