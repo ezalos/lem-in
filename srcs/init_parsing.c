@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:41:02 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/11 16:25:26 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/12 11:50:02 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			parse_links(t_god *god, int fd, t_print *print, char *line)
 			ret = link_rooms(god->lem_in, str, &god->adjacent_matrix, god);
 		if (ret == -1)
 			return (-1);
-		ft_memdel((void **)&str);
+		// ft_memdel((void **)&str);
 	}
 	return (0);
 }
