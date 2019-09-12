@@ -6,7 +6,7 @@
 /*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:41:02 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/10 18:38:26 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/12 12:52:46 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int 		parse_links(t_god *god, int fd, t_print *print, char *line)
 			ret = link_rooms(god->lem_in, str, &god->adjacent_matrix, god);
 		if (ret == -1)
 			return (-1);
-		ft_memdel((void **)&str);
+		// ft_memdel((void **)&str);
 	}
 	return (0);
 }

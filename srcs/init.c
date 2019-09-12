@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/09/10 18:43:56 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/12 13:49:32 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void		init_used_tab(t_god *god)
 	i = 0;
 	while (god->rooms[i])
 	{
-		god->rooms[i]->used = ft_memalloc(sizeof(int *)
+		god->rooms[i]->used = ft_memalloc(sizeof(int)
 		* god->rooms[i]->nb_of_connexions);
-		god->rooms[i]->tmp_used = ft_memalloc(sizeof(int *)
+		god->rooms[i]->tmp_used = ft_memalloc(sizeof(int)
 		* god->rooms[i]->nb_of_connexions);
 		god->surcharged_link = ft_memalloc(sizeof(t_ints) * god->size * 2);
 		i++;

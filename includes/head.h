@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/11 16:21:04 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/12 14:15:47 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,11 +218,36 @@ typedef struct 					s_visu
 */
 /*
 **************
-**   LOU	**
+**   LOUIS	**
 **************
 */
+//main
 void	loulou(t_god *god);
 int		search_a_path(t_god *god, t_lemin *here, t_lemin *daddy);
+
+//dist
+void			ft_execute_pile_end_to_start(t_god *god, int depth,
+	t_ints pile_a, t_ints pile_b);
+void			get_dist_from_end(t_god *god);
+int				are_these_room_correctly_oriented(t_lemin *from, t_lemin *to);
+int				is_this_extremities(t_god *god, t_lemin *here);
+void			get_dist_from_end_oriented_graph(t_god *god);
+//room sort
+int			room_compare(t_lemin *one, t_lemin *two);
+void		room_connexions_sort(t_lemin *here);
+//tools
+void		clean_search(t_god *god);
+void 		clean_gone(t_god *god);
+void 		clean_dist(t_god *god);
+void 		mean_connec(t_god *god);
+//save paths
+t_ints 			*malloc_paths(t_god *god);
+void		write_path(t_god *god, t_lemin *here, t_ints path);
+void	extract_paths(t_god *god);
+void	save_solution(t_god *god, t_lemin *daddy);
+int		find_connec(t_god *god, int from, int to);
+int		find_connec_ptr(t_god *god, t_lemin *from, t_lemin *to);
+
 
 /*
 **************
