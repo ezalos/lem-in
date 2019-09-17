@@ -6,7 +6,7 @@
 /*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:41:02 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/12 12:52:46 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/13 13:53:40 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int 		parse_rooms(t_god *god, int fd, t_print *print, char *line)
 		ret = parse_extremity(god, print, fd, END, line);
 	else if ((ret = check_room_parsing(print, line)) != -1)
 		add_rooms(god, 0, god->ants, line);
+	if (!ft_strncmp(line, "#Here is the number of lines required: ", 38))
+		god->expected_solution = ft_atoi(line + 38);
 	if (ret == -1)
 		return (-1);
 	return (0);
