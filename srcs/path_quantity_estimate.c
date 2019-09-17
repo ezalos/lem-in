@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:16:14 by root              #+#    #+#             */
-/*   Updated: 2019/06/24 19:55:29 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/17 13:56:02 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ void		block_all_rooms_connected(t_lemin *here)
 int				how_many_extremities(t_god *god, int side)
 {
 	int 		i;
-	int			name_size;
 
-	name_size = ft_nb_len(god->extremities[side]->id, 10);
 	i = -1;
 	god->extremities_list[side] = ft_memalloc(sizeof(int*)
 		* (god->extremities[side]->nb_of_connexions + 1));

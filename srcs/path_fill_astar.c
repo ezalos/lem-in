@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:05:17 by root              #+#    #+#             */
-/*   Updated: 2019/09/09 17:46:03 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/17 13:55:34 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ int				alternate_piles(t_god *god, int id_start,
 	int id_end, int start_to_end)
 {
 	t_piles stack;
-	int 	depth;
 	int		r_v;
 
-	depth = 0;
 	init_stack(god->size * 2, &stack, id_start);
 	stack.finish = id_end;
 	stack.ste = start_to_end;
