@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/09/10 16:19:41 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/17 13:55:17 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,7 @@ void			print_room_infos(t_god *god)
 void 			print_this_path(t_god *god, t_ints path)
 {
 	int			j;
-	int			name_size;
 
-	name_size = ft_nb_len(god->end->id, 10);
 	if (path && path[0])
 	{
 		ft_printf("%~{155;155;255}Path of length %d\n", path[0] - 1);
