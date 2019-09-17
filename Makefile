@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/12 13:42:11 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/09/17 14:41:21 by ezalos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,8 @@ SRCS_LI		=			main\
 						louis_dist\
 						louis_room_sort\
 						louis_tools\
-						louis_save_path
+						louis_save_path\
+						louis_data
 
 # SRCS_VS		=	visu-hex
 

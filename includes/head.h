@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/12 14:15:47 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/17 15:07:57 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@
 # define INIT_SPEC				4
 
 # define HTABLE_SIZE			262144
+
+# define NORMAL					0
+# define SURCHARGE				1
 
 # define RIGHT					0
 # define DOWN					1
@@ -91,7 +94,15 @@ typedef struct					s_meta
 }								t_meta;
 
 
-
+typedef struct					s_data
+{
+	struct s_lemin				*room;
+	struct s_data				***baby;
+	struct s_data				*daddy;
+	int							id;
+	int							surcharge;
+	int							depth;
+}								t_data;
 
 
 typedef struct 					s_piles
@@ -151,6 +162,7 @@ typedef struct					s_god
 	long int 					turn;
 
 	struct s_hashtable			*hashtable;
+	struct s_data				*possibility_tree;
 
 	t_lemin						*start;
 	t_lemin						*end;
@@ -247,6 +259,11 @@ void	extract_paths(t_god *god);
 void	save_solution(t_god *god, t_lemin *daddy);
 int		find_connec(t_god *god, int from, int to);
 int		find_connec_ptr(t_god *god, t_lemin *from, t_lemin *to);
+//data
+void		free_tree(t_data *daddy);
+void		free_elmnt(t_data *branch);
+void		add_to_tree(t_data *daddy, t_data *baby, int mode);
+t_data		*create_branch(t_lemin *room);
 
 
 /*
