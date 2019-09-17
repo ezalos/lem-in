@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:41:34 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/12 18:40:35 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/14 19:56:29 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_ints 			*malloc_paths(t_god *god)
 {
+	// DEBUG_FUNC;
 	t_ints			*malloc_paths;
 	int				i;
 
@@ -24,24 +25,25 @@ t_ints 			*malloc_paths(t_god *god)
 	return (malloc_paths);
 }
 
-void		write_path(t_god *god, t_lemin *here, t_ints path)
+int		write_path(t_god *god, t_lemin *here, t_ints path)
 {
-	if (!here)
+	int						r_v;
+
+	r_v = FAILURE;
+	if (here)
 	{
-		// ft_printf("pbm\n");
-		return ;
+		r_v = SUCCESS;
+		if (here->id != god->extremities[0]->id)
+			r_v = write_path(god, here->last_room, path);
+		here->gone = 1;
+		path[++path[0]] = here->id;
 	}
-	// ft_printf("%~{?}Room %s\n", here->name);
-	if (here->id != god->extremities[0]->id)
-		write_path(god, here->last_room, path);
-	// ft_printf("%~{}Room %s", here->name);
-	here->gone = 1;
-	path[++path[0]] = here->id;
-	// ft_printf("--\n");
+	return (r_v);
 }
 
 void	save_solution(t_god *god, t_lemin *daddy)
 {
+	// DEBUG_FUNC;
 	int						r_v;
 	int						i;
 
@@ -61,6 +63,7 @@ void	save_solution(t_god *god, t_lemin *daddy)
 
 int		find_connec_id(t_god *god, int from, int to)
 {
+	// DEBUG_FUNC;
 	int i;
 
 	i = -1;
@@ -72,6 +75,7 @@ int		find_connec_id(t_god *god, int from, int to)
 
 int		find_connec_ptr(t_god *god, t_lemin *from, t_lemin *to)
 {
+	// DEBUG_FUNC;
 	int i;
 
 	i = 0;
@@ -85,17 +89,20 @@ int		find_connec_ptr(t_god *god, t_lemin *from, t_lemin *to)
 
 void	block_path_connections(t_god *god, t_ints path)
 {
+	// DEBUG_FUNC;
 	int check;
 	int i;
 
 	i = 0;
-	while (++i <= path[0] - 1)
-		if ((check = find_connec_id(god, path[i], path[i + 1])) >= 0)
-			god->rooms[path[i]]->used[check] = 1;
+	if (path)
+		while (++i <= path[0] - 1)
+			if ((check = find_connec_id(god, path[i], path[i + 1])) >= 0)
+				god->rooms[path[i]]->used[check] = 1;
 }
 
 void	extract_paths(t_god *god)
 {
+	// DEBUG_FUNC;
 	t_ints			*path;
 	int 			i;
 	int 			turn;
@@ -106,28 +113,17 @@ void	extract_paths(t_god *god)
 	{
 		write_path(god, god->rooms[god->used_goulots[i]], path[i - 1]);
 		path[i - 1][++path[i - 1][0]] = god->extremities[1]->id;
+		// ft_printf("side\n");
 		block_path_connections(god, path[i - 1]);
-		// ft_printf("PATH LEN : %d\n", path[i - 1][0]);
-		// ft_printf("%~{}Room %s\n", god->extremities[1]->name);
-		// print_this_path(god, path[i - 1]);
 	}
+	// ft_printf("otherside\n");
 	god->paths = path;
 	god->nb_of_paths = god->used_goulots[0];
-	if (!god->final_path)
+	turn = evaluate_set_of_path(god, god->paths, god->nb_of_paths);
+	if (!god->final_path || turn < god->turn)
 	{
-		god->final_path = path;
+		god->final_path = god->paths;
 		god->nb_final_paths = god->used_goulots[0];
-		turn = evaluate_set_of_path(god, god->final_path, god->nb_final_paths);
-		// ft_printf("Anthill solved in %d turns!\n", turn);
 		god->turn = turn;
-		return ;
 	}
-	if ((turn = evaluate_set_of_path(god, god->paths, god->nb_of_paths))
-	 < evaluate_set_of_path(god, god->final_path, god->nb_final_paths))
-	 {
- 		god->final_path = god->paths;
- 		god->nb_final_paths = god->nb_of_paths;
-		god->turn = turn;
-	 }
-	 // ft_printf("\tAnthill solved in %d turns!\n", turn);
 }

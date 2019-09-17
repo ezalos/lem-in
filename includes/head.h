@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/12 14:15:47 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/16 16:14:49 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct					s_lemin
 	struct s_lemin				**connexions;
 	int							nb_of_connexions;
 	int 						weight;//depth
+	int 						depth;
 	int 						dist_to_end;
 	struct s_lemin				*last_room;
 	struct s_lemin				*next_room;
@@ -90,9 +91,14 @@ typedef struct					s_meta
 	int							*ants_sent;
 }								t_meta;
 
-
-
-
+typedef struct					s_data
+{
+	t_ints						search;
+	t_ints						surcharge;
+	struct s_lemin				*room;
+	struct s_data				**baby;
+	struct s_data				*daddy;
+}								t_data;
 
 typedef struct 					s_piles
 {
@@ -242,7 +248,7 @@ void 		clean_dist(t_god *god);
 void 		mean_connec(t_god *god);
 //save paths
 t_ints 			*malloc_paths(t_god *god);
-void		write_path(t_god *god, t_lemin *here, t_ints path);
+int		write_path(t_god *god, t_lemin *here, t_ints path);
 void	extract_paths(t_god *god);
 void	save_solution(t_god *god, t_lemin *daddy);
 int		find_connec(t_god *god, int from, int to);
