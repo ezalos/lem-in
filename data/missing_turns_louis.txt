@@ -20,6 +20,7 @@
 ./42_lem-in_tools/maps/valid/big_sup/map_big_sup_27 :	3
 ./42_lem-in_tools/maps/valid/big_sup/map_big_sup_28 :	2
 ./42_lem-in_tools/maps/valid/big_sup/map_big_sup_29 :	4
+./42_lem-in_tools/maps/valid/big_sup/map_big_sup_3 :	4
 ./42_lem-in_tools/maps/valid/big_sup/map_big_sup_30 :	1
 ./42_lem-in_tools/maps/valid/big_sup/map_big_sup_4 :	2
 ./42_lem-in_tools/maps/valid/big_sup/map_big_sup_5 :	1

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/09/18 18:24:40 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/18 18:35:03 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ int		main(int ac, char **av)
 		return (clean_error());
 	if (lets_calcul(god) == -1)
 		return (clean_error());
-	// if (!god->visu)
-	// 	display_result(god);
-	// else
-	// 	ft_setup_visu(god);
+	if (!god->visu)
+		display_result(god);
+	else
+		ft_setup_visu(god);
 	// print_time();
 	// ft_printf("turn = %d\t MISSING : %d\n", god->turn, god->turn - god->expected_solution);
-	// ft_add_to_file("./data/missing_turns", ft_strjoin_multi(3, av[1], " :\t", ft_nb_to_a(god->turn - god->expected_solution, 10)));
+	// ft_add_to_file("./data/missing_turns_louis", ft_strjoin_multi(3, av[1], " :\t", ft_nb_to_a(god->turn - god->expected_solution, 10)));
 	ft_clean_garbage();
 	return (0);
 }

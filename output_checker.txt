@@ -1,0 +1,44 @@
+find maps/valid/big_sup -type f -exec echo {} \; -exec ./checker.sh ../lem-in {} \; | grep -e "maps/valid" -e \\\[33m
+
+maps/valid/big_sup/map_big_sup_1
+maps/valid/big_sup/map_big_sup_10
+maps/valid/big_sup/map_big_sup_11
+maps/valid/big_sup/map_big_sup_12
+maps/valid/big_sup/map_big_sup_13
+maps/valid/big_sup/map_big_sup_14
+maps/valid/big_sup/map_big_sup_15
+maps/valid/big_sup/map_big_sup_16
+    >>> Path does not end on room_end {Uyv2}
+    >>> Path followed by ant L4 does not exist
+    >>> nbr of ants in room_end (Uyv2): 161, expected: 196
+maps/valid/big_sup/map_big_sup_17
+    >>> Path does not end on room_end {Kct1}
+    >>> Path followed by ant L3 does not exist
+    >>> nbr of ants in room_end (Kct1): 419, expected: 464
+maps/valid/big_sup/map_big_sup_18
+maps/valid/big_sup/map_big_sup_19
+maps/valid/big_sup/map_big_sup_2
+maps/valid/big_sup/map_big_sup_20
+maps/valid/big_sup/map_big_sup_21
+maps/valid/big_sup/map_big_sup_22
+maps/valid/big_sup/map_big_sup_23
+maps/valid/big_sup/map_big_sup_24
+maps/valid/big_sup/map_big_sup_25
+maps/valid/big_sup/map_big_sup_26
+maps/valid/big_sup/map_big_sup_27
+maps/valid/big_sup/map_big_sup_28
+maps/valid/big_sup/map_big_sup_29
+maps/valid/big_sup/map_big_sup_3
+maps/valid/big_sup/map_big_sup_30
+maps/valid/big_sup/map_big_sup_4
+maps/valid/big_sup/map_big_sup_5
+    >>> Path does not end on room_end {Fzk4}
+    >>> Path followed by ant L3 does not exist
+    >>> nbr of ants in room_end (Fzk4): 169, expected: 208
+maps/valid/big_sup/map_big_sup_6
+maps/valid/big_sup/map_big_sup_7
+maps/valid/big_sup/map_big_sup_8
+    >>> Path does not end on room_end {Fyu8}
+    >>> Path followed by ant L2 does not exist
+    >>> nbr of ants in room_end (Fyu8): 144, expected: 184
+maps/valid/big_sup/map_big_sup_9
