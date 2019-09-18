@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:41:34 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/14 19:56:29 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/17 17:10:13 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		write_path(t_god *god, t_lemin *here, t_ints path)
 	return (r_v);
 }
 
-void	save_solution(t_god *god, t_lemin *daddy)
+void	save_solution(t_god *god, t_data *daddy)
 {
 	// DEBUG_FUNC;
 	int						r_v;
@@ -59,6 +59,7 @@ void	save_solution(t_god *god, t_lemin *daddy)
 	}
 	else
 		god->used_goulots[++god->used_goulots[0]] = daddy->id;
+	god->reach_end_room = daddy;
 }
 
 int		find_connec_id(t_god *god, int from, int to)

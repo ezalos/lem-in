@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 14:41:35 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/17 15:07:13 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/17 18:58:36 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,48 @@ void		add_to_tree(t_data *daddy, t_data *baby, int mode)
 	if (i >= daddy->room->nb_of_connexions)
 		ft_printf("%s: %s\n", __func__, "More child than possible");
 	daddy->baby[mode][i] = baby;
-	daddy->baby[mode][i]->depth = daddy->depth + 1;
-	daddy->baby[mode][i]->daddy = daddy;
+	baby->depth = daddy->depth + 1;
+	baby->daddy = daddy;
+	if (mode == SURCHARGE)
+	{
+		baby->surcharge = SURCHARGE;
+		// baby->depth = daddy->depth - 1;
+		//NEED TO MAKE SURCHARGE GROW UNITL EQUAL
+	}
+	else
+	{
+		baby->surcharge = NORMAL;
+		// baby->depth = daddy->depth + 1;
+	}
+}
+
+void		save_to_tree(t_data *daddy, t_lemin *room, int mode)
+{
+	DEBUG_FUNC;
+	t_data *baby;
+	int		i;
+
+	ft_printf("SAVE ROOM %s %d\n", room->name, mode);
+	baby = create_branch(room);
+	i = 0;
+	while (daddy->baby[mode][i])
+		i++;
+	if (i >= daddy->room->nb_of_connexions)
+		ft_printf("%s: %s\n", __func__, "More child than possible");
+	daddy->baby[mode][i] = baby;
+	baby->depth = daddy->depth + 1;
+	baby->daddy = daddy;
+	if (mode == SURCHARGE)
+	{
+		baby->surcharge = SURCHARGE;
+		// baby->depth = daddy->depth - 1;
+		//NEED TO MAKE SURCHARGE GROW UNITL EQUAL
+	}
+	else
+	{
+		baby->surcharge = NORMAL;
+		// baby->depth = daddy->depth + 1;
+	}
 }
 
 void		free_elmnt(t_data *branch)
@@ -44,7 +84,7 @@ void		free_elmnt(t_data *branch)
 	ft_memdel((void**)&branch->baby[SURCHARGE]);
 	ft_memdel((void**)&branch->baby[NORMAL]);
 	ft_memdel((void**)&branch->baby);
-	ft_memdel((void**)&branch); = ft_memalloc(sizeof(t_data));
+	ft_memdel((void**)&branch);
 }
 
 void		free_tree(t_data *daddy)

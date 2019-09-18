@@ -6,11 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/09/17 15:07:57 by ezalos           ###   ########.fr       */
-=======
-/*   Updated: 2019/09/16 16:14:49 by ldevelle         ###   ########.fr       */
->>>>>>> e35b75087c32686766ceb2cc0611a1ec1a21849a
+/*   Updated: 2019/09/17 18:30:19 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +94,6 @@ typedef struct					s_meta
 	int							*ants_sent;
 }								t_meta;
 
-<<<<<<< HEAD
-
 typedef struct					s_data
 {
 	struct s_lemin				*room;
@@ -109,17 +103,6 @@ typedef struct					s_data
 	int							surcharge;
 	int							depth;
 }								t_data;
-
-=======
-typedef struct					s_data
-{
-	t_ints						search;
-	t_ints						surcharge;
-	struct s_lemin				*room;
-	struct s_data				**baby;
-	struct s_data				*daddy;
-}								t_data;
->>>>>>> e35b75087c32686766ceb2cc0611a1ec1a21849a
 
 typedef struct 					s_piles
 {
@@ -179,6 +162,7 @@ typedef struct					s_god
 
 	struct s_hashtable			*hashtable;
 	struct s_data				*possibility_tree;
+	struct s_data				*reach_end_room;
 
 	t_lemin						*start;
 	t_lemin						*end;
@@ -251,7 +235,7 @@ typedef struct 					s_visu
 */
 //main
 void	loulou(t_god *god);
-int		search_a_path(t_god *god, t_lemin *here, t_lemin *daddy);
+int		search_a_path(t_god *god, t_data *possibility_tree);
 
 //dist
 void			ft_execute_pile_end_to_start(t_god *god, int depth,
@@ -272,7 +256,7 @@ void 		mean_connec(t_god *god);
 t_ints 			*malloc_paths(t_god *god);
 int		write_path(t_god *god, t_lemin *here, t_ints path);
 void	extract_paths(t_god *god);
-void	save_solution(t_god *god, t_lemin *daddy);
+void	save_solution(t_god *god, t_data *daddy);
 int		find_connec(t_god *god, int from, int to);
 int		find_connec_ptr(t_god *god, t_lemin *from, t_lemin *to);
 //data
@@ -280,6 +264,7 @@ void		free_tree(t_data *daddy);
 void		free_elmnt(t_data *branch);
 void		add_to_tree(t_data *daddy, t_data *baby, int mode);
 t_data		*create_branch(t_lemin *room);
+void		save_to_tree(t_data *daddy, t_lemin *room, int mode);
 
 
 /*
