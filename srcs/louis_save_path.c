@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:41:34 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/17 17:10:13 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/18 10:32:09 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ void	save_solution(t_god *god, t_data *daddy)
 	{
 		i = 0;
 		while (++i <= god->used_goulots[0])
-			if (god->used_goulots[i] == daddy->id)
+			if (god->used_goulots[i] == daddy->daddy->id)
 				r_v++;
 		if (!r_v)
-			god->used_goulots[++god->used_goulots[0]] = daddy->id;
+			god->used_goulots[++god->used_goulots[0]] = daddy->daddy->id;
 	}
 	else
-		god->used_goulots[++god->used_goulots[0]] = daddy->id;
+		god->used_goulots[++god->used_goulots[0]] = daddy->daddy->id;
 	god->reach_end_room = daddy;
 }
 
@@ -116,6 +116,7 @@ void	extract_paths(t_god *god)
 		path[i - 1][++path[i - 1][0]] = god->extremities[1]->id;
 		// ft_printf("side\n");
 		block_path_connections(god, path[i - 1]);
+		// print_this_path(god, path[i - 1]);
 	}
 	// ft_printf("otherside\n");
 	god->paths = path;

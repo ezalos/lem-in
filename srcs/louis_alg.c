@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 17:45:56 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/17 19:06:05 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/18 10:37:33 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			is_room_searched(t_data *baby, int id)
 {
-	DEBUG_FUNC;
+	// DEBUG_FUNC;
 	int		r_v;
 
 	r_v = 0;
@@ -22,7 +22,7 @@ int			is_room_searched(t_data *baby, int id)
 		r_v = 1;
 	else if (baby->daddy)
 		r_v += is_room_searched(baby->daddy, id);
-	ft_printf("%d\n", r_v);
+	// ft_printf("%d\n", r_v);
 	return (r_v);
 }
 
@@ -35,8 +35,8 @@ int			is_room_valid_base(t_god *god, t_lemin *room, t_data *baby)
 		if (room->id != god->extremities[0]->id)
 			if (!is_room_searched(baby, room->id))
 				r_v = SUCCESS;
-	DEBUG_FUNC;
-	ft_printf("%d\n", r_v);
+	// DEBUG_FUNC;
+	// ft_printf("%d\n", r_v);
 	return (r_v);
 }
 
@@ -50,8 +50,8 @@ int			is_used_room_valid(t_god *god, t_lemin *room, t_data *baby)
 			if (room->last_room)
 				if (room->last_room->id != god->extremities[0]->id)
 					r_v = SUCCESS;
-	DEBUG_FUNC;
-	ft_printf("%d\n", r_v);
+	// DEBUG_FUNC;
+	// ft_printf("%d\n", r_v);
 	return (r_v);
 }
 
@@ -63,14 +63,14 @@ int			is_unused_room_valid(t_god *god, t_lemin *room, t_data *baby)
 	if (is_room_valid_base(god, room, baby))
 		if (!room->gone)
 			r_v = SUCCESS;
-	DEBUG_FUNC;
-	ft_printf("%d\n", r_v);
+	// DEBUG_FUNC;
+	// ft_printf("%d\n", r_v);
 	return (r_v);
 }
 
 int		is_connec_available(t_lemin *room, int connec)
 {
-	DEBUG_FUNC;
+	// DEBUG_FUNC;
 	if (room->used[connec] || room->tmp_used[connec])
 		return (FAILURE);
 	room->tmp_used[connec] = 1;
@@ -92,7 +92,6 @@ void	search_uninit_room(t_lemin *here, t_lemin *save)
 
 int		search_unused_rooms(t_god *god, t_data *possibility_tree)
 {
-	DEBUG_FUNC;
 	// DEBUG_FUNC;
 	t_lemin					*here;
 	// int						r_v;
@@ -100,7 +99,7 @@ int		search_unused_rooms(t_god *god, t_data *possibility_tree)
 
 	here = possibility_tree->room;
 	i = -1;
-	while (here->connexions[++i] && DEBUG_FUNC)
+	while (here->connexions[++i])// && DEBUG_FUNC)
 		if (is_unused_room_valid(god, here->connexions[i], possibility_tree) && is_connec_available(here,i))
 			save_to_tree(possibility_tree, here->connexions[i], NORMAL);
 			// if ((r_v = search_a_path(god, here->connexions[i], here)))
@@ -112,7 +111,6 @@ int		search_unused_rooms(t_god *god, t_data *possibility_tree)
 
 int		search_used_rooms(t_god *god, t_data *possibility_tree)
 {
-	DEBUG_FUNC;
 	// DEBUG_FUNC;
 	t_lemin					*here;
 	// int						r_v;
@@ -120,7 +118,7 @@ int		search_used_rooms(t_god *god, t_data *possibility_tree)
 
 	here = possibility_tree->room;
 	i = -1;
-	while (here->connexions[++i] && DEBUG_FUNC)
+	while (here->connexions[++i])// && DEBUG_FUNC)
 		if (is_used_room_valid(god, here->connexions[i], possibility_tree) && is_connec_available(here,i)
 	 	&& is_connec_available(here->connexions[i], find_connec_ptr(god, here->connexions[i], here->connexions[i]->last_room)))
 		{
@@ -139,13 +137,18 @@ int		search_used_rooms(t_god *god, t_data *possibility_tree)
 
 int		search_a_path(t_god *god, t_data *possibility_tree)
 {
-	DEBUG_FUNC;
 	// DEBUG_FUNC;
 	t_lemin					*here;
 	int						r_v;
 
 	here = possibility_tree->room;
 	// search_init_room(here, daddy, &save);
+	if (possibility_tree->surcharge)
+	{
+		save_to_tree(possibility_tree, here->last_room, NORMAL);
+		return (SUCCESS);
+	}
+
 	if (possibility_tree->room->id == god->extremities[1]->id)
 	{
 		save_solution(god, possibility_tree);
@@ -163,39 +166,54 @@ int		search_a_path(t_god *god, t_data *possibility_tree)
 
 int			traversal_tree_search(t_god *god, t_data *daddy, int depth)
 {
-	DEBUG_FUNC;
-	ft_printf("Depth: %d/%d\n", daddy->depth, depth);
+	// DEBUG_FUNC;
+	// ft_printf("Depth: %d/%d\n", daddy->depth, depth);
 	int i;
 	int tt;
 
 	tt = 0;
+	if (god->reach_end_room)
+		return (1);
 	if (daddy->depth == depth)
 	{
 		search_a_path(god, daddy);
 		return (1);
 	}
 	i = -1;
-	while (daddy->baby[NORMAL][++i])
+	while (!god->reach_end_room && daddy->baby[NORMAL][++i])
 		tt += traversal_tree_search(god, daddy->baby[NORMAL][i], depth);
 	i = -1;
-	while (daddy->baby[SURCHARGE][++i])
+	while (!god->reach_end_room && daddy->baby[SURCHARGE][++i])
 		tt += traversal_tree_search(god, daddy->baby[SURCHARGE][i], depth);
 	return (tt);
 }
 
-void		update_last_room(t_data *here)
+int			update_last_room(t_god *god, t_data *here)
 {
-	DEBUG_FUNC;
-	if (here && here->daddy && here->daddy->surcharge)
+	int		r_v;
+
+	r_v = FAILURE;
+	// DEBUG_FUNC;
+	if (here)
 	{
-		ft_printf("SURCHARGE\n");
-		here->room->last_room = here->daddy->room;
+		if (here->id == god->extremities[0]->id)
+			r_v = SUCCESS;
+		if (here->daddy)
+		{
+			if (!here->daddy->surcharge)
+				here->room->last_room = here->daddy->room;
+			else
+				ft_printf("%~{255;0;0}SURCHARGE%~{}\n");
+			// ft_printf("%s <-- ", here->room->name);
+			r_v = update_last_room(god, here->daddy);
+		}
+		// else
+		// 	ft_printf("%s\n", here->room->name);
 	}
-	if (here && here->daddy)
-		update_last_room(here->daddy);
+	return (r_v);
 }
 
-void		ultimate_dispatch_room(t_god *god)
+int 		ultimate_dispatch_room(t_god *god)
 {
 	DEBUG_FUNC;
 	int		depth;
@@ -208,48 +226,61 @@ void		ultimate_dispatch_room(t_god *god)
 	while (!god->reach_end_room && is_working)
 	{
 		is_working = traversal_tree_search(god, god->possibility_tree, depth++);
-		ft_printf("%d TREE BRANCH FOUND AT DEEPNESS %d\n", is_working, depth);
+		// ft_printf("%d TREE BRANCH FOUND AT DEEPNESS %d\n", is_working, depth);
 		// ft_press_any_key();
 	}
-	update_last_room(god->reach_end_room);
+	if (update_last_room(god, god->reach_end_room))
+		ft_printf("%~{}LAST ROOM IS END\n");
+	else
+		ft_printf("\n%~{255;0;0}LAST ROOM ISNT END\n\n");
 	ft_printf("%~{}END\n");
+	return (is_working);
 	//update paths
 }
 
 
 void	loulou(t_god *god)
 {
-	// int ite;
+	int ite;
 	int save;
 	int retry = 3;
 
-	// ite = 1;
+	ite = 1;
 	get_dist_from_end(god);
-	while (retry)
+	while (retry && ite)
 	{
 		ft_printf("\n%d\t%d/%d\n", retry, god->used_goulots[0], god->goulots);
 		save = god->turn;
 		DEBUG_COLOR;
+		time_exe("Setup");
 		clean_search(god);
 
 
 		// ite = search_a_path(god, god->extremities[0], NULL);
-
-		ultimate_dispatch_room(god);
-		ft_press_any_key();
+		time_exe("Algo");
+		ite = ultimate_dispatch_room(god);
+		if (!ite)
+			continue;
 		// ft_printf("ITE = %d\n", ite);
+		time_exe("Setup");
 		clean_gone(god);
+		time_exe("Extract");
 		extract_paths(god);
+		time_exe("Setup");
 		clean_dist(god);
-		get_dist_from_end_oriented_graph(god);
+		// get_dist_from_end_oriented_graph(god);
 		// DEBUG_FUNC;
 		ft_printf("turn%d/%d/%d\n", save, god->turn, god->expected_solution);
 		if (save <= god->turn)
 			retry--;
 		else
 			retry = 3;
-		// print_paths(god);
+		// print_paths(god->fina);
+		// time_exe("Free");
+		// free_tree(god->possibility_tree);
+		// ft_press_any_key();
 	}
+	time_exe("End");
 	// DEBUG_FUNC;
 	mean_connec(god);
 	ft_printf("%d\t%d/%d\n%d\n", retry, god->used_goulots[0], god->goulots, INT_MAX);

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/09/13 16:59:18 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/18 10:30:31 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		main(int ac, char **av)
 	// 	display_result(god);
 	// else
 	// 	ft_setup_visu(god);
-	// print_time();
+	print_time();
 	ft_printf("turn = %d\t MISSING : %d\n", god->turn, god->turn - god->expected_solution);
 	ft_clean_garbage();
 	return (0);

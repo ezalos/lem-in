@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/09/17 13:55:17 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/18 09:40:02 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ void			print_room_infos(t_god *god)
 	ft_printf("There is %~{155;155;255}%d%~{} ants\n", god->ants);
 }
 
+// void			
+
 void 			print_this_path(t_god *god, t_ints path)
 {
 	int			j;
@@ -182,7 +184,7 @@ void 			print_final_paths(t_god *god)
 	i = 0;
 	while (i < god->nb_final_paths)
 	{
-		print_this_path(god, god->final_path[i]);
+		print_paths(god);
 		i++;
 	}
 }
