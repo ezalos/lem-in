@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:13:37 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/12 18:37:57 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/18 17:47:49 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void 		clean_dist(t_god *god)
 	while (++i < god->size)
 	{
 		// if (!god->rooms[i]->gone)
-		god->rooms[i]->dist_to_end = INT_MAX;
+		// god->rooms[i]->dist_to_end = INT_MAX;
 		ft_bzero(god->rooms[i]->tmp_used, god->rooms[i]->nb_of_connexions * sizeof(int));
 		// j = -1;
 		// while (++j < god->rooms[i]->nb_of_connexions)
