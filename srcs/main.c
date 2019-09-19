@@ -31,12 +31,10 @@ int			main(int ac, char **av)
 		return (clean_error());
 	if (lets_calcul(god) == -1)
 		return (clean_error());
-	if (!god->visu)
+	if (!god->visu || god->all_in_one == 1)
 		display_result(god);
 	else
 		ft_setup_visu(god);
-	//print_time();
-	//ft_printf("turn = %d\n", god->turn);
 	ft_clean_garbage();
 	return (0);
 }

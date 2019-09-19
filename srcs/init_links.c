@@ -54,7 +54,9 @@ int			link_rooms(t_tab *lem_in, char *line,
 	if ((second = hashtable_value(god->hashtable, split[1],
 		ft_strlen(split[1]))) == NULL)
 		return (-1);
-	(*adjacent_matrix)[first->id][my_fs[first->id]++] = second;
-	(*adjacent_matrix)[second->id][my_fs[second->id]++] = first;
+	if ((*adjacent_matrix)[first->id][my_fs[first->id] - 1] != second)
+		(*adjacent_matrix)[first->id][my_fs[first->id]++] = second;
+	if ((*adjacent_matrix)[second->id][my_fs[second->id] - 1] != first)
+		(*adjacent_matrix)[second->id][my_fs[second->id]++] = first;
 	return (SUCCESS);
 }

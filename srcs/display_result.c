@@ -6,7 +6,7 @@
 /*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 13:15:14 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/11 16:18:02 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/15 15:37:43 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,14 @@ int				push_ants(t_god *god, int *genome,
 	return (pushed);
 }
 
-int				*init_waiting_tab(t_god *god, int len)
+int				*init_waiting_tab(t_god *god)
 {
 	int		*tab;
 	int		i;
 	int		mod;
+	int		len;
 
-	tab = ft_memalloc(sizeof(int *) * god->nb_final_paths);
+	tab = ft_memalloc(sizeof(int *) * (god->nb_final_paths));
 	i = 0;
 	len = 0;
 	while (i < god->nb_final_paths)
@@ -81,10 +82,8 @@ int				*init_waiting_tab(t_god *god, int len)
 		while (++i < god->nb_final_paths)
 			tab[i] = god->turn - god->final_path[i][0] + 1;
 	else
-	{
 		while (++i < god->nb_final_paths)
 			tab[i] = god->turn - god->final_path[i][0];
-	}
 	if ((mod = ((god->ants + len) % god->nb_final_paths)) != 0)
 	{
 		i = -1;
@@ -102,7 +101,7 @@ int				display_result_suit(t_god *god, int *tmp, int *t_ants)
 
 	genome = 1;
 	print.index = 0;
-	waiting_ant = init_waiting_tab(god, genome);
+	waiting_ant = init_waiting_tab(god);
 	while (*t_ants > 0 || *tmp > 0)
 	{
 		*tmp = moove_one_turn(god, &print);
@@ -125,6 +124,9 @@ int				display_result(t_god *god)
 
 	tmp = 0;
 	t_ants = god->ants;
-	display_result_suit(god, &tmp, &t_ants);
+	if (god->all_in_one == 1)
+		display_all_in_one(god, t_ants);
+	else
+		display_result_suit(god, &tmp, &t_ants);
 	return (0);
 }

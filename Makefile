@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/09 18:22:07 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/09/15 12:40:44 by ythomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRCS_LI		=			main\
 						algo_paths_tools\
 						new_algo_function_content\
 						hash_tools\
+						display_spe_cases\
 						louis_alg
 
 # SRCS_VS		=	visu-hex
@@ -186,7 +187,7 @@ VISU_FRAMEWORK = -framework Foundation -framework AppKit -framework SceneKit
 ##						##
 ##########################
 
-all :	$(NAME)
+all :	$(NAME) auteur
 
 $(NAME): $(VISU) $(LIB) Makefile $(A_OBJ)
 		@$(call run_and_test, $(CC) $(CFLAGS) -I $(VISU_HEADER) -I./$(HEAD_DIR) $(VISU_FRAMEWORK) $(VISU) $(A_OBJ) $(LIB) -o $(NAME))
@@ -203,12 +204,12 @@ $(LIB): FORCE
 $(HEAD_PATH):
 	@$(MAKE) -C $(LIB_DIR)
 
-clean : libclean
+clean : libclean auteur
 		@echo "\$(YELLOW)$(NAME) objs \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
 		@echo "\$(YELLOW)$(VISU) objs \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
 		@rm -f $(A_OBJ) #$(B_OBJ)
 
-fclean : libfclean clean
+fclean : libfclean clean auteur
 		@echo "\$(YELLOW)$(NAME) \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
 		@echo "\$(YELLOW)$(VISU) \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
 		@rm -rf $(NAME) #$(VISU)
@@ -218,6 +219,10 @@ libclean :
 
 libfclean : libclean
 			@$(MAKE) fclean -C $(LIB_DIR)
+
+auteur:
+	@echo ldevelle > auteur
+	@echo ythomas >> auteur
 
 re :	fclean all
 

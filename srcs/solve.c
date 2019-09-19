@@ -6,11 +6,28 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:35:56 by root              #+#    #+#             */
-/*   Updated: 2019/09/11 17:26:24 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/15 12:50:43 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
+
+int				check_start_to_end(t_god *god)
+{
+	int i;
+
+	i = 0;
+	while (i < god->extremities[0]->nb_of_connexions)
+	{
+		if (god->extremities[0]->connexions[i]->id == god->extremities[1]->id)
+		{
+			god->all_in_one = 1;
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 int				full_process(t_god *god)
 {
@@ -44,6 +61,9 @@ void			init_paths(t_god *god)
 int				lets_calcul(t_god *god)
 {
 	init_paths(god);
+	god->all_in_one = 0;
+	if (check_start_to_end(god) == 1)
+		return (0);
 	full_process(god);
 	return (0);
 }

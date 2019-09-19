@@ -55,7 +55,6 @@ typedef struct					s_lemin
 	int							x_coord;
 	int							y_coord;
 
-
 	struct s_lemin				**connexions;
 	int							nb_of_connexions;
 	int 						weight;//depth
@@ -156,6 +155,7 @@ typedef struct					s_god
 	int							name_len;
 
 	t_ints						extremities_list[2];
+	int 						all_in_one;
 
 	int 						trigger;
 	int 						variation;
@@ -262,6 +262,8 @@ void 			fill_line_buffer(t_print *print, char *nb, char *name);
 
 int 			ft_setup_visu(t_god *god);
 void			init_new_coord(t_visu *visu);
+void 			display_all_in_one(t_god *god, int t_ants);
+int				*init_waiting_tab(t_god *god);
 
 /*
 **************
@@ -315,7 +317,6 @@ int				zero_tst(t_god *god, t_lemin *room, int i, int j);
 */
 
 int 			breadth_first_search(t_god *god, int *stat);
-
 int				lets_calcul(t_god *god);
 int				full_process(t_god *god);
 

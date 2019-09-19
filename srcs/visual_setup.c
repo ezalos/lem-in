@@ -6,7 +6,7 @@
 /*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 16:59:16 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/12 14:23:11 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/15 15:10:34 by ythomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,6 @@ int				get_max_room_in_path(t_god *god)
 	return (tmp + 1);
 }
 
-void			print_this_fucking_path(t_visu *visu)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (visu->paths[i])
-	{
-		j = 0;
-		while (visu->paths[i][j])
-		{
-			ft_printf("%s ", visu->paths[i][j]->name);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-	}
-}
-
 int				init_visu_paths(t_god *god, t_visu *visu)
 {
 	int i;
@@ -63,6 +44,7 @@ int				init_visu_paths(t_god *god, t_visu *visu)
 			visu->paths[i][j] = ft_memalloc(sizeof(t_room));
 			visu->paths[i][j]->x = 0.0;
 			visu->paths[i][j]->y = 0.0;
+			visu->paths[i][j]->z = 0.0;
 			visu->paths[i][j]->name = ft_strdup(
 				god->rooms[god->final_path[i][j + 1]]->name);
 			visu->paths[i][j]->nb_rooms = god->final_path[i][0] + 1;
@@ -81,13 +63,16 @@ int				ft_setup_visu(t_god *god)
 
 	visu = malloc(sizeof(t_visu));
 	visu->nb_paths = god->nb_final_paths;
+	visu->flux = init_waiting_tab(god);
 	visu->paths = ft_memalloc(sizeof(void *) * (visu->nb_paths + 1));
 	visu->ants = god->ants;
 	visu->turn = god->turn;
 	visu->nb_h = get_max_room_in_path(god);
+	visu->screen_h = visu->nb_h * 200.0;
+	visu->screen_w = W_SCREEN - 100;
 	if (init_visu_paths(god, visu) == -1)
 		return (-1);
-	visu->rate_x = (W_SCREEN - 100) / visu->nb_paths / 2;
+	visu->rayon = visu->screen_w / 100.0 + (100 * visu->nb_paths);
 	init_new_coord(visu);
 	launch_visual(visu);
 	return (0);
