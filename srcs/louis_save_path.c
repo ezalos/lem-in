@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:41:34 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/18 10:32:09 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/19 15:19:28 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ int		write_path(t_god *god, t_lemin *here, t_ints path)
 		r_v = SUCCESS;
 		if (here->id != god->extremities[0]->id)
 			r_v = write_path(god, here->last_room, path);
+		if (here->last_room)
+			here->depth = here->last_room->depth + 1;
+		else
+			here->depth = 0;
 		here->gone = 1;
 		path[++path[0]] = here->id;
 	}

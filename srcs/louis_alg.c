@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 17:45:56 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/18 18:17:52 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/19 15:49:23 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,18 @@ int		search_a_path(t_god *god, t_data *possibility_tree)
 
 	if (possibility_tree->room->id == god->extremities[1]->id)
 	{
-		save_solution(god, possibility_tree);
+		if (here->depth < god->turn)
+			save_solution(god, possibility_tree);
 		return (SUCCESS);
 	}
+	if (here->id == god->extremities[0]->id)
+		here->depth = 0;
+	else if (here->depth == -1)
+		here->depth = possibility_tree->daddy->room->depth + 1;
+	else if (here->depth < possibility_tree->daddy->room->depth + 1)
+		here->depth = possibility_tree->daddy->room->depth + 1;
+	else
+		return (FAILURE);
 	room_connexions_sort(here);
 	if ((r_v = search_unused_rooms(god, possibility_tree)) == SUCCESS)
 		return (r_v);
@@ -275,11 +284,18 @@ void	loulou(t_god *god)
 			retry--;
 		else
 			retry = 3;
-		// print_paths(god->fina);
 		// time_exe("Free");
 		// free_tree(god->possibility_tree);
 		// ft_press_any_key();
 	}
+		int 		i;
+
+		i = 0;
+		while (i < god->nb_final_paths)
+		{
+			print_this_path(god, god->final_path[i]);
+			i++;
+		}
 	// time_exe("End");
 	// DEBUG_FUNC;
 	// mean_connec(god);

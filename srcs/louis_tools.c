@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:13:37 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/18 18:59:28 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/19 15:19:07 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void 		clean_gone(t_god *god)
 	while (++i < god->size)
 	{
 		god->rooms[i]->gone = 0;
+		god->rooms[i]->depth = -1;
 		ft_bzero(god->rooms[i]->used, god->rooms[i]->nb_of_connexions * sizeof(int));
 		// j = -1;
 		// while (++j < god->rooms[i]->nb_of_connexions)

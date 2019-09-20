@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:35:56 by root              #+#    #+#             */
-/*   Updated: 2019/09/18 18:28:04 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:57:12 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int				lets_calcul(t_god *god)
 {
 	// print_room_infos(god);
 	init_paths(god);
-	full_process(god);
+	// full_process(god);
 	// ft_printf("%s-%s\n", god->extremities[0]->name, god->extremities[1]->name);
-	// loulou(god);
+	loulou(god);
 	// DEBUG_FUNC;
 	//ft_printf("[%d]\n", god->turn);
 	//print_paths(god);

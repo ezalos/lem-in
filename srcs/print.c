@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/09/18 09:40:02 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/19 15:47:43 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void			print_room_infos(t_god *god)
 	ft_printf("There is %~{155;155;255}%d%~{} ants\n", god->ants);
 }
 
-// void			
+// void
 
 void 			print_this_path(t_god *god, t_ints path)
 {
@@ -152,6 +152,10 @@ void 			print_this_path(t_god *god, t_ints path)
 				ft_printf("%~{155;255;155}");
 			else
 				ft_printf("%~{?*}", god->rooms[path[j]]);
+			if (!ft_strcmp(god->rooms[path[j]]->name, "Uyv2"))
+				ft_rgb_bcolor(255, 0, 0);
+			if (!ft_strcmp(god->rooms[path[j]]->name, "Xog3"))
+				ft_rgb_bcolor(0, 255, 0);
 			ft_printf("%*s%~{}", god->name_len, god->rooms[path[j]]->name);
 			if (god->rooms[path[j]]->id != god->extremities[1]->id)
 			{
