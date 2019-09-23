@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_position.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 14:38:39 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/15 12:53:18 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/23 20:14:30 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int				get_len_actual_path(t_visu *visu, int i)
 
 void			calculate_coord_last_room(t_visu *visu)
 {
-	int		len;
+	// int		len;
 	double	rate_y;
 	int		i;
 	int		j;
 
 	rate_y = ((visu->screen_h - 100.0) / (double)visu->nb_h);
-	len = get_len_actual_path(visu, 0);
+	// len = get_len_actual_path(visu, 0);
 	i = 0;
 	while (visu->paths[i])
 	{

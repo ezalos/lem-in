@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/15 12:40:44 by ythomas          ###   ########.fr        #
+#    Updated: 2019/09/23 21:09:58 by ezalos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME 	= lem-in
 
 CC = gcc
 
-CFLAGS =
+CFLAGS = -Wall -Wextra -Werror
 
 DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 -O2 -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int\
@@ -29,7 +29,7 @@ DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 
 
 # CFLAGS = $(DFLAGS)
-# CFLAGS =
+CFLAGS =
 
 ##############################################################################
 ##############################################################################
@@ -56,8 +56,6 @@ SRCS_LI		=			main\
 						display_result\
 						tools\
 						link_data\
-						visual_setup\
-						creat_position\
 						get_param\
 						hashtable\
 						init_checking\
@@ -69,7 +67,14 @@ SRCS_LI		=			main\
 						new_algo_function_content\
 						hash_tools\
 						display_spe_cases\
-						louis_alg
+						louis_alg\
+						louis_dist\
+						louis_room_sort\
+						louis_tools\
+						louis_save_path\
+						louis_data
+						#visual_setup\
+						creat_position\
 
 # SRCS_VS		=	visu-hex
 
@@ -176,10 +181,12 @@ endef
 ##############################################################################
 ##############################################################################
 
-VISU = ../visu/visu.o
-VISU_SOURCE = ../visu/visu.mm
-VISU_HEADER = ../visu/visu.h
+VISU = ./visu/visu.o
+VISU_SOURCE = ./visu/visu.mm
+VISU_HEADER = ./visu/visu.h
 VISU_FRAMEWORK = -framework Foundation -framework AppKit -framework SceneKit
+LINUX_COMPILE =  -I/usr/include/GNUstep -fconstant-string-class=NSConstantString  -D_NATIVE_OBJC_EXCEPTIONS
+LINUX_COMPILE_2 =   -lgnustep-base
 
 ##########################
 ##						##
@@ -189,11 +196,13 @@ VISU_FRAMEWORK = -framework Foundation -framework AppKit -framework SceneKit
 
 all :	$(NAME) auteur
 
-$(NAME): $(VISU) $(LIB) Makefile $(A_OBJ)
-		@$(call run_and_test, $(CC) $(CFLAGS) -I $(VISU_HEADER) -I./$(HEAD_DIR) $(VISU_FRAMEWORK) $(VISU) $(A_OBJ) $(LIB) -o $(NAME))
+#$(NAME): $(LIB) Makefile $(A_OBJ) #$(VISU)
+$(NAME): $(LIB) Makefile $(A_OBJ)
+		@$(call run_and_test, $(CC) $(CFLAGS) $(A_OBJ) $(LIB) -I./$(HEAD_DIR) -o $(NAME))
+		# -I$(VISU_HEADER) $(VISU_FRAMEWORK) $(VISU))
 
-$(VISU): $(VISU_SOURCE) $(VISU_HEADER)
-	clang -O0 -g -x objective-c $(VISU_SOURCE) -c -o $(VISU)
+# $(VISU): $(VISU_SOURCE) $(VISU_HEADER)
+# 		clang -O0 -g -x objective-c $(LINUX_COMPILE) $(VISU_SOURCE) $(LINUX_COMPILE_2) -c -o $(VISU)
 
 $(DIR_OBJ)%.o:$(SRC_PATH)/%.c $(HEAD_PATH)
 		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)

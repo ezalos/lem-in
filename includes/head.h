@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/09 18:26:09 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/23 21:10:15 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@
 
 # define HTABLE_SIZE			262144
 
+# define NORMAL					0
+# define SURCHARGE				1
+
 # define RIGHT					0
 # define DOWN					1
 # define LEFT					2
@@ -42,7 +45,7 @@
 # define P_BUFF					5000
 
 # include "../../libft/includes/libft.h"
-# include "../../visu/visu.h"
+# include "../visu/visu.h"
 
 typedef int* 					t_ints;
 
@@ -51,6 +54,7 @@ typedef struct					s_lemin
 	int							id;
 	char						*name;
 	int							place;
+	int							orientation;
 
 	int							x_coord;
 	int							y_coord;
@@ -58,8 +62,11 @@ typedef struct					s_lemin
 	struct s_lemin				**connexions;
 	int							nb_of_connexions;
 	int 						weight;//depth
+	int 						depth;
 	int 						dist_to_end;
 	struct s_lemin				*last_room;
+	struct s_lemin				*next_room;
+	struct s_lemin				*surcharge;
 	int 						*used; //tableau de la taille du nb_of_xonnexions, val 0 ou 1 si connexion utilise
 	int 						*tmp_used;
 	int 						blocked;// fait parti d'un chemin deja valide
@@ -78,9 +85,15 @@ typedef struct					s_meta
 	int							*ants_sent;
 }								t_meta;
 
-
-
-
+typedef struct					s_data
+{
+	struct s_lemin				*room;
+	struct s_data				***baby;
+	struct s_data				*daddy;
+	int							id;
+	int							surcharge;
+	int							depth;
+}								t_data;
 
 typedef struct 					s_piles
 {
@@ -132,15 +145,19 @@ typedef struct					s_god
 	t_lemin						***adjacent_matrix;
 	t_ints						surcharged_link;
 
-	t_ints						*paths;
+	t_ints						used_goulots;
+
 	t_ints 						*final_path;
-	int 						*waiting_ant;
+	t_ints						*paths;
 	int 						nb_final_paths;
 	int							nb_of_paths;
 	int							ants;
+	int 						*waiting_ant;
 	long int 					turn;
 
 	struct s_hashtable			*hashtable;
+	struct s_data				*possibility_tree;
+	struct s_data				*reach_end_room;
 
 	t_lemin						*start;
 	t_lemin						*end;
@@ -181,6 +198,44 @@ typedef struct 					s_print
 **																			**
 ******************************************************************************
 */
+/*
+**************
+**   LOUIS	**
+**************
+*/
+//main
+void	loulou(t_god *god);
+int		search_a_path(t_god *god, t_data *possibility_tree);
+
+//dist
+void			ft_execute_pile_end_to_start(t_god *god, int depth,
+	t_ints pile_a, t_ints pile_b);
+void			get_dist_from_end(t_god *god);
+int				are_these_room_correctly_oriented(t_lemin *from, t_lemin *to);
+int				is_this_extremities(t_god *god, t_lemin *here);
+void			get_dist_from_end_oriented_graph(t_god *god);
+//room sort
+int			room_compare(t_lemin *one, t_lemin *two);
+void		room_connexions_sort(t_lemin *here);
+//tools
+void		clean_search(t_god *god);
+void 		clean_gone(t_god *god);
+void 		clean_dist(t_god *god);
+void 		mean_connec(t_god *god);
+//save paths
+t_ints 			*malloc_paths(t_god *god);
+int		write_path(t_god *god, t_lemin *here, t_ints path);
+void	extract_paths(t_god *god);
+void	save_solution(t_god *god, t_data *daddy);
+int		find_connec(t_god *god, int from, int to);
+int		find_connec_ptr(t_god *god, t_lemin *from, t_lemin *to);
+//data
+void		free_tree(t_data *daddy);
+void		free_elmnt(t_data *branch);
+void		add_to_tree(t_data *daddy, t_data *baby, int mode);
+t_data		*create_branch(t_lemin *room);
+void		save_to_tree(t_data *daddy, t_lemin *room, int mode);
+
 
 /*
 **************
@@ -281,6 +336,8 @@ int				close_a_path(t_lemin *here);
 void			find_a_path(t_lemin *here, int id, t_ints *path);
 int				get_rid_of_dead_ends(t_god *god);
 int				ft_evaluate_set_of_path(t_god *god, int nb_paths);
+int				evaluate_set_of_path(t_god *god, t_ints *set_of_paths, int nb_paths);
+
 /*
 *******************
 ** 	TOOLS		**

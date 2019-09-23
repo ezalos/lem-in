@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:35:56 by root              #+#    #+#             */
-/*   Updated: 2019/09/15 12:50:43 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/23 21:14:56 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void			init_paths(t_god *god)
 	god->final_path = NULL;
 	god->nb_final_paths = 0;
 	god->paths = ft_memalloc(sizeof(t_ints *) * (god->goulots + 1));
+	god->used_goulots = ft_memalloc(sizeof(int) * (god->goulots + 10));
 	while (i <= god->goulots)
 	{
 		god->paths[i] = ft_memalloc(sizeof(t_ints) * god->size * 2);

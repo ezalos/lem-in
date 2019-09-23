@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/06/24 19:48:57 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/23 20:04:21 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,28 +134,28 @@ void			print_room_infos(t_god *god)
 	ft_printf("There is %~{155;155;255}%d%~{} ants\n", god->ants);
 }
 
+// void
+
 void 			print_this_path(t_god *god, t_ints path)
 {
 	int			j;
-	int			name_size;
 
-	name_size = ft_nb_len(god->end->id, 10);
 	if (path && path[0])
 	{
 		ft_printf("%~{155;155;255}Path of length %d\n", path[0] - 1);
 		j = 0;
-		while (++j <= path[0] + 1)
+		while (++j <= path[0])
 		{
-			if (god->rooms[path[j]]->place == -1)
+			if (god->rooms[path[j]]->id == god->extremities[0]->id)
 				ft_printf("%~{255;155;155}");
-			else if (god->rooms[path[j]]->place == 1)
+			else if (god->rooms[path[j]]->id == god->extremities[1]->id)
 				ft_printf("%~{155;255;155}");
 			else
 				ft_printf("%~{?*}", god->rooms[path[j]]);
-			if (!(ft_strcmp(god->rooms[path[j]]->name, "Ioy9")))
-					ft_rgb_bcolor(255,255,255);
+			// if (!(ft_strcmp(god->rooms[path[j]]->name, "Ioy9")))
+			// 		ft_rgb_bcolor(255,255,255);
 			ft_printf("%*s%~{}", god->name_len, god->rooms[path[j]]->name);
-			if (god->rooms[path[j]]->place != 1)
+			if (god->rooms[path[j]]->id != god->extremities[1]->id)
 			{
 				if (god->rooms[path[j]]->nb_of_connexions < 3)
 					ft_printf("%~{50;50;50}");
@@ -186,7 +186,7 @@ void 			print_final_paths(t_god *god)
 	i = 0;
 	while (i < god->nb_final_paths)
 	{
-		print_this_path(god, god->final_path[i]);
+		print_paths(god);
 		i++;
 	}
 }

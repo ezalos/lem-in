@@ -6,13 +6,13 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 18:34:40 by root              #+#    #+#             */
-/*   Updated: 2019/09/12 14:43:22 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/23 20:14:02 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-void		set_room_in_tab(t_god *god, int place, t_tab *new, t_tab **lem_in)
+void		set_room_in_tab(int place, t_tab *new, t_tab **lem_in)
 {
 	if (place < 0 || !(*lem_in))
 		ft_tabadd_start(lem_in, new, 0);
@@ -47,6 +47,6 @@ int			add_rooms(t_god *god, int place, char *line)
 		return (ERROR);
 	if (place < 0 || !(*lem_in))
 		god->extremities[0] = room;
-	set_room_in_tab(god, place, new, lem_in);
+	set_room_in_tab(place, new, lem_in);
 	return (VALID);
 }

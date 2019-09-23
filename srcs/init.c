@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/09/11 16:19:26 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/23 19:56:48 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int				init_suit(t_god *god, t_print *print)
 	if (!god->goulots)
 		return (-1);
 	*ft_remember_god() = god;
-	init_used_tab(god);
+	init_used_tab(god);//LONG TIME
 	print_whole_buffer(print);
 	write(1, "\n", 1);
 	return (0);

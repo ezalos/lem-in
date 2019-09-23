@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:30:48 by root              #+#    #+#             */
-/*   Updated: 2019/09/11 16:22:02 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/23 19:57:32 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int			order_my_little_connexions(t_god *god)
 {
 	int			i;
-	int			j;
 	t_tab		*now;
 	t_lemin		*here;
 
@@ -31,7 +30,6 @@ int			order_my_little_connexions(t_god *god)
 		now = now->dir[0];
 	}
 	return (0);
-	j = -1;
 }
 
 void		get_rooms_in_tab(t_god *god)
