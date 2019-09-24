@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/24 18:18:18 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/24 18:26:43 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,36 +212,36 @@ typedef struct 					s_print
 **************
 */
 //main
-void	loulou(t_god *god);
-int		search_a_path(t_god *god, t_data *possibility_tree);
-double		total_time_prog(void);
+void			loulou(t_god *god);
+int				search_a_path(t_god *god, t_data *possibility_tree);
+double			total_time_prog(void);
 //room check
-int			is_room_searched(t_data *baby, int id);
-int			is_room_valid_base(t_god *god, t_lemin *room, t_data *baby);
-int			is_used_room_valid(t_god *god, t_lemin *room, t_data *baby);
-int			is_unused_room_valid(t_god *god, t_lemin *room, t_data *baby);
-int			is_connec_available(t_lemin *room, int connec);
+int				is_room_searched(t_data *baby, int id);
+int				is_room_valid_base(t_god *god, t_lemin *room, t_data *baby);
+int				is_used_room_valid(t_god *god, t_lemin *room, t_data *baby);
+int				is_unused_room_valid(t_god *god, t_lemin *room, t_data *baby);
+int				is_connec_available(t_lemin *room, int connec);
 //room sort
-int			room_compare(t_lemin *one, t_lemin *two);
-void		room_connexions_sort(t_lemin *here);
+int				room_compare(t_lemin *one, t_lemin *two);
+void			room_connexions_sort(t_lemin *here);
 //tools
-void		clean_search(t_god *god);
-void 		clean_gone(t_god *god);
-void		reset_all(t_god *god);
-void		save_yoyo(t_god *god);
+void			clean_search(t_god *god);
+void 			clean_gone(t_god *god);
+void			reset_all(t_god *god);
+void			save_yoyo(t_god *god);
 
 //save paths
 t_ints 			*malloc_paths(t_god *god);
-int		write_path(t_god *god, t_lemin *here, t_ints path);
-void	extract_paths(t_god *god);
-void	save_solution(t_god *god, t_data *daddy);
-int		find_connec(t_god *god, int from, int to);
+int				write_path(t_god *god, t_lemin *here, t_ints path);
+void			extract_paths(t_god *god);
+void			save_solution(t_god *god, t_data *daddy);
+int				find_connec(t_god *god, int from, int to);
 //data
-void		free_tree(t_data *daddy);
-void		free_elmnt(t_data *branch);
-void		add_to_tree(t_data *daddy, t_data *baby, int mode);
-t_data		*create_branch(t_lemin *room);
-void		save_to_tree(t_data *daddy, t_lemin *room, int mode);
+void			free_tree(t_data *daddy);
+void			free_elmnt(t_data *branch);
+void			add_to_tree(t_data *daddy, t_data *baby, int mode);
+t_data			*create_branch(t_lemin *room);
+void			save_to_tree(t_data *daddy, t_lemin *room, int mode);
 
 
 /*

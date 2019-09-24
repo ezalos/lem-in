@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/09/24 18:15:46 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/24 18:30:53 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,19 @@ double		total_time_prog(void)
 		init = ((double)(clock()));
 	m = ((double)(((double)(clock())) - init)) / (CLOCKS_PER_SEC);
 	return (m);
+}
 
+void		print_infos(t_god *god)
+{
+	ft_printf("%~{}turn = %4d \tMISSING : %2d\n%f\tY? : %d/(%d)\n",\
+	god->turn, god->turn - god->expected_solution, total_time_prog(),\
+	god->yohan, god->save_turn);
+	if (0)
+	{
+		ft_add_to_file("./data/missing_turns_louis",\
+		ft_strjoin_multi(3, av[1], " :\t",\
+			ft_nb_to_a(god->turn - god->expected_solution, 10)));
+	}
 }
 
 int			main(int ac, char **av)
@@ -38,20 +50,19 @@ int			main(int ac, char **av)
 	(void)ac;
 	total_time_prog();
 	god = ft_memalloc(sizeof(t_god));
-	god->fd = 0;
-	god->visu = 0;
 	if (lem_in(god, av) == -1)
 		return (clean_error());
 	if (lets_calcul(god) == -1)
 		return (clean_error());
-	if (god->expected_solution != ERROR_EX_SOLUTION && god->turn - god->expected_solution > 2)
+	if (god->expected_solution != ERROR_EX_SOLUTION
+	&& god->turn - god->expected_solution > 2)
 		loulou(god);
 	if (!god->visu || god->all_in_one == 1)
 		display_result(god);
 	else
 		ft_setup_visu(god);
-	ft_printf("%~{}turn = %4d \tMISSING : %2d\n%f\tY? : %d/(%d)\n", god->turn, god->turn - god->expected_solution, total_time_prog(), god->yohan, god->save_turn);
-	// ft_add_to_file("./data/missing_turns_louis", ft_strjoin_multi(3, av[1], " :\t", ft_nb_to_a(god->turn - god->expected_solution, 10)));
+	if (0)
+		print_infos(god);
 	ft_clean_garbage();
 	return (0);
 }
