@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/24 12:15:36 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/24 18:18:18 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 # define FAILURE				0
 # define SUCCESS				1
+# define NEUTRAL				2
 # define F_V 					1
 # define F_H 					2
 
@@ -150,9 +151,12 @@ typedef struct					s_god
 	t_ints						used_goulots;
 
 	t_ints 						*final_path;
+	t_ints 						*save_path;
 	t_ints						*paths;
 	int 						nb_final_paths;
 	int							nb_of_paths;
+	int							save_path_nb;
+	int							save_turn;
 	int							ants;
 	int 						*waiting_ant;
 	long int 					turn;
@@ -164,6 +168,8 @@ typedef struct					s_god
 	t_lemin						*start;
 	t_lemin						*end;
 	t_lemin						*extremities[2];
+
+	int							yohan;
 
 	int							size;
 	int							expected_solution;
@@ -209,29 +215,27 @@ typedef struct 					s_print
 void	loulou(t_god *god);
 int		search_a_path(t_god *god, t_data *possibility_tree);
 double		total_time_prog(void);
-
-//dist
-void			ft_execute_pile_end_to_start(t_god *god, int depth,
-	t_ints pile_a, t_ints pile_b);
-void			get_dist_from_end(t_god *god);
-int				are_these_room_correctly_oriented(t_lemin *from, t_lemin *to);
-int				is_this_extremities(t_god *god, t_lemin *here);
-void			get_dist_from_end_oriented_graph(t_god *god);
+//room check
+int			is_room_searched(t_data *baby, int id);
+int			is_room_valid_base(t_god *god, t_lemin *room, t_data *baby);
+int			is_used_room_valid(t_god *god, t_lemin *room, t_data *baby);
+int			is_unused_room_valid(t_god *god, t_lemin *room, t_data *baby);
+int			is_connec_available(t_lemin *room, int connec);
 //room sort
 int			room_compare(t_lemin *one, t_lemin *two);
 void		room_connexions_sort(t_lemin *here);
 //tools
 void		clean_search(t_god *god);
 void 		clean_gone(t_god *god);
-void 		clean_dist(t_god *god);
-void 		mean_connec(t_god *god);
+void		reset_all(t_god *god);
+void		save_yoyo(t_god *god);
+
 //save paths
 t_ints 			*malloc_paths(t_god *god);
 int		write_path(t_god *god, t_lemin *here, t_ints path);
 void	extract_paths(t_god *god);
 void	save_solution(t_god *god, t_data *daddy);
 int		find_connec(t_god *god, int from, int to);
-int		find_connec_ptr(t_god *god, t_lemin *from, t_lemin *to);
 //data
 void		free_tree(t_data *daddy);
 void		free_elmnt(t_data *branch);

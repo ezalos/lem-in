@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/24 13:18:43 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/09/24 18:16:42 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,8 @@ SRCS_LI		=			main\
 						hash_tools\
 						display_spe_cases\
 						louis_alg\
-						louis_dist\
+						louis_search\
+						louis_room_check\
 						louis_room_sort\
 						louis_tools\
 						louis_save_path\

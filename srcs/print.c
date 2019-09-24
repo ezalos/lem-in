@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/09/24 13:42:59 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/24 17:33:54 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,60 +62,6 @@ void		print_surcharged_tab(t_god *god)
 	ft_printf("\n");
 }
 
-int		print_matrix(t_tab *lem_in)
-{
-	int				fd;
-	t_tab			*tmp;
-	t_lemin		*here;
-	int				i;
-	int				len;
-
-	len = ft_tab_lendir(lem_in, 0);
-	fd = ft_strlen(((t_lemin*)lem_in->content)->name);
-	// tmp = lem_in;
-	// while (tmp)
-	// {
-	// 	if (fd < (int)ft_strlen(((t_lemin*)lem_in->content)->name))
-	// 		fd = ft_strlen(((t_lemin*)lem_in->content)->name);
-	// 	tmp = tmp->dir[0];
-	// }
-	if (fd < 3)
-		fd = 3;
-	ft_printf("%*s", fd, " ");
-	tmp = lem_in;
-	while (tmp)
-	{
-		here = (t_lemin*)(tmp->content);
-		ft_printf("%~{?*}%*s%s%*s%~{}", here, fd - (ft_strlen(here->name) / 2), " ", here->name, 1 + fd % 2 + (fd - (fd % 2)) - ((ft_strlen(here->name) / 2) + (ft_strlen(here->name) % 2)), " ");
-		tmp = tmp->dir[0];
-	}
-	tmp = lem_in;
-	ft_printf("\n");
-	while (tmp)
-	{
-		here = (t_lemin*)(tmp->content);
-		ft_printf("%~{?*}%*s%~{}", here, fd, here->name);
-		i = -1;
-		while (++i < len)
-		{
-			if (!here->connexions[i])
-			{
-				// ft_printf("%~{?*}%-*s%~{}", here->connexions[i], fd, "void");
-				ft_printf("%*s%~{80;0;100}x%~{}%*s", fd, " ", fd, " ");
-				// break ;
-			}
-			else
-			{
-				ft_printf("%~{?*}%*s%~{} ", here, fd, here->name);
-				ft_printf("%~{?*}%-*s%~{}", here->connexions[i], fd, ((t_lemin*)here->connexions[i])->name);
-			}
-		}
-		ft_printf("\n");
-		tmp = tmp->dir[0];
-	}
-	return (0);
-}
-
 void			print_room_infos(t_god *god)
 {
 	int	i;
@@ -134,8 +80,6 @@ void			print_room_infos(t_god *god)
 	ft_printf("There is %~{155;155;255}%d%~{} ants\n", god->ants);
 }
 
-// void
-
 void 			print_this_path(t_god *god, t_ints path)
 {
 	int			j;
@@ -152,8 +96,6 @@ void 			print_this_path(t_god *god, t_ints path)
 				ft_printf("%~{155;255;155}");
 			else
 				ft_printf("%~{?*}", god->rooms[path[j]]);
-			// if (!(ft_strcmp(god->rooms[path[j]]->name, "Ioy9")))
-			// 		ft_rgb_bcolor(255,255,255);
 			ft_printf("%*s%~{}", god->name_len, god->rooms[path[j]]->name);
 			if (god->rooms[path[j]]->id != god->extremities[1]->id)
 			{
@@ -186,7 +128,7 @@ void 			print_final_paths(t_god *god)
 	i = 0;
 	while (i < god->nb_final_paths)
 	{
-		print_paths(god);
+		print_this_path(god, god->final_path[i]);
 		i++;
 	}
 }
