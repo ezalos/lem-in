@@ -88,6 +88,7 @@ int			parse_ants(t_god *god, t_print *print)
 	int		tmp;
 
 	i = 0;
+	god->expected_solution = ERROR_EX_SOLUTION;
 	if (ft_gnl(god->fd, &line) > 0)
 	{
 		while (line[i] != '\0')
