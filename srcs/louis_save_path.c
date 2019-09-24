@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:41:34 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/19 15:19:28 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/24 14:05:43 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	extract_paths(t_god *god)
 	// DEBUG_FUNC;
 	t_ints			*path;
 	int 			i;
+	// int 			save;
 	int 			turn;
 
 	i = 0;
@@ -120,6 +121,7 @@ void	extract_paths(t_god *god)
 		path[i - 1][++path[i - 1][0]] = god->extremities[1]->id;
 		// ft_printf("side\n");
 		block_path_connections(god, path[i - 1]);
+		path[i - 1][0]--;
 		// print_this_path(god, path[i - 1]);
 	}
 	// ft_printf("otherside\n");
@@ -128,8 +130,17 @@ void	extract_paths(t_god *god)
 	turn = evaluate_set_of_path(god, god->paths, god->nb_of_paths);
 	if (!god->final_path || turn < god->turn)
 	{
+		// save = 10000;
+		// i = 0;
+		// while (++i <= god->used_goulots[0])
+		// {
+		// 	if (save > path[i - 1][0])
+		// 		save = i - 1;
+		// }
+		// path[save][0]--;
 		god->final_path = god->paths;
 		god->nb_final_paths = god->used_goulots[0];
 		god->turn = turn;
+
 	}
 }

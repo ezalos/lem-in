@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/24 12:17:07 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/09/24 13:18:43 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -185,8 +185,6 @@ VISU = ./visu/visu.o
 VISU_SOURCE = ./visu/visu.mm
 VISU_HEADER = ./visu/visu.h
 VISU_FRAMEWORK = -framework Foundation -framework AppKit -framework SceneKit
-LINUX_COMPILE =  -I/usr/include/GNUstep -fconstant-string-class=NSConstantString  -D_NATIVE_OBJC_EXCEPTIONS
-LINUX_COMPILE_2 =   -lgnustep-base
 
 ##########################
 ##						##
@@ -196,7 +194,6 @@ LINUX_COMPILE_2 =   -lgnustep-base
 
 all :	$(NAME) auteur
 
-#$(NAME): $(LIB) Makefile $(A_OBJ) #$(VISU)
 $(NAME): $(VISU) $(LIB) Makefile $(A_OBJ) $(HEAD_PATH) $(VISU_HEADER)
 		@$(call run_and_test, $(CC) $(CFLAGS) $(A_OBJ) $(LIB) -I./$(HEAD_DIR) -o $(NAME) -I$(VISU_HEADER) $(VISU_FRAMEWORK) $(VISU))
 
