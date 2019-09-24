@@ -51,6 +51,7 @@ int				init(t_god *god)
 	int			ret;
 
 	print = init_print();
+	god->expected_solution = ERROR_EX_SOLUTION;
 	if (parse_ants(god, print) == -1)
 		return (-1);
 	god->hashtable = hashtable_init();

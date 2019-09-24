@@ -36,11 +36,38 @@ void		reset_all(t_god *god)
 	god->used_goulots = 0;
 }
 
+void			loulou_init_paths(t_god *god)
+{
+	int i;
+
+	i = 0;
+	god->paths = ft_memalloc(sizeof(t_ints *) * (god->goulots + 1));
+	god->used_goulots = ft_memalloc(sizeof(int) * (god->goulots + 10));
+	while (i <= god->goulots)
+	{
+		god->paths[i] = ft_memalloc(sizeof(t_ints) * god->size * 2);
+		i++;
+	}
+}
+
+double		total_time_prog(void)
+{
+	static double	init;
+	double			m;
+
+	if (!init)
+		init = ((double)(clock()));
+	m = ((double)(((double)(clock())) - init)) / (CLOCKS_PER_SEC);
+	return (m);
+
+}
+
 int			main(int ac, char **av)
 {
 	t_god			*god;
 
 	(void)ac;
+	total_time_prog();
 	god = ft_memalloc(sizeof(t_god));
 	god->fd = 0;
 	god->visu = 0;
@@ -56,11 +83,12 @@ int			main(int ac, char **av)
 	// 	print_this_path(god, god->final_path[i]);
 	// 	i++;
 	// }
-	// ft_printf("%~{}turn = %d\t MISSING : %d\n", god->turn, god->turn - god->expected_solution);
-	if (god->turn - god->expected_solution > 2)
+	ft_printf("%~{}turn = %d\t MISSING : %d\n%f\n", god->turn, god->turn - god->expected_solution, total_time_prog());
+	if (god->expected_solution != ERROR_EX_SOLUTION && god->turn - god->expected_solution > 2)
 	{
 		reset_all(god);
-		init_paths(god);
+		loulou_init_paths(god);
+		ft_printf("%p & %d\n", god->final_path, god->nb_final_paths);
 		loulou(god);
 	}
 	if (!god->visu || god->all_in_one == 1)
@@ -68,7 +96,7 @@ int			main(int ac, char **av)
 	else
 		ft_setup_visu(god);
 	// print_time();
-	// ft_printf("%~{}turn = %d\t MISSING : %d\n", god->turn, god->turn - god->expected_solution);
+	ft_printf("%~{}turn = %d\t MISSING : %d\n%f\n", god->turn, god->turn - god->expected_solution, total_time_prog());
 	// ft_add_to_file("./data/missing_turns_louis", ft_strjoin_multi(3, av[1], " :\t", ft_nb_to_a(god->turn - god->expected_solution, 10)));
 	ft_clean_garbage();
 	return (0);

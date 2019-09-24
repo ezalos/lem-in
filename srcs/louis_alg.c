@@ -234,12 +234,13 @@ int 		ultimate_dispatch_room(t_god *god)
 	is_working = 1;
 	while (!god->reach_end_room && is_working)
 	{
+		ft_printf("TIME %f\n", total_time_prog());
 		is_working = traversal_tree_search(god, god->possibility_tree, depth++);
 		// ft_printf("%d TREE BRANCH FOUND AT DEEPNESS %d\n", is_working, depth);
 		// ft_press_any_key();
 	}
-	if (!update_last_room(god, god->reach_end_room))
-		ft_printf("%~{}LAST ROOM ISNT END\n");
+	if (is_working)
+		update_last_room(god, god->reach_end_room);
 	// else
 		// ft_printf("\n%~{255;0;0}LAST ROOM ISNT END\n\n");
 	// ft_printf("%~{}END\n");
@@ -256,8 +257,9 @@ void	loulou(t_god *god)
 
 	ite = 1;
 	// get_dist_from_end(god);
-	while (retry && ite)
+	while (retry && ite && god->goulots > god->nb_final_paths)
 	{
+		ft_printf("%~{?}TIME %f%~{}\n", total_time_prog());
 		// ft_printf("\n%d\t%d/%d\n", retry, god->used_goulots[0], god->goulots);
 		save = god->turn;
 		// DEBUG_COLOR;
@@ -289,7 +291,7 @@ void	loulou(t_god *god)
 		// ft_press_any_key();
 	}
 		// int 		i;
-		//
+		
 		// i = 0;
 		// while (i < god->nb_final_paths)
 		// {

@@ -42,6 +42,8 @@
 # define LEFT					2
 # define UP						3
 
+# define ERROR_EX_SOLUTION		-1
+
 # define P_BUFF					5000
 
 # include "../../libft/includes/libft.h"
@@ -206,6 +208,7 @@ typedef struct 					s_print
 //main
 void	loulou(t_god *god);
 int		search_a_path(t_god *god, t_data *possibility_tree);
+double		total_time_prog(void);
 
 //dist
 void			ft_execute_pile_end_to_start(t_god *god, int depth,
