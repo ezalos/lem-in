@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_spe_cases.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 12:21:33 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/15 12:52:05 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/24 12:17:17 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void			display_all_in_one(t_god *god, int t_ants)
 {
 	t_print			*print;
 	int				i;
-	char			*tmp;
 
 	print = init_print();
 	i = 1;

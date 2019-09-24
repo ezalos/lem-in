@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/09/23 21:18:47 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/24 12:06:57 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int			main(int ac, char **av)
 	}
 	if (!god->visu || god->all_in_one == 1)
 		display_result(god);
-	// else
-	// 	ft_setup_visu(god);
+	else
+		ft_setup_visu(god);
 	// print_time();
 	ft_printf("turn = %d\t MISSING : %d\n", god->turn, god->turn - god->expected_solution);
 	// ft_add_to_file("./data/missing_turns_louis", ft_strjoin_multi(3, av[1], " :\t", ft_nb_to_a(god->turn - god->expected_solution, 10)));

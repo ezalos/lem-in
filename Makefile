@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/23 21:09:58 by ezalos           ###   ########.fr        #
+#    Updated: 2019/09/24 12:17:07 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 
 
 # CFLAGS = $(DFLAGS)
-CFLAGS =
+# CFLAGS =
 
 ##############################################################################
 ##############################################################################
@@ -72,9 +72,9 @@ SRCS_LI		=			main\
 						louis_room_sort\
 						louis_tools\
 						louis_save_path\
-						louis_data
-						#visual_setup\
-						creat_position\
+						louis_data\
+						visual_setup\
+						creat_position
 
 # SRCS_VS		=	visu-hex
 
@@ -197,14 +197,13 @@ LINUX_COMPILE_2 =   -lgnustep-base
 all :	$(NAME) auteur
 
 #$(NAME): $(LIB) Makefile $(A_OBJ) #$(VISU)
-$(NAME): $(LIB) Makefile $(A_OBJ)
-		@$(call run_and_test, $(CC) $(CFLAGS) $(A_OBJ) $(LIB) -I./$(HEAD_DIR) -o $(NAME))
-		# -I$(VISU_HEADER) $(VISU_FRAMEWORK) $(VISU))
+$(NAME): $(VISU) $(LIB) Makefile $(A_OBJ) $(HEAD_PATH) $(VISU_HEADER)
+		@$(call run_and_test, $(CC) $(CFLAGS) $(A_OBJ) $(LIB) -I./$(HEAD_DIR) -o $(NAME) -I$(VISU_HEADER) $(VISU_FRAMEWORK) $(VISU))
 
-# $(VISU): $(VISU_SOURCE) $(VISU_HEADER)
-# 		clang -O0 -g -x objective-c $(LINUX_COMPILE) $(VISU_SOURCE) $(LINUX_COMPILE_2) -c -o $(VISU)
+$(VISU): $(VISU_SOURCE) $(VISU_HEADER) Makefile
+		clang -O0 -g -x objective-c $(LINUX_COMPILE) $(VISU_SOURCE) $(LINUX_COMPILE_2) -c -o $(VISU)
 
-$(DIR_OBJ)%.o:$(SRC_PATH)/%.c $(HEAD_PATH)
+$(DIR_OBJ)%.o:$(SRC_PATH)/%.c $(HEAD_PATH) Makefile
 		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)
 
 $(LIB): FORCE

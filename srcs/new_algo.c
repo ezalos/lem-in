@@ -6,7 +6,7 @@
 /*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 14:52:16 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/23 20:01:01 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/24 12:15:37 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void			check_possible_trigger(t_god *god,
 		while (j < god->rooms[last_p[i + 1]]->nb_of_connexions)
 		{
 			stack->actual_room = god->rooms[last_p[i + 1]]->id;
-			if (basic_test_do_trigger(god, god->rooms[last_p[i + 1]], i, j) == 1
+			if (basic_test_do_trigger(god, god->rooms[last_p[i + 1]], j) == 1
 				&& ((god->rooms[last_p[i + 1]]->last_room->surcharged != 1)
 				|| ((god->rooms[last_p[i + 1]]->last_room->surcharged == 1)
 				&& (god->rooms[last_p[i + 1]]->nb_of_connexions == 2))))
 			{
-				do_the_trigger(god->rooms[last_p[i + 1]], last_p, i, j);
+				do_the_trigger(god->rooms[last_p[i + 1]], last_p, j);
 				(god->trigger)++;
 			}
 			j++;
@@ -54,10 +54,10 @@ int				get_next_rooms(t_god *god, t_piles *stack,
 		while (++i[1] < god->rooms[lp[i[0] + 1]]->nb_of_connexions)
 		{
 			stack->actual_room = god->rooms[lp[i[0] + 1]]->id;
-			if (test_g_one(god, god->rooms[lp[i[0] + 1]], i[0], i[1]) == 1)
+			if (test_g_one(god, god->rooms[lp[i[0] + 1]], i[1]) == 1)
 				gone_is_one(god, stack, new_p,
 				god->rooms[lp[i[0] + 1]]->connexions[i[1]]->id);
-			else if (zero_tst(god, god->rooms[lp[i[0] + 1]], i[0], i[1]) == 1)
+			else if (zero_tst(god, god->rooms[lp[i[0] + 1]], i[1]) == 1)
 			{
 				gone_is_zero(god, stack, new_p,
 				god->rooms[lp[i[0] + 1]]->connexions[i[1]]->id);

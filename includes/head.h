@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/23 21:10:15 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/24 12:15:36 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ void		save_to_tree(t_data *daddy, t_lemin *room, int mode);
 **   INIT	**
 **************
 */
+void			init_paths(t_god *god);
 int 			init(t_god *god);
 int 			lem_in(t_god *god, char **av);
 
@@ -362,11 +363,11 @@ int 			get_faster_path(t_god *god);
 void			add_path_to_set(t_god *god, int path);
 int 			get_len_path(t_god *god);
 
-void			do_the_trigger(t_lemin *room, t_ints tab, int i, int j);
-int				basic_test_do_trigger(t_god *god, t_lemin *room, int i, int j);
-int				next_is_it_trigger(t_god *god, int room, int last_one);
-int				test_g_one(t_god *god, t_lemin *room, int i, int j);
-int				zero_tst(t_god *god, t_lemin *room, int i, int j);
+void			do_the_trigger(t_lemin *room, t_ints tab, int j);
+int				basic_test_do_trigger(t_god *god, t_lemin *room, int j);
+int				next_is_it_trigger(t_god *god, int room);
+int				test_g_one(t_god *god, t_lemin *room, int j);
+int				zero_tst(t_god *god, t_lemin *room, int j);
 /*
 **************
 **   	A*		**
