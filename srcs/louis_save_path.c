@@ -6,15 +6,14 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:41:34 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/24 14:05:43 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/24 18:19:11 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/head.h"
 
-t_ints 			*malloc_paths(t_god *god)
+t_ints	*malloc_paths(t_god *god)
 {
-	// DEBUG_FUNC;
 	t_ints			*malloc_paths;
 	int				i;
 
@@ -27,7 +26,7 @@ t_ints 			*malloc_paths(t_god *god)
 
 int		write_path(t_god *god, t_lemin *here, t_ints path)
 {
-	int						r_v;
+	int				r_v;
 
 	r_v = FAILURE;
 	if (here)
@@ -47,9 +46,8 @@ int		write_path(t_god *god, t_lemin *here, t_ints path)
 
 void	save_solution(t_god *god, t_data *daddy)
 {
-	// DEBUG_FUNC;
-	int						r_v;
-	int						i;
+	int				r_v;
+	int				i;
 
 	r_v = 0;
 	if (god->used_goulots[0])
@@ -66,37 +64,10 @@ void	save_solution(t_god *god, t_data *daddy)
 	god->reach_end_room = daddy;
 }
 
-int		find_connec_id(t_god *god, int from, int to)
-{
-	// DEBUG_FUNC;
-	int i;
-
-	i = -1;
-	while (++i < god->rooms[from]->nb_of_connexions)
-		if (god->rooms[from]->connexions[i]->id == god->rooms[to]->id)
-			return (i);
-	return (-1);
-}
-
-int		find_connec_ptr(t_god *god, t_lemin *from, t_lemin *to)
-{
-	// DEBUG_FUNC;
-	int i;
-
-	i = 0;
-	while (god->rooms[from->id]->connexions[i] != to
-	&& i < god->rooms[from->id]->nb_of_connexions)
-		i++;
-	if (god->rooms[from->id]->connexions[i] == to)
-		return (i);
-	return (-1);
-}
-
 void	block_path_connections(t_god *god, t_ints path)
 {
-	// DEBUG_FUNC;
-	int check;
-	int i;
+	int				check;
+	int				i;
 
 	i = 0;
 	if (path)
@@ -107,11 +78,9 @@ void	block_path_connections(t_god *god, t_ints path)
 
 void	extract_paths(t_god *god)
 {
-	// DEBUG_FUNC;
 	t_ints			*path;
-	int 			i;
-	// int 			save;
-	int 			turn;
+	int				i;
+	int				turn;
 
 	i = 0;
 	path = malloc_paths(god);
@@ -119,28 +88,16 @@ void	extract_paths(t_god *god)
 	{
 		write_path(god, god->rooms[god->used_goulots[i]], path[i - 1]);
 		path[i - 1][++path[i - 1][0]] = god->extremities[1]->id;
-		// ft_printf("side\n");
 		block_path_connections(god, path[i - 1]);
 		path[i - 1][0]--;
-		// print_this_path(god, path[i - 1]);
 	}
-	// ft_printf("otherside\n");
 	god->paths = path;
 	god->nb_of_paths = god->used_goulots[0];
 	turn = evaluate_set_of_path(god, god->paths, god->nb_of_paths);
 	if (!god->final_path || turn < god->turn)
 	{
-		// save = 10000;
-		// i = 0;
-		// while (++i <= god->used_goulots[0])
-		// {
-		// 	if (save > path[i - 1][0])
-		// 		save = i - 1;
-		// }
-		// path[save][0]--;
 		god->final_path = god->paths;
 		god->nb_final_paths = god->used_goulots[0];
 		god->turn = turn;
-
 	}
 }
