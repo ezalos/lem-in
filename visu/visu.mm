@@ -191,7 +191,19 @@ static __strong NSWindow *displayWindow = nil;
 	[view setAllowsCameraControl:YES];
 	[view setScene:scene];
 	_scene = scene;
+
+	NSRect frameRect = NSMakeRect(100,900,200,50);
+	NSTextView *myTextField = [[[NSTextView alloc] initWithFrame:frameRect] autorelease];
+	[myTextField setString:@"Ants 0 / 100"];
+	[myTextField setEditable:NO];
+	[myTextField setTextColor:_pinkLollypopColor];
+	[myTextField setBackgroundColor:_blackNightSky];
+	[myTextField setFont:[NSFont fontWithName:@"Helvetica Bold" size:30]];
+	[view addSubview:myTextField];
+
 	[[displayWindow contentView] addSubview:view];
+
+
 }
 
 - (void)setupMenu:(NSString *const)appName {
