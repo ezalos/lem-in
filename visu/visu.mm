@@ -17,6 +17,7 @@
 #include <math.h>
 
 static __strong NSColor *_blueSkyColor = nil;
+static __strong NSColor *_transparent = nil;
 static __strong NSColor *_pinkLollypopColor = nil;
 static __strong NSColor *_redCorailColor = nil;
 static __strong NSColor *_yellowLightningColor = nil;
@@ -197,7 +198,7 @@ static __strong NSWindow *displayWindow = nil;
 	[myTextField setString:@"Ants 0 / 100"];
 	[myTextField setEditable:NO];
 	[myTextField setTextColor:_pinkLollypopColor];
-	[myTextField setBackgroundColor:_blackNightSky];
+	[myTextField setBackgroundColor:_transparent];
 	[myTextField setFont:[NSFont fontWithName:@"Helvetica Bold" size:30]];
 	[view addSubview:myTextField];
 
@@ -269,6 +270,7 @@ void							launch_visual(t_visu *const visu)
 	[application activateIgnoringOtherApps:YES];
 
 	displayWindow = window;
+	_transparent = [NSColor colorWithSRGBRed:171.0/255.0 green:241.0/255.0 blue:1.0 alpha:0.0];
 	_blueSkyColor = [NSColor colorWithSRGBRed:171.0/255.0 green:241.0/255.0 blue:1.0 alpha:1.0];
 	_pinkLollypopColor = [NSColor colorWithSRGBRed:1.0 green:171.0/255.0 blue:234.0/255.0 alpha:1.0];
 	_redCorailColor = [NSColor colorWithSRGBRed:1.0 green:146.0/255.0 blue:135.0/255.0 alpha:0.1];
