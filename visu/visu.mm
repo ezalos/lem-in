@@ -17,7 +17,6 @@
 #include <math.h>
 
 static __strong NSColor *_blueSkyColor = nil;
-static __strong NSColor *_transparent = nil;
 static __strong NSColor *_pinkLollypopColor = nil;
 static __strong NSColor *_redCorailColor = nil;
 static __strong NSColor *_yellowLightningColor = nil;
@@ -36,6 +35,9 @@ static NSString *_fourmiName = @"fourmi";
 - (SCNNode *)addLight:(t_room *const)room;
 - (void)startFourmiMovement:(t_visu *const)visu;
 - (void)startFourmiMovementAtPath:(const int)count index:(const int)index visu:(t_visu *const)visu;
+
+@property(strong, nonatomic) NSTextView *textLabel;
+@property(assign, nonatomic) int fourmiCounter;
 
 @end
 static __strong LeminScene *_scene;
@@ -93,18 +95,27 @@ static __strong LeminScene *_scene;
 			if (visu->paths[indexPath][++indexInPath]) {
 				l = visu->paths[indexPath][indexInPath - 1];
 				r = visu->paths[indexPath][indexInPath];
-				//NSLog(@"<%ld> (%s[%ld])->(%s[%ld]) {%f, %f}->{%f, %f}", indexPath, l->name, indexInPath - 1, r->name, indexInPath, l->x, l->y, r->x, r->y);
 				[scene addConection:SCNVector3Make(l->x, l->y, l->z) end:SCNVector3Make(r->x, r->y, r->z)];
 			}
 		}
 		++indexPath;
 	}
-	[scene startFourmiMovement:visu];
 	return scene;
 }
 
 static int						_fourmiCount = 0;
-static int						_fourmiCounter = 0;
+- (void)setFourmiCounter:(int)fourmiCounter {
+	if (!fourmiCounter) {
+		if (_fourmiCount)
+			[[self textLabel] setString:[[[NSString alloc] initWithFormat:@"%d ants", _fourmiCount] autorelease]];
+		else
+			[[self textLabel] setString:@""];
+	}
+	else {
+		[[self textLabel] setString:[[[NSString alloc] initWithFormat:@"Ants: %d / %d", fourmiCounter, _fourmiCount] autorelease]];
+	}
+	_fourmiCounter = fourmiCounter;
+}
 static BOOL						_fourmiState = NO;
 static t_visu					*_visu = nil;
 
@@ -113,7 +124,6 @@ static t_visu					*_visu = nil;
 
 	index = 0;
 	_fourmiCount = 0;
-	_fourmiCounter = 0;
 	_fourmiState = YES;
 	_visu = visu;
 	while (index < visu->nb_paths) {
@@ -121,6 +131,7 @@ static t_visu					*_visu = nil;
 		_fourmiCount += visu->flux[index];
 		++index;
 	}
+	[self setFourmiCounter:0];
 }
 
 - (void)fourmiMovement:(const int)index position:(const int)position node:(SCNNode *const)node visu:(t_visu *const)visu {
@@ -138,7 +149,8 @@ static t_visu					*_visu = nil;
 	}
 	else {
 		[node removeFromParentNode];
-		if (++_fourmiCounter >= _fourmiCount) {
+		[self setFourmiCounter:[self fourmiCounter] + 1];
+		if ([self fourmiCounter] >= _fourmiCount) {
 			_fourmiState = NO;
 		}
 	}
@@ -193,18 +205,19 @@ static __strong NSWindow *displayWindow = nil;
 	[view setScene:scene];
 	_scene = scene;
 
-	NSRect frameRect = NSMakeRect(100,900,200,50);
+	NSRect frameRect = NSMakeRect(36.0, H_SCREEN - (36.0 + 50.0), W_SCREEN - 36.0 * 2.0, 50.0);
 	NSTextView *myTextField = [[[NSTextView alloc] initWithFrame:frameRect] autorelease];
-	[myTextField setString:@"Ants 0 / 100"];
+
+	[myTextField setString:@""];
 	[myTextField setEditable:NO];
 	[myTextField setTextColor:_pinkLollypopColor];
-	[myTextField setBackgroundColor:_transparent];
-	[myTextField setFont:[NSFont fontWithName:@"Helvetica Bold" size:30]];
+	[myTextField setBackgroundColor:[NSColor clearColor]];
+	[myTextField setFont:[NSFont systemFontOfSize:30.0 weight:NSFontWeightBold]];
 	[view addSubview:myTextField];
-
 	[[displayWindow contentView] addSubview:view];
 
-
+	[scene setTextLabel:myTextField];
+	[scene startFourmiMovement:visu];
 }
 
 - (void)setupMenu:(NSString *const)appName {
@@ -242,6 +255,8 @@ static __strong NSWindow *displayWindow = nil;
 		[_scene startFourmiMovement:_visu];
 }
 - (void)actionReset {
+	_fourmiCount = 0;
+	[_scene setFourmiCounter:0];
 	[[_scene rootNode] removeAllActions];
 	for (SCNNode *const node in [[_scene rootNode] childNodes]) {
 		if ([node name]) {
@@ -270,7 +285,6 @@ void							launch_visual(t_visu *const visu)
 	[application activateIgnoringOtherApps:YES];
 
 	displayWindow = window;
-	_transparent = [NSColor colorWithSRGBRed:171.0/255.0 green:241.0/255.0 blue:1.0 alpha:0.0];
 	_blueSkyColor = [NSColor colorWithSRGBRed:171.0/255.0 green:241.0/255.0 blue:1.0 alpha:1.0];
 	_pinkLollypopColor = [NSColor colorWithSRGBRed:1.0 green:171.0/255.0 blue:234.0/255.0 alpha:1.0];
 	_redCorailColor = [NSColor colorWithSRGBRed:1.0 green:146.0/255.0 blue:135.0/255.0 alpha:0.1];
