@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/25 14:29:29 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/25 17:29:30 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ typedef struct					s_god
 	int 						fin;
 
 	int							name_len;
+	char						*file;
 
 	t_ints						extremities_list[2];
 	int 						all_in_one;
@@ -345,6 +346,7 @@ void			find_a_path(t_lemin *here, int id, t_ints *path);
 int				get_rid_of_dead_ends(t_god *god);
 int				ft_evaluate_set_of_path(t_god *god, int nb_paths);
 int				evaluate_set_of_path(t_god *god, t_ints *set_of_paths, int nb_paths);
+void			clean_final_path(t_god *god);
 
 /*
 *******************

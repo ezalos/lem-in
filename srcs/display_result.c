@@ -6,7 +6,7 @@
 /*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 13:15:14 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/25 16:43:02 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/25 17:14:24 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int				display_result(t_god *god)
 
 	tmp = 0;
 	t_ants = god->ants;
+	clean_final_path(god);
 	if (god->all_in_one == 1)
 		display_all_in_one(god, t_ants);
 	else

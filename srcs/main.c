@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/09/25 16:58:03 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/25 17:34:10 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,26 @@ void		print_infos(t_god *god, char **av)
 	}
 }
 
+void		create_data(t_god *god)
+{
+	char	*str;
+	int		fd_in;
+	int		fd_out;
+
+	ft_add_to_file("./data.lem-in",\
+	ft_strjoin_multi(3,\
+		ft_nb_to_a(god->turn - god->expected_solution, 10),\
+		"\t:\t", ft_nb_to_a((int)(total_time_prog() * (double)1000), 10)));
+	if (god->expected_solution != ERROR_EX_SOLUTION
+	&& god->turn - god->expected_solution > 10)
+	{
+		fd_out = ft_create_new_file("./too_much");
+		fd_in = open(god->file, O_RDONLY);
+		while (ft_gnl(fd_in, &str))
+			ft_printf("%~.*%s\n", fd_out, str);
+	}
+}
+
 int			main(int ac, char **av)
 {
 	t_god			*god;
@@ -65,7 +85,7 @@ int			main(int ac, char **av)
 		display_result(god);
 	else
 		ft_setup_visu(god);
-	ft_add_to_file("./data.lem-in", ft_strjoin_multi(3, ft_nb_to_a(god->turn - god->expected_solution, 10), "\t:\t", ft_nb_to_a((int)(total_time_prog() * (double)1000), 10)));
+	create_data(god);
 	ft_clean_garbage();
 	return (0);
 }

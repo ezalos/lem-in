@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 13:58:43 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/23 19:55:21 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/25 17:14:40 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,17 @@ int			evaluate_set_of_path(t_god *god, t_ints *set_of_paths, int nb_paths)
 	sort_t_ints(set_of_paths, nb_paths);
 	turn = send_using_n_path(god, set_of_paths, nb_paths);
 	return (turn);
+}
+
+void		clean_final_path(t_god *god)
+{
+	int		save;
+	int		i;
+
+	save = 10000000;
+	i = 0;
+	while (save > god->turn && ++i <= god->nb_final_paths)
+		save = evaluate_set_of_path(god, god->final_path, i);
+	god->nb_final_paths = i;
+	god->turn = save;
 }

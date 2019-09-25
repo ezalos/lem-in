@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visual_setup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 16:59:16 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/15 15:10:34 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:15:21 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int				ft_setup_visu(t_god *god)
 {
 	t_visu	*visu;
 
+	clean_final_path(god);
 	visu = malloc(sizeof(t_visu));
 	visu->nb_paths = god->nb_final_paths;
 	visu->flux = init_waiting_tab(god);

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:41:34 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/25 17:00:34 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/25 17:09:11 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,10 @@ void	extract_paths(t_god *god)
 	t_ints			*path;
 	int				i;
 	int				turn;
-	int				save;
 
 	i = 0;
 	path = malloc_paths(god);
-	while ((save = 10000000) && ++i <= god->used_goulots[0])
+	while (++i <= god->used_goulots[0])
 	{
 		write_path(god, god->rooms[god->used_goulots[i]], path[i - 1]);
 		path[i - 1][++path[i - 1][0]] = god->extremities[1]->id;
@@ -95,12 +94,10 @@ void	extract_paths(t_god *god)
 	god->paths = path;
 	god->nb_of_paths = god->used_goulots[0];
 	turn = evaluate_set_of_path(god, god->paths, god->nb_of_paths);
-	if ((!god->final_path || turn < god->turn) && !(i = 0))
+	if (!god->final_path || turn < god->turn)
 	{
-		while (save > turn && ++i <= god->nb_of_paths)
-			save = evaluate_set_of_path(god, god->paths, i);
 		god->final_path = god->paths;
-		god->nb_final_paths = i;
-		god->turn = save;
+		god->nb_final_paths = god->nb_of_paths;
+		god->turn = turn;
 	}
 }

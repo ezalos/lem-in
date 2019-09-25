@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_param.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 16:07:18 by ythomas           #+#    #+#             */
-/*   Updated: 2019/08/31 16:54:45 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:29:49 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ int					lem_in(t_god *god, char **av)
 		return (-1);
 	else if (file == NULL && (init(god) == -1))
 		return (-1);
+	god->file = file;
 	return (0);
 }
