@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/25 19:46:59 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/09/25 20:04:54 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -251,7 +251,7 @@ last :	all
 		@./$(NAME) $(shell cat tests/last)
 
 unit_test :
-			./42_lem-in_tools/generator --big-superposition > ./maps/unit_test
+			$(shell ./42_lem-in_tools/generator --big-superposition > ./maps/unit_test)
 			$(shell cd 42_lem-in_tools ; bash ./checker.sh ../$(NAME) ../maps/unit_test | grep -e "maps" -e \\\[33m ; cd ..)
 			$(shell ./$(NAME) ./maps/unit_test | grep "LOULOU ET YOYO POUR LA LIFE")
 
