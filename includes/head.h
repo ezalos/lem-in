@@ -235,7 +235,7 @@ t_ints 			*malloc_paths(t_god *god);
 int				write_path(t_god *god, t_lemin *here, t_ints path);
 void			extract_paths(t_god *god);
 void			save_solution(t_god *god, t_data *daddy);
-int				find_connec(t_god *god, int from, int to);
+int				find_connec_id(t_god *god, int from, int to);
 //data
 void			free_tree(t_data *daddy);
 void			free_elmnt(t_data *branch);

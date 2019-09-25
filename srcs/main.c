@@ -30,7 +30,7 @@ double		total_time_prog(void)
 	return (m);
 }
 
-void		print_infos(t_god *god)
+void		print_infos(t_god *god, char **av)
 {
 	ft_printf("%~{}turn = %4d \tMISSING : %2d\n%f\tY? : %d/(%d)\n",\
 	god->turn, god->turn - god->expected_solution, total_time_prog(),\
@@ -62,7 +62,7 @@ int			main(int ac, char **av)
 	else
 		ft_setup_visu(god);
 	if (0)
-		print_infos(god);
+		print_infos(god, av);
 	ft_clean_garbage();
 	return (0);
 }

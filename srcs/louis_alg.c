@@ -107,5 +107,5 @@ void		loulou(t_god *god)
 		else
 			retry = 3;
 	}
-	choose_best_solution();
+	choose_best_solution(god);
 }
