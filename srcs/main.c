@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/09/25 17:34:10 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/25 19:13:04 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,12 @@ int			main(int ac, char **av)
 	if (0)
 		print_infos(god, av);
 	if (!god->visu || god->all_in_one == 1)
+	{
 		display_result(god);
+		create_data(god);
+	}
 	else
 		ft_setup_visu(god);
-	create_data(god);
 	ft_clean_garbage();
 	return (0);
 }

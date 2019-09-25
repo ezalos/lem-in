@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:32:37 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/25 16:01:39 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:19:35 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ int		print_header_stat(char *name, int *tab, int size, int step)
 
 int		print_step(int *x, int quant, int seuil, int len)
 {
+	int i;
+
 	if (*x / quant)
 		ft_printf("%0*d", *x / quant, 0);
-	else if (*x)
+	i = 0;
+	while ((*x - i++) % quant > 0)
 		ft_printf(".");
 	*x = 0;
-	ft_printf("\n%~{255;150;150}%*d%~{}|%~{150;255;150}", len, seuil);
+	if (len)
+		ft_printf("\n%~{255;150;150}%*d%~{}|%~{150;255;150}", len, seuil);
 	return (1);
 }
 
@@ -64,8 +68,8 @@ void	print_tab(char *name, int *tab, int step, int size)
 		i++;
 	}
 	seuil += step;
-	ft_printf("%0*d\n", x / quant, 0);
-	x = 0;
+	print_step(&x, quant, seuil += step, 0);
+	ft_printf("\n");
 }
 
 int		get_tab_from_file(char *str, int **tab)
@@ -78,7 +82,11 @@ int		get_tab_from_file(char *str, int **tab)
 	*tab = ft_memalloc(sizeof(int) * 5000);
 	i = -1;
 	while (get_next_line(fd, &line) > 0)
-		(*tab)[++i] = ft_atoi(line);
+	{
+		i++;
+		(*tab)[i] = ft_atoi(ft_strchr(line, ':') + 2);
+		(*tab)[i] = ft_atoi(line);
+	}
 	close(fd);
 	return (i + 1);
 }

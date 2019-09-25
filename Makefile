@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/25 15:10:32 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/09/25 19:46:59 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME 	= lem-in
 CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
+
+SFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined  -g3
 
 DFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g3 -pedantic\
 -O2 -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int\
@@ -98,7 +100,6 @@ A_OBJ		= $(patsubst %,$(DIR_OBJ)%.o,$(SRCS_LI))
 OBJ 		= $(patsubst %,%.o,$(SRCS_LI))
 
 LIB_DIR		= ./libft
-LIB_DIR		= ./../libft
 HEAD		= head.h
 HEAD_DIR	= ./includes
 HEAD_PATH	= $(HEAD_DIR)/$(HEAD)
@@ -199,7 +200,7 @@ $(NAME): $(VISU) $(LIB) Makefile $(A_OBJ) $(HEAD_PATH) $(VISU_HEADER)
 		@$(call run_and_test, $(CC) $(CFLAGS) $(A_OBJ) $(LIB) -I./$(HEAD_DIR) -o $(NAME) -I$(VISU_HEADER) $(VISU_FRAMEWORK) $(VISU))
 
 $(VISU): $(VISU_SOURCE) $(VISU_HEADER) Makefile
-		clang -O0 -g -x objective-c $(LINUX_COMPILE) $(VISU_SOURCE) $(LINUX_COMPILE_2) -c -o $(VISU)
+		clang -O0 -g -x objective-c $(VISU_SOURCE) -c -o $(VISU)
 
 $(DIR_OBJ)%.o:$(SRC_PATH)/%.c $(HEAD_PATH) Makefile
 		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)
@@ -212,13 +213,14 @@ $(HEAD_PATH):
 
 clean : libclean auteur
 		@echo "\$(YELLOW)$(NAME) objs \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
-		@echo "\$(YELLOW)$(VISU) objs \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
-		@rm -f $(A_OBJ) #$(B_OBJ)
+		@echo "\$(YELLOW)$(VISU) objs \$(END)\\thas been \$(GREEN)\\t\\t  $@\$(END)"
+		@rm -f $(A_OBJ) $(VISU)
 
 fclean : libfclean clean auteur
-		@echo "\$(YELLOW)$(NAME) \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
+		@echo "\$(YELLOW)$(NAME) \$(END)\\t\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
 		@echo "\$(YELLOW)$(VISU) \$(END)\\thas been \$(GREEN)\\t\\t\\t  $@\$(END)"
-		@rm -rf $(NAME) #$(VISU)
+		@rm -rf $(NAME)
+		@rm -rf stats
 
 libclean :
 			@$(MAKE) clean -C $(LIB_DIR)
