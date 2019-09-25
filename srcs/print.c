@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 00:30:29 by root              #+#    #+#             */
-/*   Updated: 2019/09/25 14:28:08 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:55:00 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void			print_this_path(t_god *god, t_ints path)
 			{
 				if (god->rooms[path[j]]->nb_of_connexions < 3)
 					ft_printf("%~{50;50;50}");
-				ft_printf(" --> ");
+				ft_printf(" --> %~{}");
 			}
 		}
 		if (path[0])
