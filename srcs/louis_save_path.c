@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:41:34 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/25 16:56:05 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/25 17:00:34 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,6 @@ void	extract_paths(t_god *god)
 			save = evaluate_set_of_path(god, god->paths, i);
 		god->final_path = god->paths;
 		god->nb_final_paths = i;
-		god->turn = turn;
+		god->turn = save;
 	}
 }
