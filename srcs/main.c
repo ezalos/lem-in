@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/09/24 18:30:53 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:06:34 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ int			main(int ac, char **av)
 	if (god->expected_solution != ERROR_EX_SOLUTION
 	&& god->turn - god->expected_solution > 2)
 		loulou(god);
+	if (0)
+		print_infos(god, av);
 	if (!god->visu || god->all_in_one == 1)
 		display_result(god);
 	else
 		ft_setup_visu(god);
-	if (0)
-		print_infos(god, av);
+	ft_add_to_file("./data.lem-in", ft_strjoin_multi(3, ft_nb_to_a(god->turn - god->expected_solution, 10), "\t:\t",	ft_nb_to_a((int)(total_time_prog() * (double)1000), 10)));
 	ft_clean_garbage();
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/24 18:16:42 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/09/25 15:10:32 by ldevelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -230,6 +230,10 @@ auteur:
 	@echo ldevelle > auteur
 	@echo ythomas >> auteur
 
+stat :	$(LIB)
+		@$(CC) $(CFLAGS) ./srcs/show_stats.c $(LIB) -o stats
+		@./stats $(nb)
+
 re :	fclean all
 
 git :
@@ -241,16 +245,13 @@ git :
 t	:	all
 		./$(NAME) $(ARG)
 
-stat :
-		@$(CC) $(CFLAGS) ./srcs/show_stats.c $(LIB) -o stats
-		@./stats $(nb)
-
 last :	all
 		@./$(NAME) $(shell cat tests/last)
 
 unit_test :
-			./generator/tools/generator --big-superposition > ./maps/big_supperpo
-			time ./$(NAME) maps/big_supperpo
+			./42_lem-in_tools/generator --big-superposition > ./maps/unit_test
+			$(shell cd 42_lem-in_tools ; bash ./checker.sh ../$(NAME) ../maps/unit_test | grep -e "maps" -e \\\[33m ; cd ..)
+			$(shell ./$(NAME) ./maps/unit_test | grep "LOULOU ET YOYO POUR LA LIFE")
 
 ten :
 		@$(MAKE) unit_test
