@@ -6,17 +6,17 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/24 18:26:43 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/25 14:29:29 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEAD_H
 # define HEAD_H
 
-
 # define FAILURE				0
 # define SUCCESS				1
 # define NEUTRAL				2
+
 # define F_V 					1
 # define F_H 					2
 
@@ -64,15 +64,15 @@ typedef struct					s_lemin
 
 	struct s_lemin				**connexions;
 	int							nb_of_connexions;
-	int 						weight;//depth
+	int 						weight;
 	int 						depth;
 	int 						dist_to_end;
 	struct s_lemin				*last_room;
 	struct s_lemin				*next_room;
 	struct s_lemin				*surcharge;
-	int 						*used; //tableau de la taille du nb_of_xonnexions, val 0 ou 1 si connexion utilise
+	int 						*used;
 	int 						*tmp_used;
-	int 						blocked;// fait parti d'un chemin deja valide
+	int 						blocked;
 
 	int							from[2];
 	int							gone;//chemin en train detre considere (dans Yohan est on aussi pour old path)

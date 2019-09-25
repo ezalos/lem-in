@@ -6,7 +6,7 @@
 /*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 13:15:14 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/24 17:00:42 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:12:27 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int				moove_one_turn(t_god *god, t_print *print)
 {
+	DEBUG_FUNC;
 	int i;
 	int j;
 	int tmp;
@@ -44,6 +45,7 @@ int				moove_one_turn(t_god *god, t_print *print)
 int				push_ants(t_god *god, int *genome,
 	int *waiting_ant, t_print *print)
 {
+	DEBUG_FUNC;
 	int i;
 	int pushed;
 
@@ -67,6 +69,7 @@ int				push_ants(t_god *god, int *genome,
 
 int				*init_waiting_tab(t_god *god)
 {
+	DEBUG_FUNC;
 	int		*tab;
 	int		i;
 	int		mod;
@@ -95,6 +98,7 @@ int				*init_waiting_tab(t_god *god)
 
 int				display_result_suit(t_god *god, int *tmp, int *t_ants)
 {
+	DEBUG_FUNC;
 	int			genome;
 	int			*waiting_ant;
 	t_print		print;
@@ -104,6 +108,8 @@ int				display_result_suit(t_god *god, int *tmp, int *t_ants)
 	waiting_ant = init_waiting_tab(god);
 	while (*t_ants > 0 || *tmp > 0)
 	{
+		ft_printf("\ntmp: %d\tants: %d\n", *tmp, *t_ants);
+		ft_wait_pls(100000000);
 		*tmp = moove_one_turn(god, &print);
 		if (*t_ants != 0)
 		{
@@ -119,6 +125,7 @@ int				display_result_suit(t_god *god, int *tmp, int *t_ants)
 
 int				display_result(t_god *god)
 {
+	DEBUG_FUNC;
 	int tmp;
 	int t_ants;
 
