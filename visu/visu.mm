@@ -286,7 +286,7 @@ void							launch_visual(t_visu *const visu)
 
 	displayWindow = window;
 	_blueSkyColor = [NSColor colorWithSRGBRed:171.0/255.0 green:241.0/255.0 blue:1.0 alpha:1.0];
-	_pinkLollypopColor = [NSColor colorWithSRGBRed:1.0 green:171.0/255.0 blue:234.0/255.0 alpha:1.0];
+	_pinkLollypopColor = [NSColor colorWithSRGBRed:1.0 green:171.0/255.0 blue:234.0/255.0 alpha:0.8];
 	_redCorailColor = [NSColor colorWithSRGBRed:1.0 green:146.0/255.0 blue:135.0/255.0 alpha:0.1];
 	_yellowLightningColor = [NSColor colorWithSRGBRed:1.0 green:1.0 blue:24.0/255.0 alpha:1.0];
 	_blackNightSky = [NSColor colorWithSRGBRed:4.0/255.0 green:35.0/255.0 blue:40.0/255.0 alpha:1.0];

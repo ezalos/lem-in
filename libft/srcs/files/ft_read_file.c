@@ -45,12 +45,12 @@ char		*ft_read_file(int fd, int *size)
 
 	*size = 0;
 	dest = NULL;
-	ft_bzero(buff, BUFF_READ + 1);
+	//ft_bzero(buff, BUFF_READ + 1);
 	while ((ret = read(fd, buff, BUFF_READ)) > 0)
 	{
 		if (buff[0] == '\0')
 			return (NULL);
-		buff[ret - 1] = '\0';
+		buff[ret] = '\0';
 		*size += ret;
 		if (!(dest = ft_strrealloc(dest, *size + 1)))
 			return (NULL);
