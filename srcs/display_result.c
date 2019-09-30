@@ -6,7 +6,7 @@
 /*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 13:15:14 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/25 17:14:24 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/30 16:06:53 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,14 @@ int				display_result(t_god *god)
 	tmp = 0;
 	t_ants = god->ants;
 	clean_final_path(god);
-	if (god->all_in_one == 1)
-		display_all_in_one(god, t_ants);
+	if (god->nb_final_paths == 0)
+		ft_printf("MAP HAS NO SOLUTION\n");
 	else
-		display_result_suit(god, &tmp, &t_ants);
+	{
+		if (god->all_in_one == 1)
+			display_all_in_one(god, t_ants);
+		else
+			display_result_suit(god, &tmp, &t_ants);
+	}
 	return (0);
 }

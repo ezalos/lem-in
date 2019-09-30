@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:32:37 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/25 18:19:35 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/09/30 14:12:50 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,12 @@ int		main(int ac, char **av)
 	if (ac == 1)
 		return (0);
 	(void)av;
-	size = get_tab_from_file("./data.lem-in", &tab);
+	size = get_tab_from_file("./data/data.lem-in", &tab);
 	ft_squick_sort(&tab, 0, size - 1);
 	range = tab[size - 1] - tab[0];
 	range /= 50;
 	if (!range)
 		range++;
-	print_tab("./data.lem-in", tab, range, size);
+	print_tab("./data/data.lem-in", tab, range, size);
 	return (0);
 }

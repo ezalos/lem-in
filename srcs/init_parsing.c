@@ -6,7 +6,7 @@
 /*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:41:02 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/23 20:16:16 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/30 16:25:19 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			parse_links(t_god *god, t_print *print, char *line)
 		return (-1);
 	while ((ret = ft_gnl(god->fd, &str)) > 0)
 	{
-		if (str[0] == '#' && str[1] != '#')
+		if (str[0] == '#')
 			add_to_buffer(print, str);
 		else if ((ret = check_link_parsing(print, str)) != -1)
 			ret = link_rooms(god->lem_in, str, &god->adjacent_matrix, god);
@@ -39,7 +39,7 @@ int			parse_rooms(t_god *god, t_print *print, char *line)
 
 	ret = 0;
 	if (line[0] == '#' && (line[1] != '#' || (line[1] == '#'
-	&& !ft_strcmp(line + 2, "start") && !ft_strcmp(line + 2, "end"))))
+	&& ft_strcmp(line + 2, "start") && ft_strcmp(line + 2, "end"))))
 		add_to_buffer(print, line);
 	else if (god->dbt == 0 && line[0] == '#' && line[1] == '#'
 	&& !ft_strcmp(line + 2, "start") && (god->dbt = 1) == 1)
@@ -87,16 +87,15 @@ int			parse_ants(t_god *god, t_print *print)
 	char	*line;
 	int		tmp;
 
-	i = 0;
+	i = -1;
 	god->expected_solution = ERROR_EX_SOLUTION;
-	if (ft_gnl(god->fd, &line) > 0)
+	while ((tmp = ft_gnl(god->fd, &line)) > 0 && line[0] == '#')
+		add_to_buffer(print, line);
+	if (tmp > 0 && ft_isdigit(line[0]))
 	{
-		while (line[i] != '\0')
-		{
+		while (line[++i] != '\0')
 			if (line[i] < '0' || line[i] > '9')
 				return (-1);
-			i++;
-		}
 	}
 	else
 		return (-1);
