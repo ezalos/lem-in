@@ -48,6 +48,8 @@ int			link_rooms(t_tab *lem_in, char *line,
 		my_fs = ft_memalloc(sizeof(int) * (god->size + 1));
 	if (!(split = ft_strsplit(line, '-')))
 		return (ERROR);
+	if (ft_strcmp(split[0], split[1]) == 0)
+		return (-1);
 	if ((first = hashtable_value(god->hashtable, split[0],
 		ft_strlen(split[0]))) == NULL)
 		return (-1);
