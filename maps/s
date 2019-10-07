@@ -1,3 +1,4 @@
+######
 10
 ##start
 start 0 0
@@ -6,14 +7,17 @@ deux 0 0
 <3 0 0
 <3 0 0
 <3 0 0
+######
 <3 0 0
 <3 0 0
 ##end
 end 0 0
 start-deux
 deux-<3
-deux-<3
+######
+######
 deux-<3
 deux-<3
 deux-<3
 <3-end
+######
