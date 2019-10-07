@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_checking.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ythomas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ythomas <ythomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:40:55 by ythomas           #+#    #+#             */
-/*   Updated: 2019/09/11 16:20:19 by ythomas          ###   ########.fr       */
+/*   Updated: 2019/10/07 14:29:30 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int				is_it_link_part(char *str)
 
 int				check_room_parsing_suit(char *str, int i, int step)
 {
+	if (str[0] == ' ')
+		return (-1);
 	if (str[i] == ' ' && str[i + 1] == ' ')
 		return (-1);
 	if ((int)(str[i]) < 32 || (int)(str[i]) >= 127)
