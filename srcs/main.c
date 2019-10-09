@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/09/30 16:06:35 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/10/09 13:56:50 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		print_infos(t_god *god, char **av)
 	ft_printf("%~{}turn = %4d \tMISSING : %2d\n%f\tY? : %d/(%d)\n",\
 	god->turn, god->turn - god->expected_solution, total_time_prog(),\
 	god->yohan, god->save_turn);
-	print_final_paths(god);
+	// print_final_paths(god);
 	if (0)
 	{
 		ft_add_to_file("./data/missing_turns_louis",\
@@ -61,7 +61,7 @@ void		create_data(t_god *god)
 		{
 			fd_out = ft_create_new_file("./too_much");
 			fd_in = open(god->file, O_RDONLY);
-			while (ft_gnl(fd_in, &str))
+			while (ft_gnl(fd_in, &str) > 0)
 				ft_printf("%~.*%s\n", fd_out, str);
 		}
 	}

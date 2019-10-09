@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 13:58:43 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/25 17:14:40 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/10/09 13:42:56 by ldevelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ void		clean_final_path(t_god *god)
 	int		save;
 	int		i;
 
-	save = 10000000;
+	save = -1;
 	i = 0;
-	while (save > god->turn && ++i <= god->nb_final_paths)
+	while ((save < 0 || save > god->turn) && ++i <= god->nb_final_paths)
 		save = evaluate_set_of_path(god, god->final_path, i);
 	god->nb_final_paths = i;
 	god->turn = save;
