@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/09/25 20:10:29 by ldevelle         ###   ########.fr       */
+/*   Updated: 2019/12/24 15:41:53 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int			main(int ac, char **av)
 		display_result(god);
 		create_data(god);
 	}
-	else
-		ft_setup_visu(god);
+	// else
+	// 	ft_setup_visu(god);
 	ft_clean_garbage();
 	return (0);
 }

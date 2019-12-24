@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/25 20:04:54 by ldevelle         ###   ########.fr        #
+#    Updated: 2019/12/24 15:45:45 by ezalos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,8 +76,8 @@ SRCS_LI		=			main\
 						louis_tools\
 						louis_save_path\
 						louis_data\
-						visual_setup\
 						creat_position
+						# visual_setup
 
 # SRCS_VS		=	visu-hex
 
@@ -196,11 +196,11 @@ VISU_FRAMEWORK = -framework Foundation -framework AppKit -framework SceneKit
 
 all :	$(NAME) auteur
 
-$(NAME): $(VISU) $(LIB) Makefile $(A_OBJ) $(HEAD_PATH) $(VISU_HEADER)
-		@$(call run_and_test, $(CC) $(CFLAGS) $(A_OBJ) $(LIB) -I./$(HEAD_DIR) -o $(NAME) -I$(VISU_HEADER) $(VISU_FRAMEWORK) $(VISU))
+$(NAME): $(LIB) Makefile $(A_OBJ) $(HEAD_PATH) #$(VISU_HEADER) $(VISU)
+		@$(call run_and_test, $(CC) $(CFLAGS) $(A_OBJ) $(LIB) -I./$(HEAD_DIR) -lm -o $(NAME)) #-I$(VISU_HEADER) $(VISU_FRAMEWORK) $(VISU))
 
-$(VISU): $(VISU_SOURCE) $(VISU_HEADER) Makefile
-		clang -O0 -g -x objective-c $(VISU_SOURCE) -c -o $(VISU)
+# $(VISU): $(VISU_SOURCE) $(VISU_HEADER) Makefile
+# 		clang -O0 -g -x objective-c $(VISU_SOURCE) -c -o $(VISU)
 
 $(DIR_OBJ)%.o:$(SRC_PATH)/%.c $(HEAD_PATH) Makefile
 		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)
